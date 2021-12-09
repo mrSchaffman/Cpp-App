@@ -155,17 +155,18 @@
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Calculator.cpp" />
     <ClCompile Include="MainFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Calculator.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Calculator.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Calculator.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
