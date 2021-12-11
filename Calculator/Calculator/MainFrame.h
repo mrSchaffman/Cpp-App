@@ -1,6 +1,11 @@
 #pragma once
 #include"wx/wx.h"
-static const size_t X = 300;
+#include"CalculatorButton.h"
+#include"OperatorButton.h"
+#include"FunctionButton.h"
+#include"NumberButton.h"
+
+static const size_t X = 400;
 static const size_t Y = 500;
 static const size_t rowL2 = 4;
 static const size_t columnL2 = 7;
@@ -10,7 +15,7 @@ static const size_t columnL3 = 4;
 class MainFrame : public wxFrame
 {
 public:
-	MainFrame(const wxString&title);
+	MainFrame(const wxString&title,size_t numberOfSizer);
 	~MainFrame();
 
 private:
@@ -36,9 +41,9 @@ private:
 	std::vector<wxString> labelsLine3_1;
 	std::vector<wxString> labelsLine3_2;
 
-	void OnButtonOperatorClick(wxCommandEvent &evt);
-	void OnButtonNumberClick(wxCommandEvent &evt);
+	void OnOperatorButtonClick(wxCommandEvent &evt);
+	void OnNumberButtonClick(wxCommandEvent &evt);
+	void OnFunctionButtonClick(wxCommandEvent &evt);
 
-	std::vector<wxOrientation>orientation;
 		DECLARE_EVENT_TABLE()
 	};	

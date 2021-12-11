@@ -1,8 +1,9 @@
 #include "MainFrame.h"
 BEGIN_EVENT_TABLE(MainFrame, wxFrame)
-
+  EVT_BUTTON(wxID_OK,OnOperatorButtonClick)
 END_EVENT_TABLE()
-MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(300,300),wxSize(X,Y))
+
+MainFrame::MainFrame(const wxString&title, size_t numberOfSizer):wxFrame(NULL,wxID_ANY,title,wxPoint(300,300),wxSize(X,Y))
 {
 	SetMaxSize(wxSize(X, Y));
 	
@@ -26,7 +27,7 @@ MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(3
 	labelsLine3_2 = { "MR","M+","="};
 
 
-	for (size_t line = 0; line <= 3; line++)
+	for (size_t line = 0; line <= numberOfSizer; line++)
 	{
 		if (line == 0)
 		{
@@ -42,17 +43,12 @@ MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(3
 		}
 		if (line == 2)
 		{
-			/*for (size_t x = 0; x < rowL2; x++)
-			{
-				for (size_t y = 0; y < columnL2; y++)
-				{
-					btnsLine2[y*rowL2 + x] = new wxButton(this, 2000 + (y*rowL2 + x), labelsLine2[y*rowL2 + x], wxDefaultPosition, wxSize(30, 30));
-					btnsLine2[y*rowL2 + x]->SetFont(GetFont().Scale(1.3));
-					line2->Add(btnsLine2[y*rowL2 + x], 0, wxALL);
-				}
-			}
+			
+			OperatorButton * btnsLine2 = new OperatorButton(this, '+');
+	
+			//	btnsLine2->SetFont(GetFont().Scale(1.3));
 
-			frameSizers[line]->Add(line2, 0, wxALIGN_CENTER);*/
+			frameSizers[line]->Add(btnsLine2, 0, wxALIGN_CENTER);
 		}
 		if (line == 3)
 		{
@@ -63,7 +59,7 @@ MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(3
 					btnsLine3_1[y*rowL3 + x] = new wxButton(this, 3010 + (y*rowL3 + x), labelsLine3_1[y*rowL3 + x], wxDefaultPosition, wxSize(50, 50));
 					btnsLine3_1[y*rowL3 + x]->SetFont(GetFont().Scale(2));
 					line3_1->Add(btnsLine3_1[y*rowL3 + x], 0, wxALL);
-					btnsLine3_1[y*rowL3 + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnButtonNumberClick, this);
+					btnsLine3_1[y*rowL3 + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnNumberButtonClick, this);
 				}
 			}
 			frameSizers[line]->Add(line3_1, 0, wxALL);
@@ -72,18 +68,21 @@ MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(3
 				wxButton *btn32 = new wxButton(this, 3020 + line32, labelsLine3_2[line32],wxDefaultPosition,wxSize(50,50));
 				btn32->SetFont(GetFont().Scale(2));
 				line3_2->Add(btn32, 0, wxBOTTOM,5);
-				btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnButtonOperatorClick, this); // Handler to modify.
+				btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnOperatorButtonClick, this); // Handler to modify.
 			}
 			// the Equal button
 			wxButton *btn32 = new wxButton(this, 3022, labelsLine3_2[2], wxDefaultPosition, wxSize(50, 105));
 			btn32->SetFont(GetFont().Scale(2));
 			line3_2->Add(btn32, 0, wxBOTTOM, 5);
-			btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnButtonOperatorClick, this);
+			btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnOperatorButtonClick, this);
 			frameSizers[line]->Add(line3_2, 0,wxLEFT,5);
 		}
 		
 		topSizer->Add(frameSizers[line], 0, wxALIGN_CENTER);
 	}
+
+	
+
 	topSizer->Fit(this);
 	topSizer->SetSizeHints(this);
 	SetSizer(topSizer);
@@ -94,15 +93,20 @@ MainFrame::~MainFrame()
 }
 	
 
-void MainFrame::OnButtonNumberClick(wxCommandEvent &evt)
+void MainFrame::OnNumberButtonClick(wxCommandEvent &evt)
 {
 
 
 	display->AppendText(wxString("${}",evt.GetId()));
 }
-void MainFrame::OnButtonOperatorClick(wxCommandEvent &evt)
+void MainFrame::OnFunctionButtonClick(wxCommandEvent & evt)
 {
 
+}
+void MainFrame::OnOperatorButtonClick(wxCommandEvent &evt)
+{
+
+	//OperatorButton::OnOperatorButtonClick(evt);
 
 	display->AppendText(wxString("t",evt.GetId()));
 }

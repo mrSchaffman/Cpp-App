@@ -6,7 +6,7 @@ IMPLEMENT_APP(CalculatorApp)
 
 bool CalculatorApp::OnInit()
 {
-	frame = new MainFrame(wxString("CalculatorApp"));
+	frame = new MainFrame(wxString("CalculatorApp"),3);
 	frame->Show(true);
 	return true;
 }

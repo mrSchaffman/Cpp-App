@@ -1,7 +1,5 @@
 ﻿  CalculatorApp.cpp
-  CalculatorButton.cpp
-  FunctionButton.cpp
-  NumberButton.cpp
+  MainFrame.cpp
   OperatorButton.cpp
   Generating Code...
   Calculator.vcxproj -> E:\Software Development\Cpp-App\Calculator\Debug\Calculator.exe
