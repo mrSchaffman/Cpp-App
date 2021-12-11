@@ -153,20 +153,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Calculator.h" />
+    <ClInclude Include="CalculatorApp.h" />
+    <ClInclude Include="CalculatorButton.h" />
+    <ClInclude Include="FunctionButton.h" />
     <ClInclude Include="MainFrame.h" />
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="NumberButton.h" />
+    <ClInclude Include="OperatorButton.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Calculator.cpp" />
+    <ClCompile Include="CalculatorApp.cpp" />
+    <ClCompile Include="CalculatorButton.cpp" />
+    <ClCompile Include="FunctionButton.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Calculator.ico" />
-    <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Calculator.rc" />
+    <ClCompile Include="NumberButton.cpp" />
+    <ClCompile Include="OperatorButton.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
