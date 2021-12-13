@@ -3,90 +3,76 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_BUTTON(wxID_OK,OnOperatorButtonClick)
 END_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString&title, size_t numberOfSizer):wxFrame(NULL,wxID_ANY,title,wxPoint(300,300),wxSize(X,Y))
+MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(300,300),wxSize(X,Y))
 {
 	SetMaxSize(wxSize(X, Y));
-	
 	topSizer = new wxBoxSizer(wxVERTICAL);
 
-	line0 = new wxBoxSizer(wxVERTICAL);
-	line1 = new wxBoxSizer(wxHORIZONTAL);
-
-	line2 = new wxGridSizer(rowL2, columnL2, 5, 5);
-	btnsLine2 = new wxButton*[rowL2*columnL2];
-
-	line3 = new wxBoxSizer(wxHORIZONTAL);
-	line3_1 = new wxGridSizer(rowL3, columnL3, 5, 5);
-	btnsLine3_1 = new wxButton*[rowL3*columnL3];
-	line3_2 = new wxBoxSizer(wxVERTICAL);
-
-	frameSizers = { line0 ,line1,line2,line3 };
-
-	labelsLine2 = { "EXP","hyp","->","y^x","sin","a","Rac","cos","b","DEG","tan","x^2","Ln","(","F-E","log",")","x-M" };
-	labelsLine3_1 = { "7","4","1","0","8","5","2",".","9","6","3","+/-","/","*","-","+" };
-	labelsLine3_2 = { "MR","M+","="};
-
-
-	for (size_t line = 0; line <= numberOfSizer; line++)
-	{
-		if (line == 0)
-		{
-			display = new wxTextCtrl(this, 1000, wxEmptyString, wxDefaultPosition, wxSize(300, 40), wxTE_RIGHT || wxTE_WORDWRAP);
-			display->SetEditable(false);
-			display->SetFont(GetFont().Scale(1.5));
-		
-			frameSizers[line]->Add(display, 0, wxALL,5);
-		}
-		if (line == 1)
-		{
-
-		}
-		if (line == 2)
-		{
-			
-			OperatorButton * btnsLine2 = new OperatorButton(this, '+');
+	// test
+	// wxButton * btn = new wxButton(this, wxID_OK, "&Ok",wxDefaultPosition, wxSize(40,40));
 	
-			//	btnsLine2->SetFont(GetFont().Scale(1.3));
-
-			frameSizers[line]->Add(btnsLine2, 0, wxALIGN_CENTER);
-		}
-		if (line == 3)
-		{
-			for (size_t x = 0; x < rowL3; x++)
-			{
-				for (size_t y = 0; y < columnL3; y++)
-				{
-					btnsLine3_1[y*rowL3 + x] = new wxButton(this, 3010 + (y*rowL3 + x), labelsLine3_1[y*rowL3 + x], wxDefaultPosition, wxSize(50, 50));
-					btnsLine3_1[y*rowL3 + x]->SetFont(GetFont().Scale(2));
-					line3_1->Add(btnsLine3_1[y*rowL3 + x], 0, wxALL);
-					btnsLine3_1[y*rowL3 + x]->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnNumberButtonClick, this);
-				}
-			}
-			frameSizers[line]->Add(line3_1, 0, wxALL);
-			for (size_t line32 = 0; line32 < 2; line32++)
-			{
-				wxButton *btn32 = new wxButton(this, 3020 + line32, labelsLine3_2[line32],wxDefaultPosition,wxSize(50,50));
-				btn32->SetFont(GetFont().Scale(2));
-				line3_2->Add(btn32, 0, wxBOTTOM,5);
-				btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnOperatorButtonClick, this); // Handler to modify.
-			}
-			// the Equal button
-			wxButton *btn32 = new wxButton(this, 3022, labelsLine3_2[2], wxDefaultPosition, wxSize(50, 105));
-			btn32->SetFont(GetFont().Scale(2));
-			line3_2->Add(btn32, 0, wxBOTTOM, 5);
-			btn32->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnOperatorButtonClick, this);
-			frameSizers[line]->Add(line3_2, 0,wxLEFT,5);
-		}
-		
-		topSizer->Add(frameSizers[line], 0, wxALIGN_CENTER);
-	}
-
-	
-
 	topSizer->Fit(this);
 	topSizer->SetSizeHints(this);
 	SetSizer(topSizer);
 }
+
+MainFrame::MainFrame(const wxString & title, wxBoxSizer *& topSizer) :wxFrame(NULL, wxID_ANY, title, wxPoint(300, 300), wxSize(X, Y))
+{
+	this->topSizer = topSizer;
+	
+}
+MainFrame::MainFrame(std::vector<wxSizer*>& sizers, size_t frameborder, wxOrientation orientation)
+{
+	frameSizers = sizers;
+	topSizer = new  wxBoxSizer(orientation);
+	for (auto& sizer : sizers)
+	{
+		topSizer->Add(sizer, 0, wxALL, frameborder);
+	}
+}
+//wxGridSizer* MainFrame::addGrid(std::initializer_list<wxString> list)
+//{
+//	
+//	wxGridSizer * grid = new wxGridSizer(5, 5,0,0);
+//	for (auto& label : list)
+//	{
+//		FunctionButton * btn = new FunctionButton(this, label);
+//		btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &OnFunctionButtonClick, this);
+//		grid->Add(btn, 0, wxALL);
+//	}
+//	
+//	return grid;
+//}
+//wxGridSizer* MainFrame::addGrid(const size_t column, std::vector<wxString> labelList)
+//{
+//	//wxGridSizer * grid = new wxGridSizer(row, column, 0, 0);
+//	wxGridSizer * grid = new wxGridSizer(column); // grid with 6 columns
+//	for (auto& label : labelList)
+//	{
+//		FunctionButton * btn = new FunctionButton(this, label);
+//		btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &OnFunctionButtonClick, this);
+//		grid->Add(btn, 0, wxALL);
+//	}
+//	return grid;
+//}
+
+void MainFrame::addGrids(std::initializer_list<wxGridSizer*> grids)
+{
+	for (auto& grid : grids)
+	{
+		topSizer->Add(grid, 0, wxALL);
+	}
+}
+
+void MainFrame::addLines(std::vector<wxBoxSizer*> &lines)
+{
+	for (auto& line : lines)
+	{
+		topSizer->Add(line,0,wxALL);
+	}
+	
+}
+
 MainFrame::~MainFrame()
 {
 
@@ -97,7 +83,7 @@ void MainFrame::OnNumberButtonClick(wxCommandEvent &evt)
 {
 
 
-	display->AppendText(wxString("${}",evt.GetId()));
+	//display->AppendText(wxString("${}",evt.GetId()));
 }
 void MainFrame::OnFunctionButtonClick(wxCommandEvent & evt)
 {
@@ -108,5 +94,5 @@ void MainFrame::OnOperatorButtonClick(wxCommandEvent &evt)
 
 	//OperatorButton::OnOperatorButtonClick(evt);
 
-	display->AppendText(wxString("t",evt.GetId()));
+	//display->AppendText(wxString("t",evt.GetId()));
 }
