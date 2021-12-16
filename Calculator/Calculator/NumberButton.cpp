@@ -14,9 +14,10 @@ void NumberButton::OnNumberButtonClick(wxCommandEvent &evt)
 	
 }
 
-NumberButton::NumberButton(wxWindow * parent, int label):CalculatorButton(parent, NumberButtonID, (char)label),m_parent(parent)
+NumberButton::NumberButton(wxWindow * parent, wxChar label, wxSize size):CalculatorButton(parent, NumberButtonID, label, size),m_parent(parent)
 {
 	//this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &NumberButton::OnNumberButtonClick, parent);
 	SetFont(this->GetFont().Scale(1.5));
+	m_label = label;
 	NumberButtonID++;
 }

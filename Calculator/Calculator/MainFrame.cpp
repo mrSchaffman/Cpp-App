@@ -3,32 +3,31 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
   EVT_BUTTON(wxID_OK,OnOperatorButtonClick)
 END_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString&title):wxFrame(NULL,wxID_ANY,title,wxPoint(300,300),wxSize(X,Y))
-{
-	SetMaxSize(wxSize(X, Y));
-	topSizer = new wxBoxSizer(wxVERTICAL);
 
-	// test
-	// wxButton * btn = new wxButton(this, wxID_OK, "&Ok",wxDefaultPosition, wxSize(40,40));
-	
+
+MainFrame::MainFrame(const wxString & title, wxBoxSizer * topSizer, wxSize size) :wxFrame(NULL, wxID_ANY, title, wxPoint(300, 300), size)
+{
+	SetMaxSize(size);
+
+	this->topSizer = topSizer;
+	this->size = size;
 	topSizer->Fit(this);
 	topSizer->SetSizeHints(this);
 	SetSizer(topSizer);
 }
-
-MainFrame::MainFrame(const wxString & title, wxBoxSizer *& topSizer) :wxFrame(NULL, wxID_ANY, title, wxPoint(300, 300), wxSize(X, Y))
-{
-	this->topSizer = topSizer;
-	
-}
 MainFrame::MainFrame(std::vector<wxSizer*>& sizers, size_t frameborder, wxOrientation orientation)
 {
+	SetMaxSize(size);
+
 	frameSizers = sizers;
 	topSizer = new  wxBoxSizer(orientation);
 	for (auto& sizer : sizers)
 	{
 		topSizer->Add(sizer, 0, wxALL, frameborder);
 	}
+	topSizer->Fit(this);
+	topSizer->SetSizeHints(this);
+	SetSizer(topSizer);
 }
 //wxGridSizer* MainFrame::addGrid(std::initializer_list<wxString> list)
 //{
@@ -66,7 +65,7 @@ void MainFrame::addGrids(std::vector<wxGridSizer*> grids)
 
 void MainFrame::addSizers(std::vector<wxSizer*> sizers)
 {
-	for (auto& sizer : sizers)
+	for (auto sizer : sizers)
 	{
 		topSizer->Add(sizer, 0, wxCENTER | wxBOTTOM, 3);
 	}
@@ -74,18 +73,13 @@ void MainFrame::addSizers(std::vector<wxSizer*> sizers)
 
 void MainFrame::addLines(std::vector<wxBoxSizer*> &lines)
 {
-	for (auto& line : lines)
+	for (auto line : lines)
 	{
 		topSizer->Add(line,0,wxALL);
 	}
 	
 }
 
-MainFrame::~MainFrame()
-{
-
-}
-	
 
 void MainFrame::OnNumberButtonClick(wxCommandEvent &evt)
 {

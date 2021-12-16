@@ -15,19 +15,14 @@ public:
 
 	virtual void OnButtonClick();
 	virtual void setLabel(wxString label);
-	virtual void setWidth(size_t width);
 	virtual void setParent(wxWindow* & parent);
-	virtual void setHeight(size_t height);
 	virtual void actualizeDisplay(std::string & string) { string.append(m_label); }
-	virtual size_t getWidth()const { return m_Width; }
-	virtual size_t getHeight()const { return m_Height; }
 
 	CalculatorButton() = default;
-	CalculatorButton(wxWindow * parent,size_t ID, wxString label, size_t width = kDefaultWidth, size_t height = kDefaultHeight);
+	CalculatorButton(wxWindow * parent,size_t ID, wxString label, wxSize size = wxSize(kDefaultWidth, kDefaultHeight));
 	virtual ~CalculatorButton() = default;
 private:
-	size_t m_Width;
-	size_t m_Height;
+
 	wxString m_label;
 	wxWindow * m_parent = nullptr;
 	

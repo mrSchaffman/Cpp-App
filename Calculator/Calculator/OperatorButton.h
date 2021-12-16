@@ -4,7 +4,7 @@ static size_t OperatorButtonID = 30;
 class OperatorButton :public CalculatorButton
 {
 public:
-	OperatorButton(wxWindow * parent,char label);
+	OperatorButton(wxWindow * parent,char label, wxSize size = wxSize(50, 50));
 	void remove(std::string & displayString);
 	void actualizeDisplay(std::string &displayString)override;
 	void OnOperatorButtonClick(wxCommandEvent &evt);

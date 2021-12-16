@@ -1,8 +1,9 @@
 #include "OperatorButton.h"
-OperatorButton::OperatorButton(wxWindow * parent, char label):CalculatorButton(parent,OperatorButtonID, label),m_parent(parent),m_label(label), m_ID(OperatorButtonID)
+OperatorButton::OperatorButton(wxWindow * parent, char label, wxSize size):CalculatorButton(parent,OperatorButtonID, label, size),m_parent(parent),m_label(label), m_ID(OperatorButtonID)
 {
 	//this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &OperatorButton::OnOperatorButtonClick,parent);
 	SetFont(this->GetFont().Scale(1.5));
+	m_label = label;
 	OperatorButtonID++;
 }
 

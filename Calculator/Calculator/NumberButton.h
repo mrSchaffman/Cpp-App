@@ -11,10 +11,10 @@ public:
 	void actualizeDisplay(std::string &displaystring)override;
 
 	NumberButton() = default;
-	NumberButton(wxWindow * parent,int label);
+	NumberButton(wxWindow * parent,wxChar label ,wxSize size = wxSize(50, 50));
 	~NumberButton() = default;
 private:
-	int m_label;
+	wxChar m_label;
 	wxWindow * m_parent = nullptr;
 	
 };
