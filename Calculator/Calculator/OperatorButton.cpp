@@ -2,7 +2,7 @@
 OperatorButton::OperatorButton(wxWindow * parent, char label, wxSize size):CalculatorButton(parent,OperatorButtonID, label, size),m_parent(parent),m_label(label), m_ID(OperatorButtonID)
 {
 	//this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &OperatorButton::OnOperatorButtonClick,parent);
-	SetFont(this->GetFont().Scale(1.5));
+	SetFont(this->GetFont().Scale(2));
 	m_label = label;
 	OperatorButtonID++;
 }

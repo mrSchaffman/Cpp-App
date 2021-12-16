@@ -20,7 +20,6 @@ public:
 
 	MainFrame()= default;
 	MainFrame(const wxString&title,wxBoxSizer* topSizer = new wxBoxSizer(wxVERTICAL),wxSize size = wxSize(280,470));
-	MainFrame(std::vector<wxSizer*>&sizers, size_t Frameborder, wxOrientation orientation = wxVERTICAL);
 	void addGrids(std::vector<wxGridSizer*> grids);
 	void addSizers(std::vector<wxSizer*> sizers);
 	void addLines(std::vector<wxBoxSizer*>&lines);

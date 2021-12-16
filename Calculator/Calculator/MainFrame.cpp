@@ -15,20 +15,7 @@ MainFrame::MainFrame(const wxString & title, wxBoxSizer * topSizer, wxSize size)
 	topSizer->SetSizeHints(this);
 	SetSizer(topSizer);
 }
-MainFrame::MainFrame(std::vector<wxSizer*>& sizers, size_t frameborder, wxOrientation orientation)
-{
-	SetMaxSize(size);
 
-	frameSizers = sizers;
-	topSizer = new  wxBoxSizer(orientation);
-	for (auto& sizer : sizers)
-	{
-		topSizer->Add(sizer, 0, wxALL, frameborder);
-	}
-	topSizer->Fit(this);
-	topSizer->SetSizeHints(this);
-	SetSizer(topSizer);
-}
 //wxGridSizer* MainFrame::addGrid(std::initializer_list<wxString> list)
 //{
 //	

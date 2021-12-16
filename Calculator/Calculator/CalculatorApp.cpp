@@ -40,6 +40,7 @@ bool CalculatorApp::OnInit()
 	operatorBoxEqual->Add(new FunctionButton(frame, "MR",wxSize(50, 50)),0, wxCENTER);
 	operatorBoxEqual->Add(new FunctionButton(frame, "M+", wxSize(50, 50)),0, wxCENTER);
 	FunctionButton *eqaulBtn = new FunctionButton(frame, "=",wxSize(50,100));
+	eqaulBtn->SetFont(eqaulBtn->GetFont().Scale(2));
 	operatorBoxEqual->Add(eqaulBtn,0, wxCENTER);
 
 	sizers.push_back(line3);
