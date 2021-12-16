@@ -25,15 +25,16 @@ public:
 	void addLines(std::vector<wxBoxSizer*>&lines);
 
 	void OnFunctionButtonClick(wxCommandEvent &evt);
+	void OnOperatorButtonClick(wxCommandEvent &evt);
+	void OnNumberButtonClick(wxCommandEvent &evt);
 	~MainFrame() = default;
 
 private:
 	
 	std::vector<wxSizer*>frameSizers;
 	wxSize size = wxSize(280, 470);
-	void OnOperatorButtonClick(wxCommandEvent &evt);
-	void OnNumberButtonClick(wxCommandEvent &evt);
 
+	wxTextCtrl * display = nullptr;
 
 		DECLARE_EVENT_TABLE()
 };	

@@ -14,6 +14,7 @@ MainFrame::MainFrame(const wxString & title, wxBoxSizer * topSizer, wxSize size)
 	topSizer->Fit(this);
 	topSizer->SetSizeHints(this);
 	SetSizer(topSizer);
+	display = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(260, 50));
 }
 
 //wxGridSizer* MainFrame::addGrid(std::initializer_list<wxString> list)
@@ -52,6 +53,7 @@ void MainFrame::addGrids(std::vector<wxGridSizer*> grids)
 
 void MainFrame::addSizers(std::vector<wxSizer*> sizers)
 {
+	topSizer->Add(display, 0, wxCENTER | wxBOTTOM, 3);
 	for (auto sizer : sizers)
 	{
 		topSizer->Add(sizer, 0, wxCENTER | wxBOTTOM, 3);
@@ -72,16 +74,16 @@ void MainFrame::OnNumberButtonClick(wxCommandEvent &evt)
 {
 
 
-	//display->AppendText(wxString("${}",evt.GetId()));
+	display->AppendText(wxString("${}",evt.GetId()));
 }
 void MainFrame::OnFunctionButtonClick(wxCommandEvent & evt)
 {
-
+	display->AppendText(wxString("${}", evt.GetId()));
 }
 void MainFrame::OnOperatorButtonClick(wxCommandEvent &evt)
 {
 
 	//OperatorButton::OnOperatorButtonClick(evt);
 
-	//display->AppendText(wxString("t",evt.GetId()));
+	display->AppendText(wxString("t",evt.GetId()));
 }

@@ -11,7 +11,7 @@ bool CalculatorApp::OnInit()
 
 
 
-	std::vector<wxSizer*> sizers = { new wxBoxSizer(wxHORIZONTAL), new wxBoxSizer(wxHORIZONTAL),new wxGridSizer(3,6,1,1) };
+	std::vector<wxSizer*> sizers = { new wxBoxSizer(wxHORIZONTAL),new wxGridSizer(3,6,1,1) };
 	std::vector<wxSizer*> Line3 = {new wxBoxSizer(wxVERTICAL),new wxBoxSizer(wxVERTICAL) };
 	std::vector<wxString> labelLine1 = { "CE","DRG","2ndF","OFF","ON/C" };
 	std::vector<wxString> labelLine2 = { "EXP","y^x","rac",">Deg","ln","log","hyp","sin","cos","tan","(",")","->","a","b","x^2","F-E","x->M" };
@@ -29,7 +29,10 @@ bool CalculatorApp::OnInit()
 	line3->Add(operatorBoxEqual,0, wxALL);
 	for (auto label : labelLine3)
 	{
-		numberGrid->Add(new NumberButton(frame, label),0, wxALL);
+		NumberButton *btn = new NumberButton(frame, label);
+		numberGrid->Add(btn,0, wxALL);
+		btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnNumberButtonClick, frame);
+
 	}
 	numberGrid->Add(new FunctionButton(frame, ".", wxSize(50, 50)), 0, wxALL);
 	numberGrid->Add(new FunctionButton(frame, "+/-", wxSize(50, 50)), 0, wxALL);
@@ -49,14 +52,17 @@ bool CalculatorApp::OnInit()
 	{
 		FunctionButton * btn = new FunctionButton(frame, label,wxSize(50,40));
 		//btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &frame->OnFunctionButtonClick, frame);
-		sizers[1]->Add(btn,0, wxCENTER);
+		sizers[0]->Add(btn,0, wxCENTER);
+		btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnFunctionButtonClick, frame);
 	}
 	for (auto label : labelLine2)
 	{
-		sizers[2]->Add(new FunctionButton(frame, label),0, wxALL,1);
+		FunctionButton * btn = new FunctionButton(frame, label);
+		sizers[1]->Add(btn,0, wxALL,1);
+		btn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnFunctionButtonClick, frame);
+
 	}
-	sizers[0]->Add(new wxTextCtrl(frame, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(260, 50)));
-	
+
 	
 	frame->addSizers(sizers);	
 	frame->Show(true);
