@@ -56,11 +56,19 @@ MainFrame::MainFrame(std::vector<wxSizer*>& sizers, size_t frameborder, wxOrient
 //	return grid;
 //}
 
-void MainFrame::addGrids(std::initializer_list<wxGridSizer*> grids)
+void MainFrame::addGrids(std::vector<wxGridSizer*> grids)
 {
 	for (auto& grid : grids)
 	{
 		topSizer->Add(grid, 0, wxALL);
+	}
+}
+
+void MainFrame::addSizers(std::vector<wxSizer*> sizers)
+{
+	for (auto& sizer : sizers)
+	{
+		topSizer->Add(sizer, 0, wxCENTER | wxBOTTOM, 3);
 	}
 }
 
