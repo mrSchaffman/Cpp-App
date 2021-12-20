@@ -8,10 +8,10 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_BUTTON(wxID_SAVE,MainFrame::OnSaveBtnClick)
 END_EVENT_TABLE()
 
-MainFrame::MainFrame(wxString title, wxBoxSizer * sizer, size_t numOfROws):wxFrame(nullptr,wxID_ANY,title,wxPoint(50,50),wxSize(600,700))
+MainFrame::MainFrame(wxString title, wxBoxSizer * sizer, size_t numOfROws):wxFrame(nullptr,wxID_ANY,title,wxPoint(50,50),wxSize(600,610))
 {
-	this->SetMaxSize(wxSize(600, 700));
-	//this->SetMinSize(wxSize(600, 700));
+	this->SetMaxSize(wxSize(600, 600));
+	this->SetMinSize(wxSize(600, 600));
 	m_topSizer = sizer;
 	m_sizers.reserve(numOfROws);
 	m_currentSizer = std::begin(m_sizers);
@@ -26,7 +26,7 @@ void MainFrame::addSizers(std::vector<wxSizer*>& sizers)
 {
 	for (auto& sizer : sizers)
 	{
-		m_topSizer->Add(sizer, 0, wxEXPAND |wxTOP|wxLEFT, 3);
+		m_topSizer->Add(sizer, 1, wxEXPAND |wxTOP|wxLEFT, 3);
 	}
 }
 
