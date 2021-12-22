@@ -1,11 +1,25 @@
 #pragma once
 #include"wx/wx.h"
+#include"DVDListCtrl.h"
+enum {
+	BTN_CLOSE = wxID_CLOSE,
+	BTN_CANCEL = wxID_CANCEL
+};
 
+enum {
+	LIST_LIST_VIEW = wxID_VIEW_LIST,
+	LIST_REPORT_VIEW,
+	LIST_GOTO,
+	LIST_FOCUS_LAST,
+	LIST_SET_FG_COL,
+	LIST_SET_BG_COL,
+	LIST_QUIT
+};
 class MainFrame: public wxFrame
 {
 public:
 	MainFrame() = default;
-	~MainFrame() = default;
+	virtual~MainFrame() = default;
 	//prevent assigment and pass-by-value
 	MainFrame(const MainFrame& src) = delete;
 	MainFrame& operator=(const MainFrame& src) = delete;
@@ -15,16 +29,28 @@ public:
 	MainFrame& operator=(MainFrame&& src) = default;
 
 	//Client can give a hint as to the number of expected sizer for increase efficiency
-	MainFrame(wxString title,wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL),size_t numOfROws = 2);
+	MainFrame(const wxString& title,wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL),size_t numOfROws = 2);
 
 	void addSizers(std::vector<wxSizer*>& sizers);
-
-private:
 	
+	wxPanel * m_panel = nullptr;
 	wxBoxSizer * m_topSizer = nullptr;
+	DVDListCtrl * m_dvdListCtrl = nullptr;
+	wxTextCtrl* m_logWindow = nullptr;
+private:
+	// number of items to initialize list
+	size_t m_numOfItems = 15;
+	wxLog * m_log = nullptr;
+
+	
 	std::vector<wxSizer*> m_sizers;
 	typename std::vector<wxSizer*>::iterator m_currentSizer;
 
+	void creatFirstSizer(wxBoxSizer*& sizer);
+	void creatSecondSizer(wxPanel *& panel, wxGridSizer*& sizer);
+	void creatThirdSizer(wxPanel *& panel, wxBoxSizer*& sizer);
+	void creatLastSizer(wxPanel *& panel,wxBoxSizer*& sizer);
+	void InitWithListItems();
 	DECLARE_EVENT_TABLE();
 
 	void OnBackwardBtnClick(wxCommandEvent & evt);
