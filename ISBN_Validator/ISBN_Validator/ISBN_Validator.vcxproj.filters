@@ -31,9 +31,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ISBN Validator.pdf">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include=".gitignore" />
   </ItemGroup>
 </Project>
