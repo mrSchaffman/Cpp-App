@@ -39,7 +39,7 @@ public:
 	wxTextCtrl* m_logWindow = nullptr;
 private:
 	// number of items to initialize list
-	size_t m_numOfItems = 15;
+	size_t m_numOfItems = 2;
 	wxLog * m_log = nullptr;
 
 	
@@ -50,6 +50,9 @@ private:
 	void creatSecondSizer(wxPanel *& panel, wxGridSizer*& sizer);
 	void creatThirdSizer(wxPanel *& panel, wxBoxSizer*& sizer);
 	void creatLastSizer(wxPanel *& panel,wxBoxSizer*& sizer);
+
+	// recreate the list control with the new flags
+	void RecreateList(long flags, bool withText = true);
 	void InitWithListItems();
 	DECLARE_EVENT_TABLE();
 

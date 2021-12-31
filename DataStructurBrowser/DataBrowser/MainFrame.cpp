@@ -11,8 +11,7 @@ END_EVENT_TABLE()
 
 MainFrame::MainFrame(const wxString& title, wxBoxSizer * sizer, size_t numOfROws):wxFrame(nullptr,wxID_ANY,title,wxPoint(650,50),wxSize(711,810))
 {
-	//give the frame and icon
-
+	
 	SetMinSize(wxSize(711, 810));
 	SetMaxSize(wxSize(711, 810));
 
@@ -79,6 +78,7 @@ MainFrame::MainFrame(const wxString& title, wxBoxSizer * sizer, size_t numOfROws
 	m_topSizer->Add(sizer5, 0, wxEXPAND | wxALL, 3);
 	m_log = wxLog::SetActiveTarget(new wxLogTextCtrl( m_logWindow));
 
+	RecreateList(wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	//SetSizer(m_topSizer);
 	m_panel->SetSizer(m_topSizer);
@@ -137,35 +137,42 @@ void MainFrame::creatSecondSizer(wxPanel *& panel, wxGridSizer *& sizer)
 void MainFrame::creatThirdSizer(wxPanel *& panel, wxBoxSizer *& sizer)
 {
 	wxBoxSizer * sizer3_1 = new wxBoxSizer(wxVERTICAL);
-	wxGridSizer * sizer3_1_1 = new wxGridSizer(2,2,1.5,1.5);
-	
-	wxStaticText * root = new wxStaticText(panel, wxID_ANY, wxString("Root:"), wxDefaultPosition,wxSize(99,30));
-	wxStaticText * name = new wxStaticText(panel, wxID_ANY, wxString("Name:"), wxDefaultPosition,wxSize(99,30));
-	wxStaticText * type = new wxStaticText(panel, wxID_ANY, wxString("Type"), wxDefaultPosition,wxSize(99,30));
-	wxStaticText * total = new wxStaticText(panel, wxID_ANY, wxString("Total"), wxDefaultPosition,wxSize(99,30));
-	sizer3_1_1->Add(root, 0, wxEXPAND);
-	sizer3_1_1->Add(name, 0, wxEXPAND);
-	sizer3_1_1->Add(type, 0, wxEXPAND);
-	sizer3_1_1->Add(total, 0, wxEXPAND);
-
-	wxStaticText * txtMsgLog = new wxStaticText(panel, wxID_ANY, wxString("Message Log"), wxDefaultPosition,wxSize(300,30));
-	m_dvdListCtrl = new DVDListCtrl(panel, LIST_CTRL, wxDefaultPosition, wxSize(580, 400), wxLC_LIST);	
-	m_logWindow = new wxTextCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(580, 100), wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
-
-
-	sizer3_1->Add(sizer3_1_1, 0, wxEXPAND | wxALL, 1.5);
-	sizer3_1->Add(m_dvdListCtrl, 0, wxEXPAND | wxALL, 1.5);
-	sizer3_1->Add(txtMsgLog, 0, wxEXPAND|wxALL,1.5);
-	sizer3_1->Add(m_logWindow, 0, wxEXPAND | wxALL, 1.5);
-
+	wxGridSizer * sizer3_1_1 = new wxGridSizer(2, 2, 1.5, 1.5);
 	wxBoxSizer * sizer3_2 = new wxBoxSizer(wxVERTICAL);
-	sizer3_2->AddSpacer(10);
-	sizer3_2->Add(new wxStaticText(panel, wxID_ANY, wxString("Options"), wxDefaultPosition, wxSize(99, 50)),0, wxCENTER);
-	for (size_t i = 0; i < 13; i++)
+
 	{
-		wxButton * btn = new wxButton(panel, 2000 + i*2, std::to_string(i), wxDefaultPosition, wxSize(99, 30));
-		sizer3_2->Add(btn, 0, wxEXPAND);
+		
+		wxStaticText * root = new wxStaticText(panel, wxID_ANY, wxString("Root:"), wxDefaultPosition, wxSize(99, 30));
+		wxStaticText * name = new wxStaticText(panel, wxID_ANY, wxString("Name:"), wxDefaultPosition, wxSize(99, 30));
+		wxStaticText * type = new wxStaticText(panel, wxID_ANY, wxString("Type"), wxDefaultPosition, wxSize(99, 30));
+		wxStaticText * total = new wxStaticText(panel, wxID_ANY, wxString("Total"), wxDefaultPosition, wxSize(99, 30));
+		sizer3_1_1->Add(root, 0, wxEXPAND);
+		sizer3_1_1->Add(name, 0, wxEXPAND);
+		sizer3_1_1->Add(type, 0, wxEXPAND);
+		sizer3_1_1->Add(total, 0, wxEXPAND);
+
+
+		wxStaticText * txtMsgLog = new wxStaticText(panel, wxID_ANY, wxString("Message Log"), wxDefaultPosition, wxSize(300, 30));
+		m_dvdListCtrl = new DVDListCtrl(panel, LIST_CTRL, wxDefaultPosition, wxSize(580, 400), wxLC_REPORT | wxLC_SINGLE_SEL);
+		m_logWindow = new wxTextCtrl(panel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(580, 100), wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+
+
+		sizer3_1->Add(sizer3_1_1, 0, wxEXPAND | wxALL, 1.5);
+		sizer3_1->Add(m_dvdListCtrl, 0, wxEXPAND | wxALL, 1.5);
+		sizer3_1->Add(txtMsgLog, 0, wxEXPAND | wxALL, 1.5);
+		sizer3_1->Add(m_logWindow, 0, wxEXPAND | wxALL, 1.5);
+
+		
+		sizer3_2->AddSpacer(10);
+		sizer3_2->Add(new wxStaticText(panel, wxID_ANY, wxString("Options"), wxDefaultPosition, wxSize(99, 50)), 0, wxCENTER);
+		for (size_t i = 0; i < 12; i++)
+		{
+			wxButton * btn = new wxButton(panel, 2000 + i * 2, std::to_string(i), wxDefaultPosition, wxSize(99, 30));
+			sizer3_2->Add(btn, 0, wxEXPAND | wxALL, 1.5);
+		}
+
 	}
+	
 
 	sizer->Add(sizer3_1, 0, wxEXPAND);
 	sizer->AddSpacer(3);
@@ -184,11 +191,16 @@ void MainFrame::creatLastSizer(wxPanel *& panel, wxBoxSizer *& sizer)
 	sizer->Add(new wxButton(panel, BTN_CANCEL, "End", wxDefaultPosition, wxSize(80, 30)), 0);
 }
 
+void MainFrame::RecreateList(long flags, bool withText)
+{
+	InitWithListItems();
+}
+
 void MainFrame::InitWithListItems()
 {
 	for (size_t i = 0; i < m_numOfItems; i++)
 	{
-		m_dvdListCtrl->InsertItem(i, wxString::Format("o", i));
+		//m_dvdListCtrl->InsertItem(i, wxString::Format("o", i));
 	}
 }
 
