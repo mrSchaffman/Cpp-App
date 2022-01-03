@@ -1,5 +1,7 @@
 #include "MainFrame.h"
 #include"wx/statline.h"
+#include<numeric>
+#include<algorithm>
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_BUTTON(BTN_CLEAR, MainFrame::OnClearButtonClick)
 	EVT_BUTTON(BTN_VALIDATE, MainFrame::OnValidateButtonClick)
@@ -22,7 +24,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 	wxBoxSizer* line4 = new wxBoxSizer(wxHORIZONTAL);
 	wxBoxSizer* line5 = new wxBoxSizer(wxHORIZONTAL);
 
-	m_isbn = new wxString();
+	//m_isbn = new wxString();
 
 	//Line 1
 	{
@@ -35,7 +37,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 	//Line 2
 	{
 		{
-			m_t1 = new NumberTextCtrl(this, T1, wxEmptyString,wxDefaultPosition,wxSize(75,40),wxTE_CENTER);
+			m_t1 = new NumberTextCtrl(this, T1, wxEmptyString,wxDefaultPosition,wxSize(75,40),wxTE_CENTER| wxTE_PROCESS_ENTER);
 			m_t1->SetFont(m_t1->GetFont().Scale(2));
 			m_t1->SetHint("0");
 			m_t1->SetMaxLength(1);
@@ -46,7 +48,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		}
 
 		{
-			m_t2 = new NumberTextCtrl(this, T2, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
+			m_t2 = new NumberTextCtrl(this, T2, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER | wxTE_PROCESS_ENTER);
 			m_t2->SetFont(m_t2->GetFont().Scale(2));
 			m_t2->SetHint("0000");
 			m_t2->SetMaxLength(4);
@@ -55,7 +57,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		}
 
 		{
-			m_t3 = new NumberTextCtrl(this, T3, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
+			m_t3 = new NumberTextCtrl(this, T3, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER | wxTE_PROCESS_ENTER);
 			m_t3->SetFont(m_t3->GetFont().Scale(2));
 			m_t3->SetHint("0000");
 			m_t3->SetMaxLength(4);
@@ -64,7 +66,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		}
 
 		{
-			m_t4 = new NumberTextCtrl(this, T4, wxEmptyString, wxDefaultPosition, wxSize(75, 40), wxTE_CENTER);
+			m_t4 = new NumberTextCtrl(this, T4, wxEmptyString, wxDefaultPosition, wxSize(75, 40), wxTE_CENTER | wxTE_PROCESS_ENTER);
 			m_t4->SetFont(m_t4->GetFont().Scale(2));
 			m_t4->SetMaxLength(1);
 			m_t4->SetHint("0");
@@ -112,8 +114,19 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 void MainFrame::OnValidateButtonClick(wxCommandEvent & evt)
 {
-	if ((m_t1->GetValue().size() != 1))
-		m_t1->SetStyle(1,2,wxTextAttr(wxNullColour,*wxRED));
+
+	NumberTextCtrl *txt = (NumberTextCtrl*)evt.GetClientObject();
+
+	m_isbn += (m_t1->GetValue());
+	m_isbn += (m_t2->GetValue());
+	m_isbn += (m_t3->GetValue());
+	m_isbn += (m_t4->GetValue());
+
+	if (isISBN_10_valid(m_isbn))
+		wxLogMessage("isbn valide!");
+	else
+		wxLogMessage("isbn not valide!");
+	
 		
 }
 
@@ -126,4 +139,21 @@ void MainFrame::OnClearButtonClick(wxCommandEvent & evt)
 
 	/*m_isbn->clear();
 	m_ISBN->clear();*/
+}
+bool MainFrame::isISBN_10_valid(const std::string& isbn)
+{
+	bool valid = false;
+	auto checksum = count_if(cbegin(isbn), cend(isbn), isdigit);
+	if (isbn.size() == 10 && checksum == 10)
+	{
+		int w = 10;
+		auto sum = accumulate(cbegin(isbn), cend(isbn), 0,
+			[&w](const int total, const char c) {
+				return total + (w--) * (c - '0');
+			});
+
+		valid = !(sum % 11);
+	}
+
+	return valid;
 }

@@ -2,6 +2,7 @@
 #include"wx/wx.h"
 #include"NumberTextCtrl.h"
 #include<memory>
+#include<string>
 enum
 {
 	BTN_CLEAR = wxID_CLEAR,
@@ -27,7 +28,7 @@ private:
 
 	std::unique_ptr<wxString> m_ISBN;
 
-	wxString *m_isbn = nullptr;
+	std::string m_isbn;
 
 	NumberTextCtrl* m_t1 = nullptr;
 	NumberTextCtrl* m_t2 = nullptr;
@@ -37,6 +38,7 @@ private:
 	wxTextCtrl* m_evtLog = nullptr;
 	wxLog *m_LogOld = nullptr;
 
+	bool isISBN_10_valid(const std::string& isbn);
 	DECLARE_EVENT_TABLE();
 };
 
