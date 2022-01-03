@@ -35,8 +35,9 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 	//Line 2
 	{
 		{
-			m_t1 = new wxTextCtrl(this, T1, wxEmptyString,wxDefaultPosition,wxSize(75,40),wxTE_CENTER);
+			m_t1 = new NumberTextCtrl(this, T1, wxEmptyString,wxDefaultPosition,wxSize(75,40),wxTE_CENTER);
 			m_t1->SetFont(m_t1->GetFont().Scale(2));
+			m_t1->SetHint("0");
 			m_t1->SetMaxLength(1);
 			m_t1->SetDefaultStyle(wxTextAttr(*wxBLUE));
 			line2->Add(m_t1, 1,wxEXPAND);
@@ -45,25 +46,28 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		}
 
 		{
-			m_t2 = new wxTextCtrl(this, T2, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
+			m_t2 = new NumberTextCtrl(this, T2, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
 			m_t2->SetFont(m_t2->GetFont().Scale(2));
+			m_t2->SetHint("0000");
 			m_t2->SetMaxLength(4);
 			line2->Add(m_t2, 1, wxEXPAND);
 			line2->Add(new wxStaticLine(this, wxID_STATIC, wxDefaultPosition, wxSize(15, -1)), 0, wxCENTER);
 		}
 
 		{
-			m_t3 = new wxTextCtrl(this, T3, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
+			m_t3 = new NumberTextCtrl(this, T3, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
 			m_t3->SetFont(m_t3->GetFont().Scale(2));
+			m_t3->SetHint("0000");
 			m_t3->SetMaxLength(4);
 			line2->Add(m_t3, 1, wxEXPAND);
 			line2->Add(new wxStaticLine(this, wxID_STATIC, wxDefaultPosition, wxSize(15, -1)), 0, wxCENTER);
 		}
 
 		{
-			m_t4 = new wxTextCtrl(this, T4, wxEmptyString, wxDefaultPosition, wxSize(75, 40), wxTE_CENTER);
+			m_t4 = new NumberTextCtrl(this, T4, wxEmptyString, wxDefaultPosition, wxSize(75, 40), wxTE_CENTER);
 			m_t4->SetFont(m_t4->GetFont().Scale(2));
 			m_t4->SetMaxLength(1);
+			m_t4->SetHint("0");
 			line2->Add(m_t4, 1, wxEXPAND);
 		}
 
@@ -91,7 +95,8 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 	//line 5
 	{
-		m_evtLog = new wxTextCtrl(this, EVT_LOG, wxEmptyString, wxDefaultPosition, wxSize(620, 220),wxTE_MULTILINE|wxTE_READONLY);
+		m_evtLog = new wxTextCtrl(this, EVT_LOG, "This is the log window.\n", wxDefaultPosition, wxSize(620, 220),wxTE_MULTILINE|wxTE_READONLY);
+		m_LogOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_evtLog));
 		line5->Add(m_evtLog, 1, wxEXPAND);
 	}
 

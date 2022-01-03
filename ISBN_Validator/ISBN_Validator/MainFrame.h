@@ -1,5 +1,6 @@
 #pragma once
 #include"wx/wx.h"
+#include"NumberTextCtrl.h"
 #include<memory>
 enum
 {
@@ -28,12 +29,13 @@ private:
 
 	wxString *m_isbn = nullptr;
 
-	wxTextCtrl* m_t1 = nullptr;
-	wxTextCtrl* m_t2 = nullptr;
-	wxTextCtrl* m_t3 = nullptr;
-	wxTextCtrl* m_t4 = nullptr;
+	NumberTextCtrl* m_t1 = nullptr;
+	NumberTextCtrl* m_t2 = nullptr;
+	NumberTextCtrl* m_t3 = nullptr;
+	NumberTextCtrl* m_t4 = nullptr;
 
 	wxTextCtrl* m_evtLog = nullptr;
+	wxLog *m_LogOld = nullptr;
 
 	DECLARE_EVENT_TABLE();
 };

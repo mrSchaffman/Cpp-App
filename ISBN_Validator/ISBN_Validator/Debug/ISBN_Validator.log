@@ -1,2 +1,5 @@
-﻿  MainFrame.cpp
+﻿  App.cpp
+  MainFrame.cpp
+  NumberTextCtrl.cpp
+  Generating Code...
   ISBN_Validator.vcxproj -> E:\Software Development\Cpp-App\ISBN_Validator\Debug\ISBN_Validator.exe
