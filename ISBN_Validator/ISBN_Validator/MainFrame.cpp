@@ -128,7 +128,7 @@ void MainFrame::OnValidateButtonClick(wxCommandEvent & evt)
 		m_t2->SetBackgroundColour(*wxGREEN);
 		m_t3->SetBackgroundColour(*wxGREEN);
 		m_t4->SetBackgroundColour(*wxGREEN);
-		wxLogMessage("isbn valide!");
+		wxLogMessage("%s is a valide isbn!",m_isbn);
 
 	}	
 	else
@@ -137,8 +137,8 @@ void MainFrame::OnValidateButtonClick(wxCommandEvent & evt)
 		m_t2->SetBackgroundColour(*wxRED);
 		m_t3->SetBackgroundColour(*wxRED);
 		m_t4->SetBackgroundColour(*wxRED);
-		wxLogMessage("isbn not valide!");
-		
+		wxLogMessage("%s is not a valide isbn!", m_isbn);
+
 	}
 		
 	
