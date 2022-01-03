@@ -24,6 +24,9 @@
     <ClInclude Include="MyTextCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MainPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -43,5 +46,11 @@
     <ClCompile Include="MyTextCtrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
   </ItemGroup>
 </Project>

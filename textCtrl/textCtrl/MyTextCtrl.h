@@ -13,5 +13,6 @@ public:
 
 private:
 	bool mHasCapture;
+	wxDECLARE_EVENT_TABLE();
 };
 
