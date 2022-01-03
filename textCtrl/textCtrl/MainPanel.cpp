@@ -1,4 +1,5 @@
 #include "MainPanel.h"
+#include"wx/clipbrd.h"
 
 MainPanel::MainPanel(wxFrame * frame, int x, int y, int w, int h) : wxPanel(frame, wxID_ANY, wxPoint(x, y), wxSize(w, h))
 {
@@ -125,3 +126,157 @@ wxTextCtrl * MainPanel::GetFocusedText() const
 	wxTextCtrl *text = win ? wxDynamicCast(win, wxTextCtrl) : nullptr;
 		return text?text:mMultiText;
 }
+#if wxUSE_CLIPBOARD
+void MainPanel::DoPasteFromClipboard()
+{
+	// On X11, we want to get the data from the primary selection instead
+	// of the normal clipboard (which isn't normal under X11 at all). This
+	// call has no effect under MSW.
+	wxTheClipboard->UsePrimarySelection();
+
+	if (!wxTheClipboard->Open())
+	{
+#if wxUSE_LOG
+		*mLog << "Error opening the clipboard.\n";
+#endif // wxUSE_LOG
+		return;
+	}
+	else
+	{
+#if wxUSE_LOG
+		*mLog << "Successfully opened the clipboard.\n";
+#endif // wxUSE_LOG
+	}
+
+	wxTextDataObject data;
+
+	if (wxTheClipboard->IsSupported(data.GetFormat()))
+	{
+#if wxUSE_LOG
+		*mLog << "Clipboard supports requested format.\n";
+#endif // wxUSE_LOG
+
+		if (wxTheClipboard->GetData(data))
+		{
+#if wxUSE_LOG
+			*mLog << "Successfully retrieved data from the clipboard.\n";
+#endif // wxUSE_LOG
+			GetFocusedText()->AppendText(data.GetText());
+		}
+		else
+		{
+#if wxUSE_LOG
+			*mLog << "Error getting data from the clipboard.\n";
+#endif // wxUSE_LOG
+		}
+	}
+	else
+	{
+#if wxUSE_LOG
+		*mLog << "Clipboard doesn't support requested format.\n";
+#endif // wxUSE_LOG
+	}
+
+	wxTheClipboard->Close();
+
+#if wxUSE_LOG
+	*mLog << "Closed the clipboard.\n";
+#endif // wxUSE_LOG
+}
+
+void MainPanel::DoCopyToClipboard()
+{
+	// On X11, we want to get the data from the primary selection instead
+	// of the normal clipboard (which isn't normal under X11 at all). This
+	// call has no effect under MSW.
+	wxTheClipboard->UsePrimarySelection();
+
+	wxString text(GetFocusedText()->GetStringSelection());
+
+	if (text.IsEmpty())
+	{
+#if wxUSE_LOG
+		*mLog << "No text to copy.\n";
+#endif // wxUSE_LOG
+
+		return;
+	}
+
+	if (!wxTheClipboard->Open())
+	{
+#if wxUSE_LOG
+		*mLog << "Error opening the clipboard.\n";
+#endif // wxUSE_LOG
+
+		return;
+	}
+	else
+	{
+#if wxUSE_LOG
+		*mLog << "Successfully opened the clipboard.\n";
+#endif // wxUSE_LOG
+	}
+
+	wxTextDataObject *data = new wxTextDataObject(text);
+
+	if (!wxTheClipboard->SetData(data))
+	{
+#if wxUSE_LOG
+		*mLog << "Error while copying to the clipboard.\n";
+#endif // wxUSE_LOG
+	}
+	else
+	{
+#if wxUSE_LOG
+		*mLog << "Successfully copied data to the clipboard.\n";
+#endif // wxUSE_LOG
+	}
+
+	wxTheClipboard->Close();
+
+#if wxUSE_LOG
+	*mLog << "Closed the clipboard.\n";
+#endif // wxUSE_LOG
+}
+
+#endif // wxUSE_CLIPBOARD
+
+void MainPanel::DoMoveToEndOfText()
+{
+	mMultiText->SetInsertionPointEnd();
+	mMultiText->SetFocus();
+}
+
+void MainPanel::DoGetWindowCoordinates()
+{
+	wxTextCtrl * const text = GetFocusedText();
+
+	const wxPoint pt0 = text->PositionToCoords(0);
+	const wxPoint ptCur = text->PositionToCoords(text->GetInsertionPoint());
+	*mLog << "Current position coordinates: "
+		"(" << ptCur.x << ", " << ptCur.y << "), "
+		"first position coordinates: "
+		"(" << pt0.x << ", " << pt0.y << ")\n";
+}
+
+void MainPanel::DoMoveToEndOfEntry()
+{
+	mText->SetInsertionPointEnd();
+	mText->SetFocus();
+}
+
+void MainPanel::DoRemoveText()
+{
+	GetFocusedText()->Remove(0, 10);
+}
+
+void MainPanel::DoReplaceText()
+{
+	GetFocusedText()->Replace(3, 8, "ABC");
+}
+
+void MainPanel::DoSelectText()
+{
+	GetFocusedText()->SetSelection(3, 8);
+}
+

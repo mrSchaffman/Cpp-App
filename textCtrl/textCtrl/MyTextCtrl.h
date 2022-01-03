@@ -11,6 +11,13 @@ public:
 	void OnTextURL(wxTextUrlEvent& event);
 	void OnTextMaxLen(wxCommandEvent& event);
 
+	static bool msLogKey;
+	static bool msLogChar;
+	static bool msLogMouse;
+	static bool msLogText;
+	static bool msLogFocus;
+	static bool msLogClip;
+
 private:
 	bool mHasCapture;
 	wxDECLARE_EVENT_TABLE();

@@ -1,2 +1,6 @@
-﻿  MainPanel.cpp
+﻿  App.cpp
+e:\software development\cpp-app\textctrl\textctrl\app.cpp(8): warning C4129: 'C': unrecognized character escape sequence
+  MainFrame.cpp
+  MainPanel.cpp
+  Generating Code...
   textCtrl.vcxproj -> E:\Software Development\Cpp-App\textCtrl\Debug\textCtrl.exe
