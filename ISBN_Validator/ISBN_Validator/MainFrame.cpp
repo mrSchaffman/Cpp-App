@@ -37,6 +37,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		{
 			m_t1 = new wxTextCtrl(this, T1, wxEmptyString,wxDefaultPosition,wxSize(75,40),wxTE_CENTER);
 			m_t1->SetFont(m_t1->GetFont().Scale(2));
+			m_t1->SetMaxLength(1);
 			m_t1->SetDefaultStyle(wxTextAttr(*wxBLUE));
 			line2->Add(m_t1, 1,wxEXPAND);
 			line2->Add(new wxStaticLine(this, wxID_STATIC, wxDefaultPosition, wxSize(15, -1)), 0, wxCENTER);
@@ -46,6 +47,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		{
 			m_t2 = new wxTextCtrl(this, T2, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
 			m_t2->SetFont(m_t2->GetFont().Scale(2));
+			m_t2->SetMaxLength(4);
 			line2->Add(m_t2, 1, wxEXPAND);
 			line2->Add(new wxStaticLine(this, wxID_STATIC, wxDefaultPosition, wxSize(15, -1)), 0, wxCENTER);
 		}
@@ -53,6 +55,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		{
 			m_t3 = new wxTextCtrl(this, T3, wxEmptyString, wxDefaultPosition, wxSize(192, 40), wxTE_CENTER);
 			m_t3->SetFont(m_t3->GetFont().Scale(2));
+			m_t3->SetMaxLength(4);
 			line2->Add(m_t3, 1, wxEXPAND);
 			line2->Add(new wxStaticLine(this, wxID_STATIC, wxDefaultPosition, wxSize(15, -1)), 0, wxCENTER);
 		}
@@ -60,6 +63,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		{
 			m_t4 = new wxTextCtrl(this, T4, wxEmptyString, wxDefaultPosition, wxSize(75, 40), wxTE_CENTER);
 			m_t4->SetFont(m_t4->GetFont().Scale(2));
+			m_t4->SetMaxLength(1);
 			line2->Add(m_t4, 1, wxEXPAND);
 		}
 
