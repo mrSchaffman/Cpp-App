@@ -1,5 +1,6 @@
 #pragma once
 #include"wx/wx.h"
+#include<memory>
 enum
 {
 	BTN_CLEAR = wxID_CLEAR,
@@ -21,7 +22,18 @@ public:
 
 private:
 	wxWindow* parent = nullptr;
-	wxBoxSizer * topSizer = nullptr;
+	wxBoxSizer * m_topSizer = nullptr;
+
+	std::unique_ptr<wxString> m_ISBN;
+
+	wxString *m_isbn = nullptr;
+
+	wxTextCtrl* m_t1 = nullptr;
+	wxTextCtrl* m_t2 = nullptr;
+	wxTextCtrl* m_t3 = nullptr;
+	wxTextCtrl* m_t4 = nullptr;
+
+	wxTextCtrl* m_evtLog = nullptr;
 
 	DECLARE_EVENT_TABLE();
 };
