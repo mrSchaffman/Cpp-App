@@ -115,7 +115,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 void MainFrame::OnValidateButtonClick(wxCommandEvent & evt)
 {
 
-	NumberTextCtrl *txt = (NumberTextCtrl*)evt.GetClientObject();
+	//NumberTextCtrl *txt = (NumberTextCtrl*)evt.GetClientObject();
 
 	m_isbn += (m_t1->GetValue());
 	m_isbn += (m_t2->GetValue());
@@ -123,9 +123,24 @@ void MainFrame::OnValidateButtonClick(wxCommandEvent & evt)
 	m_isbn += (m_t4->GetValue());
 
 	if (isISBN_10_valid(m_isbn))
+	{
+		m_t1->SetBackgroundColour(*wxGREEN);
+		m_t2->SetBackgroundColour(*wxGREEN);
+		m_t3->SetBackgroundColour(*wxGREEN);
+		m_t4->SetBackgroundColour(*wxGREEN);
 		wxLogMessage("isbn valide!");
+
+	}	
 	else
+	{
+		m_t1->SetBackgroundColour(*wxRED);
+		m_t2->SetBackgroundColour(*wxRED);
+		m_t3->SetBackgroundColour(*wxRED);
+		m_t4->SetBackgroundColour(*wxRED);
 		wxLogMessage("isbn not valide!");
+		
+	}
+		
 	
 		
 }
@@ -137,6 +152,10 @@ void MainFrame::OnClearButtonClick(wxCommandEvent & evt)
 	m_t3->Clear();
 	m_t4->Clear();
 
+	m_t1->SetBackgroundColour(*wxWHITE);
+	m_t2->SetBackgroundColour(*wxWHITE);
+	m_t3->SetBackgroundColour(*wxWHITE);
+	m_t4->SetBackgroundColour(*wxWHITE);
 	/*m_isbn->clear();
 	m_ISBN->clear();*/
 }
