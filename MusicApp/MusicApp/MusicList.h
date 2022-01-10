@@ -1,4 +1,5 @@
 #pragma once
+#include"wx/wx.h"
 #include "wx/listctrl.h"
 
 enum {
@@ -49,6 +50,8 @@ private:
 	virtual wxString OnGetItemText(long item, long column) const override;
 
 	wxWindow * m_parent = nullptr;
+
+	void logEvent(wxListEvent&event, const wxString & string);
 
 	wxDECLARE_EVENT_TABLE();
 

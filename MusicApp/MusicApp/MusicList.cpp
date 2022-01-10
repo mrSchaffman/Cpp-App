@@ -83,6 +83,8 @@ void MusicList::OnDeleteAllItems(wxListEvent & event)
 
 void MusicList::OnSelected(wxListEvent & event)
 {
+	logEvent(event, "Onselected");
+	//wxLogMessage("item selected");
 }
 
 void MusicList::OnDeselected(wxListEvent & event)
@@ -232,4 +234,12 @@ int MusicList::OnGetItemImage(long item) const
 wxString MusicList::OnGetItemText(long item, long column) const
 {
 	return wxString();
+}
+
+void MusicList::logEvent(wxListEvent & event, const wxString & string)
+{
+	wxLogMessage("%d Music %ld: %s",string, event.GetIndex(), event.GetText());
+	//wxLogMessage("Item %ld: %s (item text = %s, data = %ld)",
+	//	event.GetIndex(), eventName,
+	//	event.GetText(), static_cast<long>(event.GetData()));
 }
