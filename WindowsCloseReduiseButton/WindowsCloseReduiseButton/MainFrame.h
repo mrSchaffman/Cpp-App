@@ -66,8 +66,8 @@ wxBitmap ExtractAtlas(const wxBitmap& atlas, int total, int loc)
 	int individualHeight = bgheight / total;
 	int bgWidth = atlas.GetWidth();
 	int atlasOffset = individualHeight * loc;
-	wxRect bgRect = wxRect(wxPoint(0, atlasOffset),
-		wxSize(bgWidth, individualHeight));
+	wxRect bgRect = wxRect(wxPoint(0, atlasOffset),wxSize(bgWidth, individualHeight));
+
 	return atlas.GetSubBitmap(bgRect);
 }
 
@@ -129,7 +129,7 @@ public:
 	~MainFrame() = default;
 
 private:
-	DECLARE_EVENT_TABLE();
+	wxDECLARE_EVENT_TABLE();
 
 
 	void OnPaintImagePanel(wxPaintEvent&);

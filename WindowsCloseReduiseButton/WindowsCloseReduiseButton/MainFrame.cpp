@@ -1,7 +1,9 @@
 #include "MainFrame.h"
+wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 
-MainFrame::MainFrame() :wxFrame(NULL, wxID_ANY, "Windows Control Button Demo", wxDefaultPosition,
-	wxSize(400, 300))
+wxEND_EVENT_TABLE()
+
+MainFrame::MainFrame() :wxFrame(NULL, wxID_ANY, "Windows Control Button Demo", wxDefaultPosition,wxSize(400, 300))
 {
 	// Start all the image handlers.  Only the PNG handler is actually needed.
 	::wxInitAllImageHandlers();

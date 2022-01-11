@@ -1,5 +1,4 @@
-﻿  MainFrame.cpp
-WindowsApp.obj : error LNK2005: "class wxBitmap __cdecl ExtractAtlas(class wxBitmap const &,int,int)" (?ExtractAtlas@@YA?AVwxBitmap@@ABV1@HH@Z) already defined in MainFrame.obj
+﻿WindowsApp.obj : error LNK2005: "class wxBitmap __cdecl ExtractAtlas(class wxBitmap const &,int,int)" (?ExtractAtlas@@YA?AVwxBitmap@@ABV1@HH@Z) already defined in MainFrame.obj
 WindowsApp.obj : error LNK2005: "void __cdecl MarginsToRect(struct _MARGINS const &,class wxRect &)" (?MarginsToRect@@YAXABU_MARGINS@@AAVwxRect@@@Z) already defined in MainFrame.obj
 WindowsApp.obj : error LNK2005: "void __cdecl RectTowxRect(struct tagRECT const &,class wxRect &)" (?RectTowxRect@@YAXABUtagRECT@@AAVwxRect@@@Z) already defined in MainFrame.obj
 WindowsApp.obj : error LNK2005: "void __cdecl TileBitmap(class wxBitmap const &,class wxDC &,class wxRect const &)" (?TileBitmap@@YAXABVwxBitmap@@AAVwxDC@@ABVwxRect@@@Z) already defined in MainFrame.obj
