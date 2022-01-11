@@ -3,21 +3,29 @@
 #include"MusicList.h"
 #include"MainPanel.h"
 enum {
-	NEW = 2,
-	OPEN,
-	SAVE,
-	SAVE_AS,
-	SETTINGS,
-	EXIT,
+	MENU_NEW = 2,
+	MENU_OPEN,
+	MENU_SAVE,
+	MENU_SAVE_AS,
+	MENU_SETTINGS,
+	MENU_EXIT,
 
-	ABOUT = 100
+	MENU_ABOUT = 1000
 };
 class MainFrame : public wxFrame
 {
 public:
 
-	MainFrame(const wxString title);
+	MainFrame(const wxString& title);
 		~MainFrame() = default;
+
+		void OnAbout(wxCommandEvent &event);
+		void OnExit(wxCommandEvent &event);
+		void OnSave(wxCommandEvent &event);
+		void OnSaveAs(wxCommandEvent &event);
+		void OnSettings(wxCommandEvent &event);
+		void OnNew(wxCommandEvent &event);
+		void OnOpen(wxCommandEvent &event);
 
 private:
 	MainPanel* m_panel = nullptr;
