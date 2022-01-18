@@ -1,8 +1,0 @@
-﻿WindowsApp.obj : error LNK2005: "class wxBitmap __cdecl ExtractAtlas(class wxBitmap const &,int,int)" (?ExtractAtlas@@YA?AVwxBitmap@@ABV1@HH@Z) already defined in MainFrame.obj
-WindowsApp.obj : error LNK2005: "void __cdecl MarginsToRect(struct _MARGINS const &,class wxRect &)" (?MarginsToRect@@YAXABU_MARGINS@@AAVwxRect@@@Z) already defined in MainFrame.obj
-WindowsApp.obj : error LNK2005: "void __cdecl RectTowxRect(struct tagRECT const &,class wxRect &)" (?RectTowxRect@@YAXABUtagRECT@@AAVwxRect@@@Z) already defined in MainFrame.obj
-WindowsApp.obj : error LNK2005: "void __cdecl TileBitmap(class wxBitmap const &,class wxDC &,class wxRect const &)" (?TileBitmap@@YAXABVwxBitmap@@AAVwxDC@@ABVwxRect@@@Z) already defined in MainFrame.obj
-WindowsApp.obj : error LNK2005: "void __cdecl TileTo(class wxBitmap const &,class wxRect const &,class wxBitmap &,int,int)" (?TileTo@@YAXABVwxBitmap@@ABVwxRect@@AAV1@HH@Z) already defined in MainFrame.obj
-MainFrame.obj : error LNK2001: unresolved external symbol "protected: virtual struct wxEventTable const * __thiscall MainFrame::GetEventTable(void)const " (?GetEventTable@MainFrame@@MBEPBUwxEventTable@@XZ)
-MainFrame.obj : error LNK2001: unresolved external symbol "protected: virtual class wxEventHashTable & __thiscall MainFrame::GetEventHashTable(void)const " (?GetEventHashTable@MainFrame@@MBEAAVwxEventHashTable@@XZ)
-E:\Software Development\Cpp-App\WindowsCloseReduiseButton\Debug\WindowsCloseReduiseButton.exe : fatal error LNK1120: 2 unresolved externals
