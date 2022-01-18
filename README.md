@@ -5,7 +5,7 @@ I will probably update this Readme from time to time.
 
 ## Getting Started
 
-I'm using visual studion 2017 for those project and C++17
+I'm using visual studio on 2017 for those project and C++17
 
 ### Prerequisites
 
@@ -21,6 +21,8 @@ To be able to run or understand the source code of those projects, you need to i
 ```
 $ wxWidgets from https://docs.wxwidgets.org/
 $ step - 2
+$ step - 3
+$ step - 4
 ```
 
 ## Deployment
