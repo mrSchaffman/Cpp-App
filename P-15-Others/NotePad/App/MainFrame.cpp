@@ -18,7 +18,7 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 	SetStatusWidths(5, m_widths);
 
 	SetStatusBarPane(0);
-	SetStatusText("Ln, Col", 1);
+	SetStatusText("Ln--, Col--", 1);
 	SetStatusText(wxT("100%"), 2);
 	SetStatusText(wxT("Win...(CRLF)"), 3);
 	SetStatusText(wxT("UTF-8"), 4);

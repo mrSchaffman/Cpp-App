@@ -86,7 +86,7 @@ void MenuBar::OnNew(wxCommandEvent & evnt)
 void MenuBar::OnAbout(wxCommandEvent & evnt)
 {
 	wxString msg;
-	msg.Printf("This is my Own implementation of the existing Notepad \n Copyright(C) Barth. Feudong"
+	msg.Printf("This is my Own implementation of the existing Notepad \n Copyright(C) Barth. Feudong \t 2022"
 	);
 
 	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
