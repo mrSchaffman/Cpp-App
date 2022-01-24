@@ -1,15 +1,4 @@
-/**
- * @file source.cpp
- * @author Barth.Feudong (https://github.com/mrSchaffman)
- * @brief 
- * @version 0.1
- * @date 2022-01-18
- * This is free software; see the source for copying conditions.  There is NO
- * warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- *
- * @copyright Barth.Feudong (c) 2021
- *
- */
+
 #pragma once
 #include"wx/wx.h"
 #include"MainFrame.h"

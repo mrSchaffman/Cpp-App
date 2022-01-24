@@ -1,6 +1,6 @@
 # Cpp-App
 
-This repo is collection of my own written App using C++ and wxWidgets Technologies
+This repo is a collection of my own written App using C++ and wxWidgets Technologies
 I will probably update this Readme from time to time.
 
 ## Getting Started
