@@ -83,10 +83,9 @@ MenuBar::MenuBar(wxTextCtrl*text):m_text(text)
 
 void MenuBar::OnNew(wxCommandEvent & evnt)
 {
-	wxString msg;
-	msg.Printf("Ctrl+N was pressed");
-
-	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
+	
+	wxDialog* dia = new wxDialog(m_parent, wxID_ANY, "New");
+	dia->Show();
 
 }
 
