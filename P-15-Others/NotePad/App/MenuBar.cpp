@@ -24,7 +24,7 @@ MenuBar::MenuBar(wxTextCtrl*text):m_text(text)
 		m_file->Append(M_PAGE_SETUP, wxT("Page Setup... "), wxT("Settings..."));
 		m_file->Append(M_PRINT, wxT("Print... \tCtrl+P"), wxT("Print File..."));
 		m_file->AppendSeparator();
-		m_file->Append(M_EXIT, wxT("Exit \tCtrl+N"), wxT("Exit the App..."));
+		m_file->Append(M_EXIT, wxT("Exit"), wxT("Exit the App..."));
 
 	}
 	m_edit = new wxMenu();
@@ -83,6 +83,11 @@ MenuBar::MenuBar(wxTextCtrl*text):m_text(text)
 
 void MenuBar::OnNew(wxCommandEvent & evnt)
 {
+	wxString msg;
+	msg.Printf("Ctrl+N was pressed");
+
+	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
+
 }
 
 void MenuBar::OnAbout(wxCommandEvent & evnt)

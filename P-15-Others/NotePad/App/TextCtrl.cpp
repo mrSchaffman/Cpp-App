@@ -3,6 +3,7 @@
 wxBEGIN_EVENT_TABLE(TextCtrl, wxTextCtrl)
 	EVT_TEXT(TXT_CTRL,TextCtrl::OnTextChange)
 	EVT_LEFT_DOWN(TextCtrl::OnMouseDown)
+	//EVT_CHAR(TextCtrl::OnChar)
 
 wxEND_EVENT_TABLE()
 
@@ -30,4 +31,18 @@ void TextCtrl::OnMouseDown(wxMouseEvent & event)
 
 
 }
+//void TextCtrl::OnChar(wxKeyEvent & event)
+//{
+//	wxPoint pt(event.GetPosition());
+//
+//	if (event.ControlDown()&&event.GetKeyCode()== WXK_UP)
+//	{
+//		wxString msg;
+//		msg.Printf("This is my Own implementation of the existing Notepad \n Copyright(C) Barth. Feudong \t 2022");
+//
+//		wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
+//
+//	}
+//}
+
 

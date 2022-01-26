@@ -15,6 +15,7 @@ public:
 	bool asChanged() { return m_txt_status; }
 
 	void OnMouseDown(wxMouseEvent &event);
+	//void OnChar(wxKeyEvent& event);
 
 
 private:
