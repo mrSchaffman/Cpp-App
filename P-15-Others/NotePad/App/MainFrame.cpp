@@ -22,9 +22,7 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 	SetStatusText(wxT("100%"), 2);
 	SetStatusText(wxT("Win...(CRLF)"), 3);
 	SetStatusText(wxT("UTF-8"), 4);
-
 #endif // wxUSE_STATUSBAR
 
-	//m_panel = new wxPanel(this);
-	m_scrolled_win = new ScrolledWin(this);
+	m_text_screen = new  TextCtrl(this);
 }

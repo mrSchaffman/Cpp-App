@@ -3,7 +3,9 @@
 #include"MainPanel.h"
 #include"MenuBar.h"
 #include"StatusBar.h"
-#include"ScrolledWin.h"
+#include"TextCtrl.h"
+
+
 
 
 enum {
@@ -18,12 +20,11 @@ public:
 
 private:
 
-	ScrolledWin* m_scrolled_win = nullptr;
 	MenuBar * m_menubar = nullptr;
 	StatusBar * m_statusbar = nullptr;
 
 	wxString m_filename = "Untitled";
-
+	TextCtrl* m_text_screen = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 };
