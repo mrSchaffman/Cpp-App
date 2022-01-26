@@ -4,9 +4,11 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_NEW,MenuBar::OnNew)
 	EVT_MENU(M_ABOUT,MenuBar::OnAbout)
 	EVT_MENU(M_EXIT,MenuBar::OnExit)
+	EVT_MENU(M_ZOOM_IN,MenuBar::OnZoomIn)
+	EVT_MENU(M_ZOOM_OUT,MenuBar::OnZoomOut)
 wxEND_EVENT_TABLE()
 
-MenuBar::MenuBar()
+MenuBar::MenuBar(wxTextCtrl*text):m_text(text)
 {
 
 	m_file = new wxMenu();
@@ -97,4 +99,14 @@ void MenuBar::OnExit(wxCommandEvent & evnt)
 {
 	//auto parent = evnt.Get();
 	//auto t = parent
+}
+
+void MenuBar::OnZoomIn(wxCommandEvent & event)
+{
+	m_text->SetFont(m_text->GetFont().Scale(1.1));
+}
+
+void MenuBar::OnZoomOut(wxCommandEvent & event)
+{
+	m_text->SetFont(m_text->GetFont().Scale(0.9));
 }

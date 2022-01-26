@@ -18,6 +18,7 @@ public:
 	MainFrame(const wxString & title);
 	virtual~MainFrame() = default;
 
+
 private:
 
 	MenuBar * m_menubar = nullptr;
@@ -25,6 +26,10 @@ private:
 
 	wxString m_filename = "Untitled";
 	TextCtrl* m_text_screen = nullptr;
+
+
+	int m_ln = 0;
+	int m_col = 0;
 
 	wxDECLARE_EVENT_TABLE();
 };

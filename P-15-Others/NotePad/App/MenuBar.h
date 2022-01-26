@@ -1,5 +1,6 @@
 #pragma once
 #include"wx/wx.h"
+
 enum {
 
 	// menu file 
@@ -47,7 +48,7 @@ enum {
 class MenuBar : public wxMenuBar
 {
 public:
-	MenuBar();
+	MenuBar(wxTextCtrl*text);
 	virtual~MenuBar() = default;/* {
 		delete m_file;
 		delete m_edit;
@@ -60,6 +61,9 @@ public:
 	void OnAbout(wxCommandEvent&evnt);
 	void OnExit(wxCommandEvent&evnt);
 
+	void OnZoomIn(wxCommandEvent&event);
+	void OnZoomOut(wxCommandEvent&event);
+
 private:
 
 	wxMenu * m_file = nullptr;
@@ -67,6 +71,7 @@ private:
 	wxMenu * m_format = nullptr;
 	wxMenu * m_view = nullptr;
 	wxMenu * m_help = nullptr;
+	wxTextCtrl*m_text = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 };
