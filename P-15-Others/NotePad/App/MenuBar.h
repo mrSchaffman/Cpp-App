@@ -1,5 +1,7 @@
 #pragma once
 #include"wx/wx.h"
+#include"PageSettingDialogue.h"
+
 
 enum {
 
@@ -48,7 +50,7 @@ enum {
 class MenuBar : public wxMenuBar
 {
 public:
-	MenuBar(wxTextCtrl*text);
+	MenuBar(wxFrame*parent,wxTextCtrl*text);
 	virtual~MenuBar() = default;/* {
 		delete m_file;
 		delete m_edit;
@@ -63,6 +65,7 @@ public:
 
 	void OnZoomIn(wxCommandEvent&event);
 	void OnZoomOut(wxCommandEvent&event);
+	void OnPageSetting(wxCommandEvent&event);
 
 private:
 
@@ -72,6 +75,9 @@ private:
 	wxMenu * m_view = nullptr;
 	wxMenu * m_help = nullptr;
 	wxTextCtrl*m_text = nullptr;
+
+	wxFrame*m_parent = nullptr;
+	PageSettingDialogue* m_page_setting = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 };

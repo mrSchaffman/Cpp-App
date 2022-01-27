@@ -33,6 +33,12 @@
     <ClInclude Include="TextCtrl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PageSettingDialogue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PreviewWin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp">
@@ -51,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PageSettingDialogue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PreviewWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

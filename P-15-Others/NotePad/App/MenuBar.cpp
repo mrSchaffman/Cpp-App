@@ -6,11 +6,12 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_EXIT,MenuBar::OnExit)
 	EVT_MENU(M_ZOOM_IN,MenuBar::OnZoomIn)
 	EVT_MENU(M_ZOOM_OUT,MenuBar::OnZoomOut)
+	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSetting)
 wxEND_EVENT_TABLE()
 
-MenuBar::MenuBar(wxTextCtrl*text):m_text(text)
+MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text)
 {
-
+	m_parent = parent;
 	m_file = new wxMenu();
 	{
 		
@@ -85,6 +86,7 @@ void MenuBar::OnNew(wxCommandEvent & evnt)
 {
 	
 	wxDialog* dia = new wxDialog(m_parent, wxID_ANY, "New");
+	wxButton*bt = new wxButton(dia, wxID_OK,wxString("ooook"),wxPoint(30,50),wxSize(60,60),wxBORDER_NONE );
 	dia->Show();
 
 }
@@ -113,4 +115,10 @@ void MenuBar::OnZoomIn(wxCommandEvent & event)
 void MenuBar::OnZoomOut(wxCommandEvent & event)
 {
 	m_text->SetFont(m_text->GetFont().Scale(0.9));
+}
+
+void MenuBar::OnPageSetting(wxCommandEvent & event)
+{
+	m_page_setting = new PageSettingDialogue(m_parent);
+	m_page_setting->ShowModal();
 }

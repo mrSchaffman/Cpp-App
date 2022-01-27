@@ -11,7 +11,7 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 
 	m_text_screen = new  TextCtrl(this);
 
-	m_menubar = new MenuBar(m_text_screen);
+	m_menubar = new MenuBar(this,m_text_screen);
 
 	SetMenuBar(m_menubar);
 
