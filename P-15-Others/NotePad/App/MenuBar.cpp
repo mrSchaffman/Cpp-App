@@ -84,10 +84,15 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text)
 
 void MenuBar::OnNew(wxCommandEvent & evnt)
 {
+	//auto win = GetParent();
+	//auto win = new wxFrame(nullptr,wxID_ANY,m_parent->GetTitle(),m_parent->GetPosition(),m_parent->GetSize(),m_parent->GetWindowStyle());
+	//win->Show(true);
 	
-	wxDialog* dia = new wxDialog(m_parent, wxID_ANY, "New");
-	wxButton*bt = new wxButton(dia, wxID_OK,wxString("ooook"),wxPoint(30,50),wxSize(60,60),wxBORDER_NONE );
-	dia->Show();
+	//auto nWin = new wxFrame(&m_parent);
+	//nWin->Show(true);
+	//wxDialog* dia = new wxDialog(m_parent, wxID_ANY, "New");
+	//wxButton*bt = new wxButton(dia, wxID_OK,wxString("ooook"),wxPoint(30,50),wxSize(60,60),wxBORDER_NONE );
+	//dia->Show();
 
 }
 

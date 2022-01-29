@@ -19,7 +19,7 @@ void PreviewWin::OnPaint(wxPaintEvent & event)
 		wxBrush brush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
 		dc.SetBrush(brush);
 
-		wxRect shadow(wxPoint(30, 50), wxPoint(125, 217));
+		wxRect shadow(wxPoint(20, 50), wxPoint(135, 217));
 		dc.DrawRectangle(shadow);
 
 	}
@@ -29,7 +29,7 @@ void PreviewWin::OnPaint(wxPaintEvent & event)
 		wxBrush brush(*wxWHITE_BRUSH);
 		dc.SetBrush(brush);
 
-		wxRect shadow(wxPoint(20, 40), wxPoint(115, 207));
+		wxRect shadow(wxPoint(10, 40), wxPoint(125, 207));
 		dc.DrawRectangle(shadow);
 
 	}
