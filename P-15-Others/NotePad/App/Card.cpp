@@ -23,24 +23,20 @@ void Card::OnPaint(wxPaintEvent & event)
 
 void Card::OnMouse(wxMouseEvent & event)
 {
+	this->ClearBackground();
+
 	wxClientDC dc(this);
 	PrepareDC(dc);
 
 	if (event.Entering())
 	{
-		this->ClearBackground();
-
 		SetCardSize(wxSize(m_size.GetWidth() + 4,m_size.GetHeight() + 4));
 		DrawCard(dc);
-
 	}
 	if (event.Leaving())
 	{
-		this->ClearBackground();
-
 		SetCardSize(wxSize(m_size.GetWidth(), m_size.GetHeight()));
 		DrawCard(dc);
-
 	}
 
 }
