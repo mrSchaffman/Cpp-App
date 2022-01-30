@@ -1,5 +1,9 @@
 #include "PageSettingDialogue.h"
 
+wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
+	EVT_COMBOBOX(ID_SIZE,PageSettingDialogue::OnSizeTypeChanged)
+wxEND_EVENT_TABLE()
+
 PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PAGE_SETTING,wxT("Page Settings"),wxDefaultPosition,wxSize(550,360))
 {
 	m_parent = parent;
@@ -19,7 +23,7 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 					formats.Add(wxT("A3"));
 					formats.Add(wxT("A4"));
 					formats.Add(wxT("A5"));
-					wxComboBox* sizesCB = new wxComboBox(this, wxID_ANY, wxT("A4"), wxDefaultPosition, wxSize(251, 25), formats, wxCB_DROPDOWN | wxCB_READONLY);
+					wxComboBox* sizesCB = new wxComboBox(this, ID_SIZE, wxT("A4"), wxDefaultPosition, wxSize(251, 25), formats, wxCB_DROPDOWN | wxCB_READONLY);
 
 					sizeRow->Add(Sizetxt, 0);
 					sizeRow->Add(sizesCB, 0);
@@ -58,7 +62,8 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 						m_orientation->Add(portait, 0,  wxALL, 5);
 						m_orientation->AddSpacer(10);
 						m_orientation->Add(Landscape, 0,  wxALL, 5);
-					
+						portait->AddChild(Landscape);
+
 
 				}
 				m_row2->Add(m_orientation, 0, wxALL, 5);
@@ -131,8 +136,8 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 		{
 			wxStaticBoxSizer* m_preview = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Preview"));
 			{
-				m_preview_win = new PreviewWin(this);
-				m_preview->Add(m_preview_win, 1);
+				m_preview_win = new Card(this);
+				m_preview->Add(m_preview_win, 1,wxCENTER);
 			}
 			wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
 			{
@@ -156,4 +161,29 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 	//SetSizer(m_topSizer);
 	SetSizerAndFit(m_topSizer);
 
+}
+
+void PageSettingDialogue::OnSizeTypeChanged(wxCommandEvent & event)
+{
+	switch (event.GetSelection())
+	{
+	case 0:
+		m_preview_win->UpdateCard(wxSize(132, 210));
+		break;
+	case 1:
+		m_preview_win->UpdateCard(wxSize(100, 132));
+		break;
+	case 2:
+		m_preview_win->UpdateCard(wxSize(90, 100));
+		break;
+	case 3:
+		m_preview_win->UpdateCard(wxSize(132, 187));
+		break;
+	case 4:
+		m_preview_win->UpdateCard(wxSize(40, 60));
+		break;
+
+	default:
+		break;
+	}
 }

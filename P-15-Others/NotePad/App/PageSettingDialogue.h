@@ -1,7 +1,7 @@
 #pragma once
 #include"wx/wx.h"
 #include"wx/hyperlink.h"
-#include"PreviewWin.h"
+#include"Card.h"
 
 
 enum {
@@ -16,6 +16,7 @@ enum {
 	ANSI_D,
 	ANSI_E,
 
+	ID_SIZE,
 	ID_PORTRAIT = 50,
 	ID_LANDSCAPE,
 
@@ -26,6 +27,9 @@ enum {
 	ID_HEADER,
 	ID_FOOTER,
 	ID_MY_INPUT_VALUE,
+
+	PORTRAIT,
+	LANDSCAPE,
 };
 
 class PageSettingDialogue: public wxDialog
@@ -34,6 +38,8 @@ public:
 	PageSettingDialogue(wxFrame*parent);
 	virtual ~PageSettingDialogue() = default;
 
+	void OnSizeTypeChanged(wxCommandEvent &event);
+
 private:
 
 	wxFrame* m_parent = nullptr;
@@ -41,9 +47,9 @@ private:
 
 	wxTextCtrl*m_header = nullptr;
 	wxTextCtrl*m_footer = nullptr;
-	wxRadioBox* m_portrait = nullptr;
-	wxRadioBox* m_landscape = nullptr;
+	wxStaticBoxSizer* m_orientation = nullptr;
+	Card* m_preview_win = nullptr;
 
-	PreviewWin* m_preview_win = nullptr;
+	wxDECLARE_EVENT_TABLE();
 };
 
