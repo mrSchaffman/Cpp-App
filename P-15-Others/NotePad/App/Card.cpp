@@ -4,11 +4,20 @@ wxBEGIN_EVENT_TABLE(Card, wxPanel)
 	EVT_MOUSE_EVENTS(Card::OnMouse)
 wxEND_EVENT_TABLE()
 
-Card::Card(wxDialog * parent):wxPanel(parent,wxID_ANY,wxDefaultPosition,wxSize(152,252))
+Card::Card(wxDialog * parent, wxSize & size):wxPanel(parent,wxID_ANY,wxDefaultPosition, PanelSize)
 {
 	m_parent = parent;
-	m_size = wxSize(132, 187);
-	SetCardSize(m_size);
+	m_card = size;
+
+	m_shadow = m_card;
+
+	m_shadow_pen = wxPen(wxColour(222, 226, 230));
+	m_margings_pen = wxPen(wxColour(255, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
+	m_card_pen = wxPen(*wxWHITE_PEN);
+
+	m_card_brush = wxBrush(*wxWHITE_BRUSH);
+	m_margings_brush = wxBrush(*wxTRANSPARENT_BRUSH);
+	m_shadow_brush = wxBrush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
 
 
 }
@@ -19,98 +28,123 @@ void Card::OnPaint(wxPaintEvent & event)
 	PrepareDC(dc);
 
 	DrawCard(dc);
+
 }
 
 void Card::OnMouse(wxMouseEvent & event)
 {
 
-	wxClientDC dc(this);
-	PrepareDC(dc);
+	//wxClientDC dc(this);
+	//PrepareDC(dc);
 
-	if (event.Entering())
-	{
-		this->ClearBackground();
-		SetCardSize(wxSize(m_size.GetWidth() + 4,m_size.GetHeight() + 4));
-		DrawCard(dc);
-	}
-	if (event.Leaving())
-	{
-		this->ClearBackground();
-		SetCardSize(wxSize(m_size.GetWidth(), m_size.GetHeight()));
-		DrawCard(dc);
-	}
+	//if (event.Entering())
+	//{
+	//	this->ClearBackground();
+	//	SetCardSize(wxSize(m_size.GetWidth() + 4,m_size.GetHeight() + 4));
+	//	DrawCard(dc);
+	//}
+	//if (event.Leaving())
+	//{
+	//	this->ClearBackground();
+	//	SetCardSize(wxSize(m_size.GetWidth(), m_size.GetHeight()));
+	//	DrawCard(dc);
+	//}
 
 }
 
-void Card::SetMargings(size_t left, size_t right, size_t top, size_t bottom)
+void Card::SetMargins(size_t left, size_t right, size_t top, size_t bottom)
 {
 	m_margin_left = left;
 	m_margin_right = right;
 	m_margin_top = top;
 	m_margin_bottom = bottom;
-
-
 }
 
-void Card::SetCardSize(const wxSize&  size)
-{
-	m_card.SetSize(size);
-	m_card.SetLeft((152 - size.GetX()) / 2);
-	m_card.SetTop((252-size.GetY())/2);
-
-	m_shadow.SetSize(wxSize(size.GetX() + 1, size.GetY() + 1));
-	m_shadow.SetLeft((152 - size.GetX()) / 2 + 2);
-	m_shadow.SetTop((252 - size.GetY()) / 2 + 2);
-
-	m_margings.SetSize(wxSize(size.GetX() - 20, size.GetY() - 20));
-	m_margings.SetLeft((152 - size.GetX()) / 2 + m_margin_left);
-	m_margings.SetTop((252 - size.GetY()) / 2 + m_margin_top);
-
-
-
-	m_shadow_pen = wxPen(wxColour(222, 226, 230));
-	m_margings_pen = wxPen(wxColour(255, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
-	m_card_pen = wxPen(*wxWHITE_PEN);
-
-	m_card_brush = wxBrush(*wxWHITE_BRUSH);
-	m_margings_brush = wxBrush(*wxTRANSPARENT_BRUSH);
-	m_shadow_brush = wxBrush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
-
-}
+//wxSize& Card::UpdateDimensions(const wxSize&  size )
+//{
+//	m_card = m_shadow = size;
+//
+//	wxRect temp(m_card);
+//	temp.SetLeft((PanelSize.GetX() - size.GetX()) / 2);
+//	temp.SetTop((PanelSize.GetY() - size.GetY()) / 2);
+//
+//	wxRect tempS(m_card);
+//	tempS.SetLeft((PanelSize.GetX() - size.GetX()) / 2 + 2);
+//	tempS.SetTop((PanelSize.GetY() - size.GetY()) / 2 + 2);
+//
+//	//m_margins.SetSize(wxSize(size.GetX() - 20, size.GetY() - 20));
+//	//m_margins.SetLeft((PanelSize.GetX() - size.GetX()) / 2 + m_margin_left);
+//	//m_margins.SetTop((PanelSize.GetY() - size.GetY()) / 2 + m_margin_top);
+//
+//}
+//
 
 void Card::DrawCard(wxDC & dc)
 {
 	{
 		dc.SetPen(m_shadow_pen);
 		dc.SetBrush(m_shadow_brush);
-		dc.DrawRectangle(m_shadow);
+		wxRect tempS(m_card);
+
+		tempS.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2 + 2);
+		tempS.SetTop((PanelSize.GetY() - m_card.GetY()) / 2 + 2);
+		dc.DrawRectangle(tempS);
 
 	}
+
+
 	{
 		dc.SetPen(m_card_pen);
 		dc.SetBrush(m_card_brush);
-		dc.DrawRectangle(m_card);
+		wxRect temp(m_card);
+
+		temp.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2);
+		temp.SetTop((PanelSize.GetY() - m_card.GetY()) / 2);
+		dc.DrawRectangle(temp);
 
 	}
-	{
-		dc.SetPen(m_margings_pen);
-		dc.SetBrush(m_margings_brush);
-		dc.DrawRectangle(m_margings);
 
-	}
 
+
+}
+
+void Card::DrawCardShadaw(wxDC&dc)
+{
+
+	//dc.SetPen(m_shadow_pen);
+	//dc.SetBrush(m_shadow_brush);
+	//m_shadow.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2 + 2);
+	//m_shadow.SetTop((PanelSize.GetY() - m_card.GetY()) / 2 + 2);
+	//dc.DrawRectangle(m_shadow);
+
+}
+
+void Card::DrawCardMargins()
+{
+	wxClientDC dc(this);
+	PrepareDC(dc);
+
+	dc.SetPen(m_margings_pen);
+	dc.SetBrush(m_margings_brush);
+	dc.DrawRectangle(m_margins);
+
+}
+
+void Card::UpdateMargins(wxDC & dc,const wxRect & size)
+{
+	this->RefreshRect(PanelSize);
+	dc.DrawRectangle(size);
 }
 
 void Card::UpdateCard(const wxSize&  size)
 {
-	this->ClearBackground();
+	m_card = size;
 
-	m_size = size;
+	this->RefreshRect(PanelSize);
 
 	wxClientDC dc(this);
 	PrepareDC(dc);
 
-	SetCardSize(m_size);
 	DrawCard(dc);
 
 }

@@ -2,6 +2,7 @@
 #include"wx/wx.h"
 #include"wx/hyperlink.h"
 #include"Card.h"
+#include<array>
 
 
 enum {
@@ -28,6 +29,7 @@ enum {
 	ID_FOOTER,
 	ID_MY_INPUT_VALUE,
 
+	ID_RADIOBOX,
 	PORTRAIT,
 	LANDSCAPE,
 };
@@ -39,6 +41,12 @@ public:
 	virtual ~PageSettingDialogue() = default;
 
 	void OnSizeTypeChanged(wxCommandEvent &event);
+	void OnMarginLeftChanged(wxCommandEvent &event);
+	void OnMarginTopChanged(wxCommandEvent &event);
+	void OnMarginRightChanged(wxCommandEvent &event);
+	void OnMarginBottomChanged(wxCommandEvent &event);
+
+	void OnOrientationChanged(wxCommandEvent &event);
 
 private:
 
@@ -47,8 +55,13 @@ private:
 
 	wxTextCtrl*m_header = nullptr;
 	wxTextCtrl*m_footer = nullptr;
-	wxStaticBoxSizer* m_orientation = nullptr;
+	wxRadioBox* m_orientation = nullptr;
 	Card* m_preview_win = nullptr;
+
+	bool isPortrait = true;
+	size_t m_format;
+	wxSize m_current_format;
+	std::array<wxSize, 6> m_formats;
 
 	wxDECLARE_EVENT_TABLE();
 };

@@ -2,10 +2,23 @@
 
 wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
 	EVT_COMBOBOX(ID_SIZE,PageSettingDialogue::OnSizeTypeChanged)
+	EVT_TEXT(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftChanged)
+	EVT_TEXT(ID_MARGIN_TOP,PageSettingDialogue::OnMarginTopChanged)
+	EVT_TEXT(ID_MARGIN_RIGHT,PageSettingDialogue::OnMarginRightChanged)
+	EVT_TEXT(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomChanged)
+	EVT_RADIOBOX(ID_RADIOBOX,PageSettingDialogue::OnOrientationChanged)
 wxEND_EVENT_TABLE()
 
 PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PAGE_SETTING,wxT("Page Settings"),wxDefaultPosition,wxSize(550,360))
 {
+	m_formats = { 
+		wxSize(132,187),
+		wxSize(93,132),
+		wxSize(66,93),
+		wxSize(47,66),
+		wxSize(33,47), 
+		wxSize(23,33) };
+
 	m_parent = parent;
 	wxBoxSizer* m_topSizer = new wxBoxSizer(wxHORIZONTAL);
 	{
@@ -18,12 +31,15 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 					wxStaticText* Sizetxt = new wxStaticText(this, wxID_ANY, wxT("Size:"), wxDefaultPosition, wxSize(75, 25));
 
 					wxArrayString formats;
+					formats.Add(wxT("A0"));
 					formats.Add(wxT("A1"));
 					formats.Add(wxT("A2"));
 					formats.Add(wxT("A3"));
 					formats.Add(wxT("A4"));
 					formats.Add(wxT("A5"));
-					wxComboBox* sizesCB = new wxComboBox(this, ID_SIZE, wxT("A4"), wxDefaultPosition, wxSize(251, 25), formats, wxCB_DROPDOWN | wxCB_READONLY);
+					wxComboBox* sizesCB = new wxComboBox(this, ID_SIZE, wxT("A0"), wxDefaultPosition, wxSize(251, 25), formats, wxCB_DROPDOWN | wxCB_READONLY);
+
+					m_current_format = m_formats[sizesCB->GetSelection()];
 
 					sizeRow->Add(Sizetxt, 0);
 					sizeRow->Add(sizesCB, 0);
@@ -52,20 +68,15 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 
 			wxBoxSizer* m_row2 = new wxBoxSizer(wxHORIZONTAL);
 			{
-				wxStaticBoxSizer* m_orientation = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Orientation"));
+				// orientation
 				{
-					
-					
-						wxRadioButton* portait = new wxRadioButton(this, ID_PORTRAIT, wxT("Portrait"), wxDefaultPosition,wxDefaultSize, wxRB_GROUP);
-						portait->SetValue(true);
-						wxRadioButton* Landscape = new wxRadioButton(this,ID_LANDSCAPE, wxT("Landscape"));
-						m_orientation->Add(portait, 0,  wxALL, 5);
-						m_orientation->AddSpacer(10);
-						m_orientation->Add(Landscape, 0,  wxALL, 5);
-						portait->AddChild(Landscape);
-
+					wxArrayString strings;
+					strings.Add(wxT("Portrait"));
+					strings.Add(wxT("Landscape"));
+					 m_orientation = new wxRadioBox(this, ID_RADIOBOX, wxT("Orientation"), wxDefaultPosition, wxSize(95, 82), strings, 1, wxRA_SPECIFY_COLS);
 
 				}
+	
 				m_row2->Add(m_orientation, 0, wxALL, 5);
 
 				wxStaticBoxSizer* m_margings = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Margins(millimeters)"));
@@ -87,9 +98,9 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 					wxBoxSizer*margRow2 = new wxBoxSizer(wxHORIZONTAL);
 					{						
 						wxStaticText* topTxt = new wxStaticText(this, wxID_ANY, wxT("Top:"), wxDefaultPosition, wxSize(40, 20));
-						wxTextCtrl* top = new wxTextCtrl(this, ID_MARGIN_TOP, wxT("25"), wxDefaultPosition, wxSize(40, 20));
+						wxTextCtrl* top = new wxTextCtrl(this, ID_MARGIN_TOP, wxT("20"), wxDefaultPosition, wxSize(40, 20));
 						wxStaticText* bottomTxt = new wxStaticText(this, wxID_ANY, wxT("Bottom:"), wxDefaultPosition, wxSize(40, 20));
-						wxTextCtrl* bottom = new wxTextCtrl(this, ID_MARGIN_BOTTOM, wxT("25"), wxDefaultPosition, wxSize(40, 20));
+						wxTextCtrl* bottom = new wxTextCtrl(this, ID_MARGIN_BOTTOM, wxT("20"), wxDefaultPosition, wxSize(40, 20));
 
 						margRow2->Add(topTxt, 1);
 						margRow2->Add(top, 1);
@@ -136,7 +147,8 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 		{
 			wxStaticBoxSizer* m_preview = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Preview"));
 			{
-				m_preview_win = new Card(this);
+
+				m_preview_win = new Card(this, m_current_format);
 				m_preview->Add(m_preview_win, 1,wxCENTER);
 			}
 			wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
@@ -165,25 +177,50 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 
 void PageSettingDialogue::OnSizeTypeChanged(wxCommandEvent & event)
 {
-	switch (event.GetSelection())
-	{
-	case 0:
-		m_preview_win->UpdateCard(wxSize(132, 210));
-		break;
-	case 1:
-		m_preview_win->UpdateCard(wxSize(100, 132));
-		break;
-	case 2:
-		m_preview_win->UpdateCard(wxSize(90, 100));
-		break;
-	case 3:
-		m_preview_win->UpdateCard(wxSize(132, 187));
-		break;
-	case 4:
-		m_preview_win->UpdateCard(wxSize(40, 60));
-		break;
+	m_current_format = m_formats[event.GetSelection()];
 
-	default:
-		break;
+	if (isPortrait)
+		m_preview_win->UpdateCard(m_current_format);
+	else
+	{
+		wxSize landscape(m_current_format.GetY(), m_current_format.GetX());
+
+		m_preview_win->UpdateCard(landscape);
 	}
+
+}
+
+void PageSettingDialogue::OnMarginLeftChanged(wxCommandEvent & event)
+{
+}
+
+void PageSettingDialogue::OnMarginTopChanged(wxCommandEvent & event)
+{
+}
+
+void PageSettingDialogue::OnMarginRightChanged(wxCommandEvent & event)
+{
+}
+
+void PageSettingDialogue::OnMarginBottomChanged(wxCommandEvent & event)
+{
+}
+
+void PageSettingDialogue::OnOrientationChanged(wxCommandEvent & event)
+{
+
+	if (event.GetSelection()==0)
+	{
+		isPortrait = true;
+		m_preview_win->UpdateCard(m_current_format);
+	}
+	else
+	{
+		isPortrait = false;
+
+		wxSize landscape(m_current_format.GetY(), m_current_format.GetX());
+		m_preview_win->UpdateCard(landscape);
+
+	}
+
 }
