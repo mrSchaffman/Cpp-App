@@ -40,6 +40,17 @@ ToolBar::ToolBar(wxFrame * frameParent):wxToolBar(frameParent,wxID_ANY,wxDefault
 
 void ToolBar::OnNew(wxCommandEvent & event)
 {
+
+	wxSize screenSize = wxGetDisplaySize();
+	wxBitmap bitmap(screenSize.x, screenSize.y);
+	wxScreenDC dc;
+	wxMemoryDC memDC;
+	memDC.SelectObject(bitmap);
+	memDC.Blit(0, 0, screenSize.x, screenSize.y, &dc, 0, 0);
+	memDC.SelectObject(wxNullBitmap);
+
+	//return bitmap;
+
 }
 
 void ToolBar::OnMode(wxCommandEvent & event)

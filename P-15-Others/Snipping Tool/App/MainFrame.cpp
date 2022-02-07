@@ -9,6 +9,8 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 	m_toolbar = new ToolBar(this);
 	SetToolBar(m_toolbar);
 
+	SetMaxSize(wxSize(320, 200));
+
 	wxImage::AddHandler(new wxPNGHandler);
 	wxImage im(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
 	wxBitmap bmpIcon(im);
