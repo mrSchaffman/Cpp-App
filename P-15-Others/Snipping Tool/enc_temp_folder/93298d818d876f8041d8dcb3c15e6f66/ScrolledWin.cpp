@@ -102,14 +102,14 @@ void ScrolledWin::OnMouse(wxMouseEvent & event)
 		wxPoint p3(285, 40);
 		wxPoint p4(310, 40);
 
-		if ((pos.x <= p2.x && pos.x >= p1.x && pos.y >= p1.y) && (pos.y <= p3.y && pos.y >= p1.y ))
-		{
-			wxString msg;
-			msg.Printf("This is a Snipping Tool \n Copyright(C) Barth. Feudong \t 2022"
-			);
+		//if ((pos.x <= p2.x && pos.x >= p1.x && pos.y >= p1.y) && (pos.y <= p3.y && pos.y >= p1.y ))
+		//{
+		//	wxString msg;
+		//	msg.Printf("This is a Snipping Tool \n Copyright(C) Barth. Feudong \t 2022"
+		//	);
 
-			wxMessageBox(msg, "About Snipping", wxOK | wxICON_INFORMATION, this);
-		}
+		//	wxMessageBox(msg, "About Snipping", wxOK | wxICON_INFORMATION, this);
+		//}
 
 	}
 	if (event.LeftUp())
