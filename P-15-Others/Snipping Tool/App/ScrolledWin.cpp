@@ -10,10 +10,9 @@ ScrolledWin::ScrolledWin(wxFrame* frame):wxScrolledWindow(frame,wxID_ANY,wxDefau
 {
 
 
-	SetBackgroundColour(wxColour (120, 120, 120));
+	SetBackgroundColour(wxColour (255, 183, 0));
 
 	 //m_link = new wxHyperlinkCtrl(this, wxID_ANY, wxT("see more: @Barth.Feudong"), wxT("https://github.com/mrSchaffman"), wxDefaultPosition, wxDefaultSize, wxTE_AUTO_URL | wxTE_READONLY);
-
 }
 
 
@@ -43,6 +42,35 @@ wxBitmap ScrolledWin::CreateRedOutlineBitmap()
 	memDC.SelectObject(wxNullBitmap);
 	return bitmap;
 }
+wxBitmap ScrolledWin::CreateHeaderBitmap()
+{
+
+	wxColour penCol(250, 163, 7);
+	wxColour headerColor(250, 163, 7);
+	wxMemoryDC memDC;
+
+	wxImage::AddHandler(new wxPNGHandler);
+	wxImage im(wxT("InfoIcon.png"), wxBITMAP_TYPE_PNG);
+	wxBitmap bmpIcon(im);
+
+	wxBitmap bitmap(GetParent()->GetSize().GetX(), 40);
+	memDC.SelectObject(bitmap);
+
+	wxRect headerRect(wxSize(GetParent()->GetSize().GetX(), 40));
+	//memDC.SetBackground(wxBrush(col3, wxBRUSHSTYLE_SOLID));
+	memDC.Clear();
+
+	memDC.SetPen(headerColor);
+	memDC.SetBrush(wxBrush(headerColor, wxBRUSHSTYLE_SOLID));
+	memDC.DrawRectangle(headerRect);
+	memDC.DrawText(wxT("Select the snip using the mode Button or click the \nNew button "),wxPoint(5,5));
+	memDC.DrawBitmap(bmpIcon, wxPoint(285, 0));
+
+
+
+	memDC.SelectObject(wxNullBitmap);
+	return bitmap;
+}
 wxBitmap ScrolledWin::GetScreenShot()
 {
 	wxSize screenSize = wxGetDisplaySize();
@@ -59,39 +87,36 @@ void ScrolledWin::OnPaint(wxPaintEvent & event)
 {
 	wxPaintDC dc(this);
 	PrepareDC(dc);
+	dc.DrawBitmap(CreateHeaderBitmap(),wxPoint(0,0));
 
-	wxPen pen(wxColour(180, 180, 180));
-	wxBrush brush(wxColour(180, 180, 180), wxBRUSHSTYLE_SOLID);
-	wxBitmap bmp(wxSize(GetClientSize().GetX(), 60));
-
-	dc.SetPen(pen);
-	dc.SetBrush(brush);
-	dc.DrawBitmap(bmp,wxPoint(0,0),true);
-
-	wxFont font(12, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
-	dc.SetFont(font);
-	dc.SetBackgroundMode(wxTRANSPARENT);
-	dc.SetTextForeground(*wxWHITE);
-	dc.SetTextBackground(wxTRANSPARENT);
-
-	dc.DrawLabel(wxT("Barth"), wxRect(wxSize(GetClientSize().GetX(), 40)));
 
 }
 
 void ScrolledWin::OnMouse(wxMouseEvent & event)
 {
+	wxPoint pos = event.GetPosition();
 	if (event.LeftDown())
 	{
-		m_anchorpoint = event.GetPosition();
-		m_rubberBand = true;
-		CaptureMouse();
+		wxPoint p1(285, 5);
+		wxPoint p2(310, 5);
+		wxPoint p3(285, 40);
+		wxPoint p4(310, 40);
+
+		if ((pos.x <= p2.x && pos.x >= p1.x && pos.y >= p1.y) && (pos.y <= p3.y && pos.y >= p1.y ))
+		{
+			wxString msg;
+			msg.Printf("This is a Snipping Tool \n Copyright(C) Barth. Feudong \t 2022"
+			);
+
+			wxMessageBox(msg, "About Snipping", wxOK | wxICON_INFORMATION, this);
+		}
+
 	}
 	if (event.LeftUp())
 	{
 		if (m_rubberBand)
 		{
-			ReleaseMouse();
-			m_currentpoint = event.GetPosition();
+			//ReleaseMouse();
 
 		}
 	}

@@ -4,7 +4,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDefaultPosition,wxSize(320,300))
+MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDefaultPosition,wxSize(320,200))
 {
 	m_toolbar = new ToolBar(this);
 	SetToolBar(m_toolbar);

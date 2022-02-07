@@ -5,6 +5,10 @@
 #include"wx/effects.h"
 #include"wx/hyperlink.h"
 
+enum 
+{
+	ID_INFO = 50,
+};
 
 class ScrolledWin: public wxScrolledWindow
 {
@@ -21,6 +25,7 @@ public:
 
 	//Drawing on Bitmaps with wxMemoryDC
 	wxBitmap CreateRedOutlineBitmap();
+	wxBitmap CreateHeaderBitmap();
 
 	//Accessing the Screen with wxScreenDC
 	wxBitmap GetScreenShot();
