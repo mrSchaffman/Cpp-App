@@ -3,21 +3,16 @@ wxBEGIN_EVENT_TABLE(ScrolledWin, wxScrolledWindow)
 EVT_PAINT(ScrolledWin::OnPaint)
 //EVT_LEFT_DOWN(ScrolledWin::OnMouseDown)
 //EVT_LEFT_UP(ScrolledWin::OnMouseUp)
+EVT_MOUSE_EVENTS(ScrolledWin::OnMouse)
 wxEND_EVENT_TABLE()
 
-ScrolledWin::ScrolledWin(wxFrame * frame):wxScrolledWindow(frame,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxHSCROLL||wxVSCROLL)
+ScrolledWin::ScrolledWin(wxFrame* frame):wxScrolledWindow(frame,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxHSCROLL||wxVSCROLL)//,m_frame(std::move(frame))
 {
-	m_frame = frame;
-	SetScrollbars(m_pixelsPerUnixX, m_pixelsPerUnixY, m_noUnitsX, m_noUnitsY);
 
-	wxBitmap bitmap = CreateRedOutlineBitmap();
-	wxBitmap screenshot = GetScreenShot();
 
-	wxColour col2(120, 120, 120);
-	//wxColour col3(160, 160, 160);
-	//wxColour col4(200, 200, 200);
-	SetBackgroundColour(col2);
+	SetBackgroundColour(wxColour (120, 120, 120));
 
+	 //m_link = new wxHyperlinkCtrl(this, wxID_ANY, wxT("see more: @Barth.Feudong"), wxT("https://github.com/mrSchaffman"), wxDefaultPosition, wxDefaultSize, wxTE_AUTO_URL | wxTE_READONLY);
 
 }
 
@@ -65,6 +60,44 @@ void ScrolledWin::OnPaint(wxPaintEvent & event)
 	wxPaintDC dc(this);
 	PrepareDC(dc);
 
-	dc.DrawBitmap(CreateRedOutlineBitmap(),wxPoint(0,0));
-	//dc.DrawBitmap(GetScreenShot(), wxPoint(200, 200));
+	wxPen pen(wxColour(180, 180, 180));
+	wxBrush brush(wxColour(180, 180, 180), wxBRUSHSTYLE_SOLID);
+	wxBitmap bmp(wxSize(GetClientSize().GetX(), 60));
+
+	dc.SetPen(pen);
+	dc.SetBrush(brush);
+	dc.DrawBitmap(bmp,wxPoint(0,0),true);
+
+	wxFont font(12, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD);
+	dc.SetFont(font);
+	dc.SetBackgroundMode(wxTRANSPARENT);
+	dc.SetTextForeground(*wxWHITE);
+	dc.SetTextBackground(wxTRANSPARENT);
+
+	dc.DrawLabel(wxT("Barth"), wxRect(wxSize(GetClientSize().GetX(), 40)));
+
+}
+
+void ScrolledWin::OnMouse(wxMouseEvent & event)
+{
+	if (event.LeftDown())
+	{
+		m_anchorpoint = event.GetPosition();
+		m_rubberBand = true;
+		CaptureMouse();
+	}
+	if (event.LeftUp())
+	{
+		if (m_rubberBand)
+		{
+			ReleaseMouse();
+			m_currentpoint = event.GetPosition();
+
+		}
+	}
+	if (event.Moving())
+	{
+
+	}
+
 }

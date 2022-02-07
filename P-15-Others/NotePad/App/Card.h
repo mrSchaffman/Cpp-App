@@ -17,10 +17,14 @@ public:
 	bool isPortrait() { return m_style; }
 	void SetPortrait( bool style) {  m_style = style; }
 	void SetMargins(size_t left, size_t right, size_t top, size_t bottom);
+
+	void SetMarginTop(size_t marg);
+	void SetMarginLeft(size_t marg);
+	void SetMarginRight(size_t marg);
+	void SetMarginBottom(size_t marg);
 	//wxSize& UpdateDimensions(const wxSize& size);
 
 	void DrawCard(wxDC&dc);
-	void DrawCardShadaw(wxDC&dc);
 	void DrawCardMargins();
 	void UpdateMargins(wxDC & dc,const wxRect& size);
 	void UpdateCard(const wxSize&  size);

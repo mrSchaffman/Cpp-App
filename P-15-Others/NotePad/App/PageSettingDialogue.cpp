@@ -192,18 +192,39 @@ void PageSettingDialogue::OnSizeTypeChanged(wxCommandEvent & event)
 
 void PageSettingDialogue::OnMarginLeftChanged(wxCommandEvent & event)
 {
+	if (event.GetInt() > 0)
+	{
+		m_preview_win->SetMarginLeft(event.GetInt());
+
+	}
 }
 
 void PageSettingDialogue::OnMarginTopChanged(wxCommandEvent & event)
 {
+	if (event.GetInt() > 0)
+	{
+		m_preview_win->SetMarginTop(event.GetInt());
+	}
+
 }
 
 void PageSettingDialogue::OnMarginRightChanged(wxCommandEvent & event)
 {
+	if (event.GetInt() > 0)
+	{
+		m_preview_win->SetMarginRight(event.GetInt());
+
+	}
+
 }
 
 void PageSettingDialogue::OnMarginBottomChanged(wxCommandEvent & event)
 {
+	if (event.GetInt() > 0)
+	{
+		m_preview_win->SetMarginBottom(event.GetInt());
+	}
+
 }
 
 void PageSettingDialogue::OnOrientationChanged(wxCommandEvent & event)

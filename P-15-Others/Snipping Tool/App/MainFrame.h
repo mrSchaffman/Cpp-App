@@ -1,6 +1,6 @@
 #pragma once
 #include"wx/wx.h"
-#include"MenuBar.h"
+#include"ToolBar.h"
 #include"ScrolledWin.h"
 
 
@@ -17,7 +17,7 @@ public:
 private:
 
 	ScrolledWin* m_scrolled_win = nullptr;
-	MenuBar * m_menubar = nullptr;
+	ToolBar * m_toolbar = nullptr;
 
 	wxString m_filename = "Untitled";
 

@@ -58,6 +58,13 @@ private:
 	wxRadioBox* m_orientation = nullptr;
 	Card* m_preview_win = nullptr;
 
+	wxRect m_margins;
+
+	wxPoint m_left;
+	wxPoint m_top;
+	wxPoint m_right;
+	wxPoint m_bottom;
+
 	bool isPortrait = true;
 	size_t m_format;
 	wxSize m_current_format;

@@ -21,10 +21,13 @@
     <ClInclude Include="MainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MenuBar.h">
+    <ClInclude Include="ScrolledWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ScrolledWin.h">
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,10 +38,10 @@
     <ClCompile Include="MainFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MenuBar.cpp">
+    <ClCompile Include="ScrolledWin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ScrolledWin.cpp">
+    <ClCompile Include="ToolBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -49,5 +52,28 @@
     <Image Include="App.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="cancel.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="delay.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="mode.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="new.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="tool.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="App.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

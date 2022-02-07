@@ -3,12 +3,21 @@
 #include"wx/overlay.h"
 #include "wx/dcbuffer.h"
 #include"wx/effects.h"
+#include"wx/hyperlink.h"
+
 
 class ScrolledWin: public wxScrolledWindow
 {
 public:
 	ScrolledWin(wxFrame*frame);
-	virtual~ScrolledWin() = default;
+	virtual~ScrolledWin() 
+	{ 
+		if (m_frame!=nullptr)
+		{
+			delete m_frame;
+		}
+		//this->Destroy(); 
+	}
 
 	//Drawing on Bitmaps with wxMemoryDC
 	wxBitmap CreateRedOutlineBitmap();
@@ -17,14 +26,11 @@ public:
 	wxBitmap GetScreenShot();
 
 	void OnPaint(wxPaintEvent&event);
+	void OnMouse(wxMouseEvent&event);
 
 private:
 	wxFrame*m_frame = nullptr;
-
-	int m_pixelsPerUnixX = 10;
-	int m_pixelsPerUnixY = 10;
-	int m_noUnitsX = 100;
-	int m_noUnitsY = 100;
+	wxHyperlinkCtrl* m_link = nullptr;
 
 	bool         m_useBuffer;
 	bool         m_showBBox;
@@ -37,8 +43,6 @@ private:
 
 
 
-	int m_ln = 0;
-	int m_col = 0;
 
 	wxDECLARE_EVENT_TABLE();
 
