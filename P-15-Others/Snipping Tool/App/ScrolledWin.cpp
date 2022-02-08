@@ -88,6 +88,7 @@ void ScrolledWin::OnPaint(wxPaintEvent & event)
 	wxPaintDC dc(this);
 	PrepareDC(dc);
 	dc.DrawBitmap(CreateHeaderBitmap(),wxPoint(0,0));
+	//dc.DrawBitmap(GetScreenShot(),wxPoint(50,50));
 
 
 }

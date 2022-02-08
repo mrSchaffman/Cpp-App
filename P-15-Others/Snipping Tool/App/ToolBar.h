@@ -1,5 +1,6 @@
 #pragma once
 #include"wx/wx.h"
+#include"wx/overlay.h"
 
 enum {
 	ID_NEW = 40,
@@ -26,6 +27,8 @@ private:
 	void OnTools(wxCommandEvent& event);
 	void OnCombo(wxCommandEvent& event);
 	std::unique_ptr<wxFrame> m_parent;
+	wxFrame* m_frame = nullptr;
+	wxOverlay    m_overlay;
 
 	wxDECLARE_EVENT_TABLE();
 };

@@ -9,7 +9,7 @@ wxBEGIN_EVENT_TABLE(ToolBar,wxToolBar)
 
 wxEND_EVENT_TABLE()
 
-ToolBar::ToolBar(wxFrame * frameParent):wxToolBar(frameParent,wxID_ANY,wxDefaultPosition,wxDefaultSize, wxTB_HORZ_TEXT | wxTB_NODIVIDER |wxNO_BORDER)
+ToolBar::ToolBar(wxFrame * frameParent):wxToolBar(frameParent,wxID_ANY,wxDefaultPosition,wxDefaultSize, wxTB_HORZ_TEXT | wxTB_NODIVIDER |wxNO_BORDER), m_frame(frameParent)
 {
 	wxImage::AddHandler(new wxPNGHandler);
 	wxImage im1(wxT("new.png"), wxBITMAP_TYPE_PNG);
@@ -49,7 +49,24 @@ void ToolBar::OnNew(wxCommandEvent & event)
 	memDC.Blit(0, 0, screenSize.x, screenSize.y, &dc, 0, 0);
 	memDC.SelectObject(wxNullBitmap);
 
-	//return bitmap;
+	wxClientDC cDc(m_frame);
+	PrepareDC(cDc);
+	//cDc.DrawBitmap(bitmap,wxPoint(50,50));
+
+
+
+		wxDCOverlay overlay_dc(m_overlay, &cDc);
+		overlay_dc.Clear();
+
+		cDc.SetPen(wxPen(*wxRED, 1));
+		cDc.SetBrush(*wxTRANSPARENT_BRUSH);
+
+		cDc.DrawRectangle(wxRect(wxSize(50,50)));
+
+
+	//m_frame->Update();
+	//Refresh(m_frame);
+	////return bitmap;
 
 }
 
