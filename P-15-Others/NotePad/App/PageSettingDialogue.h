@@ -3,12 +3,13 @@
 #include"wx/hyperlink.h"
 #include"Card.h"
 #include<array>
+#include"wx/valnum.h"
 
 
 enum {
 	ID_PAGE_SETTING = 12,
 
-	A1=13,
+	A1,
 	A2,
 	A3,
 	A4,
@@ -17,9 +18,10 @@ enum {
 	ANSI_D,
 	ANSI_E,
 
-	ID_SIZE,
+	ID_SIZE_CBOX,
 	ID_PORTRAIT = 50,
 	ID_LANDSCAPE,
+	ID_CARD,
 
 	ID_MARGIN_LEFT,
 	ID_MARGIN_RIGHT,
@@ -28,8 +30,9 @@ enum {
 	ID_HEADER,
 	ID_FOOTER,
 	ID_MY_INPUT_VALUE,
-
+	ID_SOURCE_CBOX,
 	ID_RADIOBOX,
+	ID_ORIENTATION,
 	PORTRAIT,
 	LANDSCAPE,
 };
@@ -37,8 +40,18 @@ enum {
 class PageSettingDialogue: public wxDialog
 {
 public:
-	PageSettingDialogue(wxFrame*parent);
+	PageSettingDialogue(wxFrame*parent, wxWindowID id = wxID_ANY,
+		const wxString& caption = wxT("Page Settings"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxSize(560, 390));
+		//long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
+
 	virtual ~PageSettingDialogue() = default;
+
+	// Accessors
+	void SetLeft(int size);
+
+	void CreateControls();
 
 	void OnSizeTypeChanged(wxCommandEvent &event);
 	void OnMarginLeftChanged(wxCommandEvent &event);
@@ -48,27 +61,41 @@ public:
 
 	void OnOrientationChanged(wxCommandEvent &event);
 
+	void Init();
 private:
 
-	wxFrame* m_parent = nullptr;
-	wxBoxSizer* m_row3 = nullptr;
+	bool TransferDataToWindow();
+	bool TransferDataFromWindow();
 
-	wxTextCtrl*m_header = nullptr;
-	wxTextCtrl*m_footer = nullptr;
-	wxRadioBox* m_orientation = nullptr;
+	wxFrame* m_parent = nullptr;
+
+
+	bool m_orientation{};
+
 	Card* m_preview_win = nullptr;
 
-	wxRect m_margins;
 
-	wxPoint m_left;
-	wxPoint m_top;
-	wxPoint m_right;
-	wxPoint m_bottom;
+	wxString m_left;
+	wxString m_top;
+	wxString m_right;
+	wxString m_bottom;
+
+	wxString m_header{};
+	wxString m_footer{};
+
+	int m_size{};
+	int m_source{};
+	wxArrayString m_sizes{};
+	wxArrayString m_sources{};
+	wxArrayString m_orientations{};
 
 	bool isPortrait = true;
-	size_t m_format;
-	wxSize m_current_format;
-	std::array<wxSize, 6> m_formats;
+	//size_t m_format;
+	wxSize m_current_format{};
+	std::array<wxSize, 6> m_formats{};
+
+	std::array<wxBitmap,6> m_bmps{};
+	wxBitmap m_current_bmp{};
 
 	wxDECLARE_EVENT_TABLE();
 };

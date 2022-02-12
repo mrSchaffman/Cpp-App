@@ -4,7 +4,7 @@ wxBEGIN_EVENT_TABLE(Card, wxPanel)
 	EVT_MOUSE_EVENTS(Card::OnMouse)
 wxEND_EVENT_TABLE()
 
-Card::Card(wxDialog * parent, wxSize & size):wxPanel(parent,wxID_ANY,wxDefaultPosition, PanelSize)
+Card::Card(wxDialog * parent, wxWindowID id, wxSize & size):wxPanel(parent,id,wxDefaultPosition, size)
 {
 	m_parent = parent;
 	m_card = size;

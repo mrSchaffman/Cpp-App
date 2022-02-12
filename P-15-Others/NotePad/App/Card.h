@@ -8,13 +8,13 @@ static wxSize CardDefaultSize = wxSize(132, 232);
 class Card: public wxPanel
 {
 public:
-	Card(wxDialog*parent,wxSize & size);
+	Card(wxDialog*parent, wxWindowID id,wxSize & size = PanelSize);
 	virtual~Card() = default;
 
 	void OnPaint(wxPaintEvent&event);
 	void OnMouse(wxMouseEvent& event);
 
-	bool isPortrait() { return m_style; }
+	bool m_orientation() { return m_style; }
 	void SetPortrait( bool style) {  m_style = style; }
 	void SetMargins(size_t left, size_t right, size_t top, size_t bottom);
 
@@ -28,6 +28,9 @@ public:
 	void DrawCardMargins();
 	void UpdateMargins(wxDC & dc,const wxRect& size);
 	void UpdateCard(const wxSize&  size);
+
+	void SetBitmap(wxBitmap bmp) { m_preview_bmp = bmp; }
+	wxBitmap GetBitmap()const { return m_preview_bmp; }
 
 private:
 	wxDialog* m_parent = nullptr;
@@ -52,6 +55,7 @@ private:
 	wxBrush m_margings_brush;
 	wxBrush m_shadow_brush;
 
+	wxBitmap m_preview_bmp{};
 
 
 	wxDECLARE_EVENT_TABLE();
