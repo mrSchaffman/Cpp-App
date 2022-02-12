@@ -153,8 +153,8 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent):wxDialog(parent,ID_PA
 			}
 			wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
 			{
-				wxButton*btOK = new wxButton(this, wxID_OK);// , wxT("IMAGE"), wxDefaultPosition, wxSize(152, 252));
-				wxButton*btCancel = new wxButton(this, wxID_CANCEL);// , wxT("IMAGE"), wxDefaultPosition, wxSize(152, 252));
+				wxButton*btOK = new wxButton(this, wxID_OK);
+				wxButton*btCancel = new wxButton(this, wxID_CANCEL);
 				m_row42->Add(btOK, 1, wxALL, 4);
 				m_row42->Add(btCancel, 1, wxALL, 4);
 			}

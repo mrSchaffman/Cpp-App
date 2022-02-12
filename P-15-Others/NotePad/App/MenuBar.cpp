@@ -6,7 +6,7 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_EXIT,MenuBar::OnExit)
 	EVT_MENU(M_ZOOM_IN,MenuBar::OnZoomIn)
 	EVT_MENU(M_ZOOM_OUT,MenuBar::OnZoomOut)
-	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSetting)
+	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSettingDialog)
 wxEND_EVENT_TABLE()
 
 MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text)
@@ -108,8 +108,7 @@ void MenuBar::OnAbout(wxCommandEvent & evnt)
 
 void MenuBar::OnExit(wxCommandEvent & evnt)
 {
-	//auto parent = evnt.Get();
-	//auto t = parent
+	m_parent->Close(true);
 }
 
 void MenuBar::OnZoomIn(wxCommandEvent & event)
@@ -122,8 +121,15 @@ void MenuBar::OnZoomOut(wxCommandEvent & event)
 	m_text->SetFont(m_text->GetFont().Scale(0.9));
 }
 
-void MenuBar::OnPageSetting(wxCommandEvent & event)
+void MenuBar::OnPageSettingDialog(wxCommandEvent & event)
 {
-	m_page_setting = new PageSettingDialogue(m_parent);
-	m_page_setting->ShowModal();
+
+	//m_page_setting_dialog = new;
+
+	PageSettingDialogue m_page_setting_dialog(m_parent);
+	
+	if (m_page_setting_dialog.ShowModal() ==  wxID_OK)
+	{
+
+	}
 }

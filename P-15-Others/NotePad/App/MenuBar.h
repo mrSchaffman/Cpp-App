@@ -65,7 +65,7 @@ public:
 
 	void OnZoomIn(wxCommandEvent&event);
 	void OnZoomOut(wxCommandEvent&event);
-	void OnPageSetting(wxCommandEvent&event);
+	void OnPageSettingDialog(wxCommandEvent&event);
 
 private:
 
@@ -77,7 +77,7 @@ private:
 	wxTextCtrl*m_text = nullptr;
 
 	wxFrame*m_parent = nullptr;
-	PageSettingDialogue* m_page_setting = nullptr;
+	//PageSettingDialogue* m_page_setting_dialog = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 };

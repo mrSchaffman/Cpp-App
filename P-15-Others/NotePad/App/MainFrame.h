@@ -1,6 +1,5 @@
 #pragma once
 #include"wx/wx.h"
-#include"MainPanel.h"
 #include"MenuBar.h"
 #include"StatusBar.h"
 #include"TextCtrl.h"
