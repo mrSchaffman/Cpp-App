@@ -14,6 +14,7 @@ PageSettingDialogue::PageSettingDialogue(wxFrame * parent, wxWindowID id ,
 	const wxPoint& pos ,
 	const wxSize& size ):wxDialog(parent,ID_PAGE_SETTING, caption, pos, size),m_parent(parent)
 {
+
 	Init();
 
 
@@ -356,6 +357,7 @@ void PageSettingDialogue::OnOrientationChanged(wxCommandEvent & event)
 
 void PageSettingDialogue::Init()
 {
+
 	m_formats = {
 	wxSize(132,187),
 	wxSize(93,132),

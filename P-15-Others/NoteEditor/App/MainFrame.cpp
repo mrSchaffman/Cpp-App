@@ -7,6 +7,13 @@ wxEND_EVENT_TABLE()
 MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDefaultPosition,wxSize(620,480))
 {
 
+	wxImage img(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
+	wxBitmap bmpIcon(img);
+
+	wxIcon AppIcon;
+	AppIcon.CopyFromBitmap(bmpIcon);
+	SetIcon(AppIcon);
+
 	SetTitle(m_filename + " - " + title);
 
 	m_text_screen = new  TextCtrl(this);
