@@ -25,7 +25,6 @@ void PageSettingDialogue::CreateControls()
 	wxBoxSizer* topSizer = new wxBoxSizer(wxHORIZONTAL);
 	{
 		SetSizer(topSizer);
-		//SetSizerAndFit(topSizer);
 
 		wxBoxSizer* boxSizer = new wxBoxSizer(wxHORIZONTAL); 
 		{
@@ -57,45 +56,49 @@ void PageSettingDialogue::CreateControls()
 
 				m_col1->Add(5, 5, wxALIGN_CENTER_HORIZONTAL | wxALL, 5);
 
-				wxFlexGridSizer* m_row2 = new wxFlexGridSizer(1,2,5,5);
-				{
 				
-					m_orientation = new wxRadioBox(this, ID_ORIENTATION, wxT("Orientation"), wxDefaultPosition, wxDefaultSize, m_orientations, 1, wxRA_SPECIFY_COLS);
-
-					m_row2->Add(m_orientation, 1, wxALIGN_LEFT | wxALL, 5);
-
-					wxStaticBoxSizer* m_margings = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Margins(millimeters)"));
+					wxFlexGridSizer* m_row2 = new wxFlexGridSizer(1, 2, 5, 5);
 					{
-						wxGridSizer*grid = new wxGridSizer(2, 4, 5, 5);
+
+
+
+						wxStaticBoxSizer* m_margings = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Margins(millimeters)"));
 						{
-							wxStaticText* leftTxt = new wxStaticText(this, wxID_STATIC, wxT("Left:"), wxDefaultPosition, wxSize(42, 20));
-							wxTextCtrl* left = new wxTextCtrl(this, ID_MARGIN_LEFT, wxT("20"), wxDefaultPosition, wxSize(42, 20));
-							wxStaticText* rightTxt = new wxStaticText(this, wxID_STATIC, wxT("Right:"), wxDefaultPosition, wxSize(42, 20));
-							wxTextCtrl* right = new wxTextCtrl(this, ID_MARGIN_RIGHT, wxT("20"), wxDefaultPosition, wxSize(42, 20));
-							wxStaticText* topTxt = new wxStaticText(this, wxID_STATIC, wxT("Top:"), wxDefaultPosition, wxSize(42, 20));
-							wxTextCtrl* top = new wxTextCtrl(this, ID_MARGIN_TOP, wxT("20"), wxDefaultPosition, wxSize(42, 20));
-							wxStaticText* bottomTxt = new wxStaticText(this, wxID_STATIC, wxT("Bottom:"), wxDefaultPosition, wxSize(42, 20));
-							wxTextCtrl* bottom = new wxTextCtrl(this, ID_MARGIN_BOTTOM, wxT("20"), wxDefaultPosition, wxSize(42, 20));
+							wxGridSizer*grid = new wxGridSizer(2, 4, 5, 5);
+							{
+								wxStaticText* leftTxt = new wxStaticText(this, wxID_STATIC, wxT("Left:"), wxDefaultPosition, wxSize(42, 20));
+								wxTextCtrl* left = new wxTextCtrl(this, ID_MARGIN_LEFT, wxT("20"), wxDefaultPosition, wxSize(42, 20));
+								wxStaticText* rightTxt = new wxStaticText(this, wxID_STATIC, wxT("Right:"), wxDefaultPosition, wxSize(42, 20));
+								wxTextCtrl* right = new wxTextCtrl(this, ID_MARGIN_RIGHT, wxT("20"), wxDefaultPosition, wxSize(42, 20));
+								wxStaticText* topTxt = new wxStaticText(this, wxID_STATIC, wxT("Top:"), wxDefaultPosition, wxSize(42, 20));
+								wxTextCtrl* top = new wxTextCtrl(this, ID_MARGIN_TOP, wxT("20"), wxDefaultPosition, wxSize(42, 20));
+								wxStaticText* bottomTxt = new wxStaticText(this, wxID_STATIC, wxT("Bottom:"), wxDefaultPosition, wxSize(42, 20));
+								wxTextCtrl* bottom = new wxTextCtrl(this, ID_MARGIN_BOTTOM, wxT("20"), wxDefaultPosition, wxSize(42, 20));
 
-							grid->Add(leftTxt, 1, wxALL, 5);
-							grid->Add(left, 1, wxALL, 5);
-							grid->Add(rightTxt, 1, wxALL, 5);
-							grid->Add(right, 1, wxALL, 5);
-							grid->Add(topTxt, 1, wxALL, 5);
-							grid->Add(top, 1, wxALL, 5);
-							grid->Add(bottomTxt, 1, wxALL, 5);
-							grid->Add(bottom, 1, wxALL, 5);
-		
-							m_margings->Add(grid, 1, wxALIGN_CENTER | wxALL, 5);
+								grid->Add(leftTxt, 1, wxALL, 5);
+								grid->Add(left, 1, wxALL, 5);
+								grid->Add(rightTxt, 1, wxALL, 5);
+								grid->Add(right, 1, wxALL, 5);
+								grid->Add(topTxt, 1, wxALL, 5);
+								grid->Add(top, 1, wxALL, 5);
+								grid->Add(bottomTxt, 1, wxALL, 5);
+								grid->Add(bottom, 1, wxALL, 5);
 
+								m_margings->Add(grid, 1, wxALIGN_CENTER | wxALL, 5);
+
+							}
 						}
+						m_row2->Add(m_margings, 1, wxALIGN_LEFT | wxALL, 5);
+
+						wxRadioBox *m_orientation = new wxRadioBox(this, ID_ORIENTATION, wxT("Orientation"), wxDefaultPosition, wxSize(90, 95), m_orientations, 1, wxRA_SPECIFY_COLS);
+						m_row2->Add(m_orientation, 1, wxALL, 5);
+
+
+
 					}
-					m_row2->Add(m_margings, 1, wxALIGN_CENTER | wxALL, 5);
 
 
-				}
-
-				wxStaticBoxSizer* style = new wxStaticBoxSizer(wxVERTICAL, this, wxT(""));
+				wxStaticBoxSizer* style2 = new wxStaticBoxSizer(wxVERTICAL, this, wxT(""));
 				{
 					wxFlexGridSizer*m_row31 = new wxFlexGridSizer(2,2,5,5);
 					{
@@ -111,14 +114,14 @@ void PageSettingDialogue::CreateControls()
 						m_row31->Add(footerTxt, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 						m_row31->Add(footer, 1, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-						style->Add(m_row31, 0, wxALL, 5);
-
 					}
+					style2->Add(m_row31, 0, wxALL, 5);
+
 				}
 
 				m_col1->Add(m_paper, 0);
 				m_col1->Add(m_row2, 0);
-				m_col1->Add(style, 0);
+				m_col1->Add(style2, 0);
 				m_col1->Add(new wxHyperlinkCtrl(this, ID_MY_INPUT_VALUE, 
 					wxT("see more: @Barth.Feudong"), 
 					wxT("https://github.com/mrSchaffman"), 
@@ -177,23 +180,28 @@ bool PageSettingDialogue::TransferDataToWindow()	// setting the Dialog UI data u
 
 		// the Margins
 		{
+			wxString left = wxString::Format(wxT("%i"), m_left);
+			wxString right = wxString::Format(wxT("%i"), m_right);
+			wxString top = wxString::Format(wxT("%i"), m_top);
+			wxString buttom = wxString::Format(wxT("%i"), m_bottom);
+
 			wxTextCtrl* leftCrtl = (wxTextCtrl*)FindWindow(ID_MARGIN_LEFT);
-			leftCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &m_left));
+			leftCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &left));
 
 			wxTextCtrl* rightCrtl = (wxTextCtrl*)FindWindow(ID_MARGIN_RIGHT);
-			rightCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &m_left));
+			rightCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &right));
 
 			wxTextCtrl* topCrtl = (wxTextCtrl*)FindWindow(ID_MARGIN_TOP);
-			topCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &m_left));
+			topCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &top));
 
 			wxTextCtrl* bottomCrtl = (wxTextCtrl*)FindWindow(ID_MARGIN_BOTTOM);
-			bottomCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &m_left));
+			bottomCrtl->SetValidator(wxTextValidator(wxFILTER_DIGITS, &buttom));
 
 			{
-				leftCrtl->SetValue(m_left);
-				rightCrtl->SetValue(m_right);
-				topCrtl->SetValue(m_top);
-				bottomCrtl->SetValue(m_bottom);
+				leftCrtl->SetValue(left);
+				rightCrtl->SetValue(right);
+				topCrtl->SetValue(top);
+				bottomCrtl->SetValue(buttom);
 
 			}
 
@@ -244,10 +252,10 @@ bool PageSettingDialogue::TransferDataFromWindow() // Setting the backend's data
 			wxTextCtrl* bottomCrtl = (wxTextCtrl*)FindWindow(ID_MARGIN_BOTTOM);
 
 			{
-				m_left = leftCrtl->GetValue();
-				m_right = rightCrtl->GetValue();
-				m_top = topCrtl->GetValue();
-				m_bottom = bottomCrtl->GetValue();
+				m_left = wxAtoi(leftCrtl->GetValue());
+				m_right = wxAtoi(rightCrtl->GetValue());
+				m_top = wxAtoi(topCrtl->GetValue());
+				m_bottom = wxAtoi(bottomCrtl->GetValue());
 
 			}
 
@@ -370,10 +378,10 @@ void PageSettingDialogue::Init()
 	m_sizes.Add(wxT("A4"));
 	m_sizes.Add(wxT("A5"));
 
-	m_left = wxT("20");
-	m_right = wxT("20");
-	m_top = wxT("20");
-	m_bottom = wxT("20");
+	m_left = 20;
+	m_right = 20;
+	m_top = 20;
+	m_bottom = 20;
 
 	m_sources.Add(wxT("Auto Bin"));
 	m_sources.Add(wxT("..."));

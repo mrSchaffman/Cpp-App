@@ -75,10 +75,10 @@ private:
 	Card* m_preview_win = nullptr;
 
 
-	wxString m_left;
-	wxString m_top;
-	wxString m_right;
-	wxString m_bottom;
+	int m_left;
+	int m_top;
+	int m_right;
+	int m_bottom;
 
 	wxString m_header{};
 	wxString m_footer{};
