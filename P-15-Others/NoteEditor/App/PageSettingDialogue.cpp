@@ -1,12 +1,17 @@
 #include "PageSettingDialogue.h"
 
 wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
-	EVT_COMBOBOX(ID_SIZE_CBOX,PageSettingDialogue::OnSizeTypeChanged)
-	EVT_TEXT(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftChanged)
-	EVT_TEXT(ID_MARGIN_TOP,PageSettingDialogue::OnMarginTopChanged)
-	EVT_TEXT(ID_MARGIN_RIGHT,PageSettingDialogue::OnMarginRightChanged)
-	EVT_TEXT(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomChanged)
-	EVT_RADIOBOX(ID_RADIOBOX,PageSettingDialogue::OnOrientationChanged)
+	EVT_UPDATE_UI(ID_SIZE_CBOX,PageSettingDialogue::OnSizeTypeUpdate)
+	EVT_UPDATE_UI(ID_SOURCE_CBOX,PageSettingDialogue::OnSourceUpdate)
+	EVT_UPDATE_UI(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftUpdate)
+	EVT_UPDATE_UI(ID_MARGIN_TOP,PageSettingDialogue::OnMarginTopUpdate)
+	EVT_UPDATE_UI(ID_MARGIN_RIGHT,PageSettingDialogue::OnMarginRightUpdate)
+	EVT_UPDATE_UI(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomUpdate)
+	EVT_UPDATE_UI(ID_RADIOBOX,PageSettingDialogue::OnOrientationUpdate)
+
+	EVT_BUTTON(ID_OK, PageSettingDialogue::OnOK)
+	EVT_BUTTON(ID_RESET, PageSettingDialogue::OnResetClick)
+
 wxEND_EVENT_TABLE()
 
 PageSettingDialogue::PageSettingDialogue(wxFrame * parent, wxWindowID id ,
@@ -134,12 +139,12 @@ void PageSettingDialogue::CreateControls()
 				wxStaticBoxSizer* m_preview = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Preview"));
 				{
 
-					m_preview_win = new Card(this, ID_CARD);// m_current_format);
+					Card* m_preview_win = new Card(this, ID_CARD, m_formats[0]);// m_current_format);
 					m_preview->Add(m_preview_win, 1, wxCENTER);
 				}
 				wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
 				{
-					wxButton*btOK = new wxButton(this, wxID_OK);
+					wxButton*btOK = new wxButton(this, ID_OK, wxT("OK"));
 					wxButton*btCancel = new wxButton(this, wxID_CANCEL);
 					m_row42->Add(btOK, 1, wxALL, 5);
 					m_row42->Add(btCancel, 1, wxALL, 5);
@@ -284,76 +289,56 @@ bool PageSettingDialogue::TransferDataFromWindow() // Setting the backend's data
 }
 
 
-void PageSettingDialogue::OnSizeTypeChanged(wxCommandEvent & event)
+void PageSettingDialogue::OnOK(wxCommandEvent & event)
 {
-	m_current_format = m_formats[event.GetSelection()];
-
-	if (isPortrait)
-		m_preview_win->UpdateCard(m_current_format);
-	else
+	if (Validate() && TransferDataFromWindow())
 	{
-		wxSize landscape(m_current_format.GetY(), m_current_format.GetX());
-
-		m_preview_win->UpdateCard(landscape);
-	}
-
-}
-
-void PageSettingDialogue::OnMarginLeftChanged(wxCommandEvent & event)
-{
-	if (event.GetInt() > 0)
-	{
-		m_preview_win->SetMarginLeft(event.GetInt());
-
+		if (IsModal())
+			EndModal(wxID_OK); // If modal
+		else
+		{
+			SetReturnCode(wxID_OK);
+			this->Show(false); // If modeless
+		}
 	}
 }
 
-void PageSettingDialogue::OnMarginTopChanged(wxCommandEvent & event)
+void PageSettingDialogue::OnResetClick(wxCommandEvent & event)
 {
-	if (event.GetInt() > 0)
-	{
-		m_preview_win->SetMarginTop(event.GetInt());
-	}
-
+	Init();
+	TransferDataToWindow();
 }
 
-void PageSettingDialogue::OnMarginRightChanged(wxCommandEvent & event)
+void PageSettingDialogue::OnSizeTypeUpdate(wxUpdateUIEvent & event)
 {
-	if (event.GetInt() > 0)
-	{
-		m_preview_win->SetMarginRight(event.GetInt());
-
-	}
-
 }
 
-void PageSettingDialogue::OnMarginBottomChanged(wxCommandEvent & event)
+void PageSettingDialogue::OnSourceUpdate(wxUpdateUIEvent & event)
 {
-	if (event.GetInt() > 0)
-	{
-		m_preview_win->SetMarginBottom(event.GetInt());
-	}
-
 }
 
-void PageSettingDialogue::OnOrientationChanged(wxCommandEvent & event)
+void PageSettingDialogue::OnMarginLeftUpdate(wxUpdateUIEvent & event)
 {
-
-	if (event.GetSelection()==0)
-	{
-		isPortrait = true;
-		m_preview_win->UpdateCard(m_current_format);
-	}
-	else
-	{
-		isPortrait = false;
-
-		wxSize landscape(m_current_format.GetY(), m_current_format.GetX());
-		m_preview_win->UpdateCard(landscape);
-
-	}
-
 }
+
+void PageSettingDialogue::OnMarginTopUpdate(wxUpdateUIEvent & event)
+{
+}
+
+void PageSettingDialogue::OnMarginRightUpdate(wxUpdateUIEvent & event)
+{
+}
+
+void PageSettingDialogue::OnMarginBottomUpdate(wxUpdateUIEvent & event)
+{
+}
+
+void PageSettingDialogue::OnOrientationUpdate(wxUpdateUIEvent & event)
+{
+}
+
+
+
 
 void PageSettingDialogue::Init()
 {
@@ -388,9 +373,12 @@ void PageSettingDialogue::Init()
 	m_sources.Add(wxT("Auto Bin"));
 	m_sources.Add(wxT("..."));
 
-	m_orientations.Add(wxT("Portrait"));
-	m_orientations.Add(wxT("Landscape"));
+
+	int i1 = m_orientations.Add(wxT("Portrait"));
+	int i2 = m_orientations.Add(wxT("Landscape"));
+
 
 	m_header = wxEmptyString;
 	m_footer = wxEmptyString;
+
 }

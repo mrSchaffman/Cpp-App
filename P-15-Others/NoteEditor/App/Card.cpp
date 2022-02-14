@@ -4,24 +4,11 @@ wxBEGIN_EVENT_TABLE(Card, wxPanel)
 	EVT_MOUSE_EVENTS(Card::OnMouse)
 wxEND_EVENT_TABLE()
 
-Card::Card(wxDialog * parent, wxWindowID id, wxSize & size):wxPanel(parent,id,wxDefaultPosition, size)
+Card::Card(wxDialog * parent, wxWindowID id, wxSize & format, wxSize & size):wxPanel(parent,id,wxDefaultPosition, size), m_parent (parent), m_format ( size)
 {
-	m_parent = parent;
-	m_card = size;
 
 
-	m_shadow = m_card;
-	m_margins = wxSize(m_card.GetWidth() - 5, m_card.GetHeight() - 5);
-
-
-	m_shadow_pen = wxPen(wxColour(222, 226, 230));
-	m_margings_pen = wxPen(wxColour(255, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
-	m_card_pen = wxPen(*wxWHITE_PEN);
-
-	m_card_brush = wxBrush(*wxWHITE_BRUSH);
-	m_margings_brush = wxBrush(*wxTRANSPARENT_BRUSH);
-	m_shadow_brush = wxBrush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
-
+	Init();
 
 }
 
@@ -29,6 +16,17 @@ void Card::OnPaint(wxPaintEvent & event)
 {
 	wxPaintDC dc(this);
 	PrepareDC(dc);
+
+	wxPen m_panel_pen = wxPen(wxPENSTYLE_TRANSPARENT);
+	wxBrush m_panel_brush = wxBrush(wxBRUSHSTYLE_TRANSPARENT);
+
+	dc.SetPen(m_panel_pen);
+	dc.SetBrush(m_panel_brush);
+
+
+	wxBitmap panel(PanelSize);
+
+	dc.DrawBitmap(panel,wxPoint(0,0));
 
 	DrawCard(dc);
 
@@ -39,68 +37,45 @@ void Card::OnMouse(wxMouseEvent & event)
 
 	if (event.Entering())
 	{
-		wxSize sizeZoomIn(m_card.GetWidth() + 4, m_card.GetHeight() + 4);
+		wxSize sizeZoomIn(m_format.GetWidth() + 4, m_format.GetHeight() + 4);
 		UpdateCard(sizeZoomIn);
 	}
 	if (event.Leaving())
 	{
-		wxSize sizeZoomOut(m_card.GetWidth() - 4, m_card.GetHeight() - 4);
+		wxSize sizeZoomOut(m_format.GetWidth() - 4, m_format.GetHeight() - 4);
 		UpdateCard(sizeZoomOut);
 	}
 
-}
-
-void Card::SetMargins(size_t left, size_t right, size_t top, size_t bottom)
-{
-	m_margin_left = left;
-	m_margin_right = right;
-	m_margin_top = top;
-	m_margin_bottom = bottom;
-}
-
-void Card::SetMarginTop(size_t marg)
-{
-	m_margin_top = marg;
-	// updateMargin
-}
-
-void Card::SetMarginLeft(size_t marg)
-{
-	m_margin_left = marg;
-}
-
-void Card::SetMarginRight(size_t marg)
-{
-	m_margin_right = marg;
-}
-
-void Card::SetMarginBottom(size_t marg)
-{
-	m_margin_bottom = marg;
 }
 
 
 void Card::DrawCard(wxDC & dc)
 {
 	{
+		wxPen m_shadow_pen = wxPen(wxColour(222, 226, 230));
+		wxBrush m_shadow_brush = wxBrush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
+
 		dc.SetPen(m_shadow_pen);
 		dc.SetBrush(m_shadow_brush);
-		wxRect tempS(m_card);
+		wxRect tempS(m_format);
 
-		tempS.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2 + 3);
-		tempS.SetTop((PanelSize.GetY() - m_card.GetY()) / 2 + 3);
+		tempS.SetLeft((PanelSize.GetX() - m_format.GetX()) / 2 + 3);
+		tempS.SetTop((PanelSize.GetY() - m_format.GetY()) / 2 + 3);
 		dc.DrawRectangle(tempS);
 
 	}
 
 
 	{
-		dc.SetPen(m_card_pen);
-		dc.SetBrush(m_card_brush);
-		wxRect temp(m_card);
+		wxPen m_format_pen = wxPen(*wxWHITE_PEN);
+		wxBrush m_format_brush = wxBrush(*wxWHITE_BRUSH);
 
-		temp.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2);
-		temp.SetTop((PanelSize.GetY() - m_card.GetY()) / 2 );
+		dc.SetPen(m_format_pen);
+		dc.SetBrush(m_format_brush);
+		wxRect temp(m_format);
+
+		temp.SetLeft((PanelSize.GetX() - m_format.GetX()) / 2);
+		temp.SetTop((PanelSize.GetY() - m_format.GetY()) / 2 );
 		dc.DrawRectangle(temp);
 
 	}
@@ -115,17 +90,21 @@ void Card::DrawCardMargins()
 	wxClientDC dc(this);
 	PrepareDC(dc);
 
+	wxPen m_margings_pen = wxPen(wxColour(255, 0, 0), 1, wxPENSTYLE_SHORT_DASH);
+	wxBrush m_margings_brush = wxBrush(*wxTRANSPARENT_BRUSH);
+
+
 	dc.SetPen(m_margings_pen);
 	dc.SetBrush(m_margings_brush);
 
 	//wxRect m_margins(wxPoint(m_margin_top, m_margin_left), wxPoint(m_margin_right, m_margin_bottom));
 	wxRect temp(m_margins);
 
-	temp.SetLeft((PanelSize.GetX() - m_card.GetX()) / 2 + m_margin_left);
-	temp.SetTop((PanelSize.GetY() - m_card.GetY()) / 2 + m_margin_top);
+	temp.SetLeft((PanelSize.GetX() - m_format.GetX()) / 2 + m_margin_left);
+	temp.SetTop((PanelSize.GetY() - m_format.GetY()) / 2 + m_margin_top);
 
-	temp.SetRight((PanelSize.GetX() - m_card.GetX()) / 2 - m_margin_right );
-	temp.SetBottom((PanelSize.GetY() - m_card.GetY()) / 2 - m_margin_bottom);
+	temp.SetRight((PanelSize.GetX() - m_format.GetX()) / 2 - m_margin_right );
+	temp.SetBottom((PanelSize.GetY() - m_format.GetY()) / 2 - m_margin_bottom);
 
 	dc.DrawRectangle(temp);
 
@@ -137,9 +116,26 @@ void Card::UpdateMargins(wxDC & dc,const wxRect & size)
 	dc.DrawRectangle(size);
 }
 
+void Card::UpdateMarginLeft(int size)
+{
+
+}
+
+void Card::UpdateMarginRight(int size)
+{
+}
+
+void Card::UpdateMarginTop(int size)
+{
+}
+
+void Card::UpdateMarginButtom(int size)
+{
+}
+
 void Card::UpdateCard(const wxSize&  size)
 {
-	m_card = size;
+	m_format = size;
 
 	this->RefreshRect(PanelSize);
 
@@ -148,4 +144,23 @@ void Card::UpdateCard(const wxSize&  size)
 
 	DrawCard(dc);
 
+}
+
+void Card::Init()
+{
+	m_shadow = m_format;
+
+	// margins
+	{
+		m_margin_left = 20;
+		m_margin_right = 20;
+		m_margin_top = 20;
+		m_margin_bottom = 20;
+
+		m_p1 = wxPoint(m_margin_left, m_margin_top);
+		m_p2 = wxPoint(m_format.GetHeight() - m_margin_bottom, m_format.GetWidth() - m_margin_right);
+
+		m_margins = wxSize(m_format.GetWidth() - 5, m_format.GetHeight() - 5);
+
+	}
 }
