@@ -112,14 +112,19 @@ void Card::UpdateMargins(wxDC & dc,const wxRect & size)
 
 void Card::UpdateFormat(const wxSize& size)
 {
-	SetFormat( size);
+	if (!m_style)
+	{
+		wxSize temp(size.GetHeight(), size.GetWidth());
+		SetFormat(temp);
+		UpdateCard(temp);
+	}
+	else
+	{
+		//wxSize temp(size.GetHeight(), size.GetWidth());
+		SetFormat(size);
+		UpdateCard(size);
 
-	this->RefreshRect(PanelSize);
-
-	wxClientDC dc(this);
-	PrepareDC(dc);
-
-	DrawCard(dc);
+	}
 
 }
 
@@ -144,14 +149,27 @@ void Card::UpdateOrientation(bool style)
 {
 	m_style = style;
 	
-	this->RefreshRect(PanelSize);
+	//this->RefreshRect(PanelSize);
 
-	wxClientDC dc(this);
-	PrepareDC(dc);
+	//wxClientDC dc(this);
+	//PrepareDC(dc);
 
-	m_format = m_formats[style];
+	if (style)
+	{
+		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+		SetFormat(temp);
+		UpdateCard(temp);
+	}
+	else
+	{
+		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+		SetFormat(temp);
+		UpdateCard(temp);
 
-	DrawCard(dc);
+	}
+	//m_format = m_formats[style];
+
+	//DrawCard(dc);
 
 
 }
@@ -175,7 +193,7 @@ void Card::Init()
 	m_style = true;
 
 	wxSize temp(m_format.GetHeight(), m_format.GetWidth());
-	m_formats = { m_format, temp };
+	//m_formats = { m_format, temp };
 	// margins
 	{
 		m_margin_left = 20;

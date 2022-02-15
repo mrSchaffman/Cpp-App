@@ -45,11 +45,8 @@ public:
 	void UpdateCard(const wxSize&  size);
 
 	void SetBitmap(wxBitmap bmp) { m_preview_bmp = bmp; }
-	void SetFormat(const wxSize& format) { 
-		m_format = format;	
-		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
-		m_formats = { m_format, temp };
-	}
+	void SetFormat(const wxSize& format) { m_format= format;}
+	wxSize GetFormat()const { return m_format; }
 
 	wxBitmap GetBitmap()const { return m_preview_bmp; }
 
@@ -72,7 +69,6 @@ private:
 	wxSize m_format;
 	wxSize m_margins;
 
-	std::array<wxSize, 2> m_formats{};
 
 	wxBitmap m_preview_bmp{};
 
