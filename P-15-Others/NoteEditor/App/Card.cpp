@@ -4,12 +4,13 @@ wxBEGIN_EVENT_TABLE(Card, wxPanel)
 	EVT_MOUSE_EVENTS(Card::OnMouse)
 wxEND_EVENT_TABLE()
 
-Card::Card(wxDialog * parent, wxWindowID id, wxSize & format, wxSize & size):wxPanel(parent,id,wxDefaultPosition, size), m_parent (parent), m_format ( size)
+Card::Card(wxDialog * parent, wxWindowID id, wxSize & format, wxSize & size):wxPanel(parent,id,wxDefaultPosition, size), m_parent (parent), m_format ( format)
 {
 
 
 	Init();
 
+	//SetBackgroundColour(wxColour(216, 243, 220));
 }
 
 void Card::OnPaint(wxPaintEvent & event)
@@ -17,16 +18,6 @@ void Card::OnPaint(wxPaintEvent & event)
 	wxPaintDC dc(this);
 	PrepareDC(dc);
 
-	wxPen m_panel_pen = wxPen(wxPENSTYLE_TRANSPARENT);
-	wxBrush m_panel_brush = wxBrush(wxBRUSHSTYLE_TRANSPARENT);
-
-	dc.SetPen(m_panel_pen);
-	dc.SetBrush(m_panel_brush);
-
-
-	wxBitmap panel(PanelSize);
-
-	dc.DrawBitmap(panel,wxPoint(0,0));
 
 	DrawCard(dc);
 
@@ -52,8 +43,8 @@ void Card::OnMouse(wxMouseEvent & event)
 void Card::DrawCard(wxDC & dc)
 {
 	{
-		wxPen m_shadow_pen = wxPen(wxColour(222, 226, 230));
-		wxBrush m_shadow_brush = wxBrush(wxColour(222, 226, 230), wxBRUSHSTYLE_SOLID);
+		wxPen m_shadow_pen = wxPen(wxColour(116, 198, 157));
+		wxBrush m_shadow_brush = wxBrush(wxColour(116, 198, 157), wxBRUSHSTYLE_SOLID);
 
 		dc.SetPen(m_shadow_pen);
 		dc.SetBrush(m_shadow_brush);
@@ -78,8 +69,11 @@ void Card::DrawCard(wxDC & dc)
 		temp.SetTop((PanelSize.GetY() - m_format.GetY()) / 2 );
 		dc.DrawRectangle(temp);
 
+
 	}
-	DrawCardMargins();
+
+
+	//DrawCardMargins();
 
 
 }
@@ -116,6 +110,19 @@ void Card::UpdateMargins(wxDC & dc,const wxRect & size)
 	dc.DrawRectangle(size);
 }
 
+void Card::UpdateFormat(const wxSize& size)
+{
+	SetFormat( size);
+
+	this->RefreshRect(PanelSize);
+
+	wxClientDC dc(this);
+	PrepareDC(dc);
+
+	DrawCard(dc);
+
+}
+
 void Card::UpdateMarginLeft(int size)
 {
 
@@ -131,6 +138,22 @@ void Card::UpdateMarginTop(int size)
 
 void Card::UpdateMarginButtom(int size)
 {
+}
+
+void Card::UpdateOrientation(bool style)
+{
+	m_style = style;
+	
+	this->RefreshRect(PanelSize);
+
+	wxClientDC dc(this);
+	PrepareDC(dc);
+
+	m_format = m_formats[style];
+
+	DrawCard(dc);
+
+
 }
 
 void Card::UpdateCard(const wxSize&  size)
@@ -149,7 +172,10 @@ void Card::UpdateCard(const wxSize&  size)
 void Card::Init()
 {
 	m_shadow = m_format;
+	m_style = true;
 
+	wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+	m_formats = { m_format, temp };
 	// margins
 	{
 		m_margin_left = 20;

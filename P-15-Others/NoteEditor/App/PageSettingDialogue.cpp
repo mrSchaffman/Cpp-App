@@ -1,13 +1,13 @@
 #include "PageSettingDialogue.h"
 
 wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
-	EVT_UPDATE_UI(ID_SIZE_CBOX,PageSettingDialogue::OnSizeTypeUpdate)
+	EVT_COMBOBOX(ID_SIZE_CBOX,PageSettingDialogue::OnFormatUpdate)
 	EVT_UPDATE_UI(ID_SOURCE_CBOX,PageSettingDialogue::OnSourceUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_TOP,PageSettingDialogue::OnMarginTopUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_RIGHT,PageSettingDialogue::OnMarginRightUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomUpdate)
-	EVT_UPDATE_UI(ID_RADIOBOX,PageSettingDialogue::OnOrientationUpdate)
+	EVT_RADIOBOX(ID_ORIENTATION,PageSettingDialogue::OnOrientationUpdate)
 
 	EVT_BUTTON(ID_OK, PageSettingDialogue::OnOK)
 	EVT_BUTTON(ID_RESET, PageSettingDialogue::OnResetClick)
@@ -65,8 +65,6 @@ void PageSettingDialogue::CreateControls()
 				
 					wxFlexGridSizer* m_row2 = new wxFlexGridSizer(1, 2, 5, 5);
 					{
-
-
 
 						wxStaticBoxSizer* m_margings = new wxStaticBoxSizer(wxVERTICAL, this, wxT("Margins(millimeters)"));
 						{
@@ -309,8 +307,10 @@ void PageSettingDialogue::OnResetClick(wxCommandEvent & event)
 	TransferDataToWindow();
 }
 
-void PageSettingDialogue::OnSizeTypeUpdate(wxUpdateUIEvent & event)
+void PageSettingDialogue::OnFormatUpdate(wxCommandEvent & event)
 {
+	Card * cardPreview = (Card*)FindWindow(ID_CARD);
+	cardPreview->UpdateFormat(m_formats[ event.GetSelection()]);
 }
 
 void PageSettingDialogue::OnSourceUpdate(wxUpdateUIEvent & event)
@@ -333,37 +333,24 @@ void PageSettingDialogue::OnMarginBottomUpdate(wxUpdateUIEvent & event)
 {
 }
 
-void PageSettingDialogue::OnOrientationUpdate(wxUpdateUIEvent & event)
+void PageSettingDialogue::OnOrientationUpdate(wxCommandEvent & event)
 {
+	Card * cardPreview = (Card*)FindWindow(ID_CARD);
+	cardPreview->UpdateOrientation(event.GetInt());
+
 }
-
-
-
 
 void PageSettingDialogue::Init()
 {
 
 	m_formats = {
 	wxSize(132,187),
-	wxSize(93,132),
-	wxSize(66,93),
-	wxSize(47,66),
-	wxSize(33,47),
-	wxSize(23,33) };
+	wxSize(100,132),
+	wxSize(80,100)};
 
-	m_bmps = { wxSize(132,187),
-	wxSize(93,132),
-	wxSize(66,93),
-	wxSize(47,66),
-	wxSize(33,47),
-	wxSize(23,33) };
-
-	m_sizes.Add(wxT("A0"));
-	m_sizes.Add(wxT("A1"));
 	m_sizes.Add(wxT("A2"));
 	m_sizes.Add(wxT("A3"));
 	m_sizes.Add(wxT("A4"));
-	m_sizes.Add(wxT("A5"));
 
 	m_left = 20;
 	m_right = 20;
@@ -373,10 +360,8 @@ void PageSettingDialogue::Init()
 	m_sources.Add(wxT("Auto Bin"));
 	m_sources.Add(wxT("..."));
 
-
-	int i1 = m_orientations.Add(wxT("Portrait"));
-	int i2 = m_orientations.Add(wxT("Landscape"));
-
+	m_orientations.Add(wxT("Portrait"));
+	m_orientations.Add(wxT("Landscape"));
 
 	m_header = wxEmptyString;
 	m_footer = wxEmptyString;

@@ -81,13 +81,13 @@ public:
 	void OnOK(wxCommandEvent &event);
 	void OnResetClick(wxCommandEvent &event);
 
-	void OnSizeTypeUpdate(wxUpdateUIEvent &event);
+	void OnFormatUpdate(wxCommandEvent &event);
 	void OnSourceUpdate(wxUpdateUIEvent &event);
 	void OnMarginLeftUpdate(wxUpdateUIEvent &event);
 	void OnMarginTopUpdate(wxUpdateUIEvent &event);
 	void OnMarginRightUpdate(wxUpdateUIEvent &event);
 	void OnMarginBottomUpdate(wxUpdateUIEvent &event);
-	void OnOrientationUpdate(wxUpdateUIEvent &event);
+	void OnOrientationUpdate(wxCommandEvent &event);
 
 
 	void Init();

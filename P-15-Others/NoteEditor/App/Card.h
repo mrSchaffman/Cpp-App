@@ -1,5 +1,7 @@
 #pragma once
 #include"wx/wx.h"
+#include<array>
+
 
 
 static wxSize PanelSize = wxSize(152, 252);
@@ -33,15 +35,21 @@ public:
 	void DrawCardMargins();
 	void UpdateMargins(wxDC & dc,const wxRect& size);
 
+	void UpdateFormat(const wxSize& size);
 	void UpdateMarginLeft(int size);
 	void UpdateMarginRight(int size);
 	void UpdateMarginTop(int size);
 	void UpdateMarginButtom(int size);
+	void UpdateOrientation(bool style);
 
 	void UpdateCard(const wxSize&  size);
 
 	void SetBitmap(wxBitmap bmp) { m_preview_bmp = bmp; }
-	void SetFormat(wxSize format) { m_format = format; }
+	void SetFormat(const wxSize& format) { 
+		m_format = format;	
+		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+		m_formats = { m_format, temp };
+	}
 
 	wxBitmap GetBitmap()const { return m_preview_bmp; }
 
@@ -64,6 +72,7 @@ private:
 	wxSize m_format;
 	wxSize m_margins;
 
+	std::array<wxSize, 2> m_formats{};
 
 	wxBitmap m_preview_bmp{};
 
