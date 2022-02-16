@@ -79,7 +79,9 @@ public:
 
 	// Event Handler
 	void OnOK(wxCommandEvent &event);
+	void OnQuit(wxCommandEvent &event);
 	void OnResetClick(wxCommandEvent &event);
+	void OnCancel(wxCommandEvent &event);
 
 	void OnFormatUpdate(wxCommandEvent &event);
 	void OnSourceUpdate(wxUpdateUIEvent &event);
