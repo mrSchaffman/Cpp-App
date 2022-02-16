@@ -40,7 +40,7 @@ public:
 	PageSettingDialogue(wxFrame*parent, wxWindowID id = wxID_ANY,
 		const wxString& caption = wxT("Page Settings"),
 		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxSize(560, 390));
+		const wxSize& size = wxSize(570, 390));
 		//long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU);
 
 	virtual ~PageSettingDialogue() = default;
@@ -48,6 +48,9 @@ public:
 	// Accessors
 	void SetSize(int size) { m_size = size; }
 	int GetSize()const { return m_size; }
+
+	void SetFormat(const wxSize& format) { m_format = format; }
+	wxSize GetFormat()const { return m_format; }
 
 	void SetSource(int size) { m_source = size; }
 	int GetSource()const { return m_source; }
@@ -120,17 +123,10 @@ private:
 	wxArrayString m_sources{};
 	wxArrayString m_orientations{};
 
-
-
 	bool isPortrait = true;
 	//size_t m_format;
-	wxSize m_current_format{};
-	std::array<wxSize, 6> m_formats{};
-
-	std::array<wxBitmap,6> m_bmps{};
-
-	//std::set<int, Card> m_cards{};
-	wxBitmap m_current_bmp{};
+	wxSize m_format{};
+	std::array<wxSize, 3> m_formats{};
 
 	wxDECLARE_EVENT_TABLE();
 };

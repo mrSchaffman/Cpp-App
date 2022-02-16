@@ -112,19 +112,19 @@ void Card::UpdateMargins(wxDC & dc,const wxRect & size)
 
 void Card::UpdateFormat(const wxSize& size)
 {
-	if (!m_style)
-	{
-		wxSize temp(size.GetHeight(), size.GetWidth());
-		SetFormat(temp);
-		UpdateCard(temp);
-	}
-	else
-	{
-		//wxSize temp(size.GetHeight(), size.GetWidth());
+	//if (m_style == false)
+	//{
+	//	wxSize temp(size.GetHeight(), size.GetWidth());
+	//	SetFormat(temp);
+	//	UpdateCard(temp);
+
+	//	return;
+	//}
+	//	//wxSize temp(size.GetHeight(), size.GetWidth());
 		SetFormat(size);
 		UpdateCard(size);
 
-	}
+
 
 }
 
@@ -145,32 +145,10 @@ void Card::UpdateMarginButtom(int size)
 {
 }
 
-void Card::UpdateOrientation(bool style)
+void Card::UpdateOrientation()
 {
-	m_style = style;
-	
-	//this->RefreshRect(PanelSize);
-
-	//wxClientDC dc(this);
-	//PrepareDC(dc);
-
-	if (style)
-	{
-		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
-		SetFormat(temp);
-		UpdateCard(temp);
-	}
-	else
-	{
-		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
-		SetFormat(temp);
-		UpdateCard(temp);
-
-	}
-	//m_format = m_formats[style];
-
-	//DrawCard(dc);
-
+		SetFormat(m_format);
+		UpdateCard(m_format);
 
 }
 

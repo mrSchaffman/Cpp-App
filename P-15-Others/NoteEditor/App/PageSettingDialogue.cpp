@@ -9,9 +9,10 @@ wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
 	EVT_UPDATE_UI(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomUpdate)
 	EVT_RADIOBOX(ID_ORIENTATION,PageSettingDialogue::OnOrientationUpdate)
 
-	EVT_BUTTON(ID_CANCEL, PageSettingDialogue::OnCancel)
-	EVT_BUTTON(ID_OK, PageSettingDialogue::OnOK)
-	EVT_BUTTON(ID_RESET, PageSettingDialogue::OnResetClick)
+	EVT_BUTTON(wxID_EXIT, PageSettingDialogue::OnQuit)
+	EVT_BUTTON(wxID_CANCEL, PageSettingDialogue::OnCancel)
+	EVT_BUTTON(wxID_OK, PageSettingDialogue::OnOK)
+	EVT_BUTTON(wxID_RESET, PageSettingDialogue::OnResetClick)
 
 wxEND_EVENT_TABLE()
 
@@ -143,12 +144,12 @@ void PageSettingDialogue::CreateControls()
 				}
 				wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
 				{
-					wxButton*btReset = new wxButton(this, ID_RESET, wxT("Reset"));
-					wxButton*btOK = new wxButton(this, ID_OK, wxT("OK"));
-					wxButton*btCancel = new wxButton(this, wxID_CANCEL);
-					m_row42->Add(btReset, 1, wxALL, 5);
-					m_row42->Add(btOK, 1, wxALL, 5);
-					m_row42->Add(btCancel, 1, wxALL, 5);
+					wxButton*btReset = new wxButton(this, wxID_RESET, wxT("Reset"),wxDefaultPosition, wxSize(50, 30));
+					wxButton*btOK = new wxButton(this, wxID_OK, wxT("OK"), wxDefaultPosition, wxSize(50, 30));
+					wxButton*btCancel = new wxButton(this, wxID_CANCEL, wxT("Cancel"), wxDefaultPosition, wxSize(50, 30));
+					m_row42->Add(btReset, 1, wxALIGN_CENTER | wxALL, 5);
+					m_row42->Add(btOK, 1, wxALIGN_CENTER | wxALL, 5);
+					m_row42->Add(btCancel, 1, wxALIGN_CENTER | wxALL, 5);
 				}
 
 				m_col2->Add(m_preview, 0);
@@ -225,7 +226,6 @@ bool PageSettingDialogue::TransferDataToWindow()	// setting the Dialog UI data u
 		// preview
 		{
 			Card* preview = (Card*)FindWindow(ID_CARD);
-			preview->SetBitmap(m_bmps[4]);
 
 		}
 
@@ -279,7 +279,6 @@ bool PageSettingDialogue::TransferDataFromWindow() // Setting the backend's data
 		// preview
 		{
 			Card* preview = (Card*)FindWindow(ID_CARD);
-			m_current_bmp = preview->GetBitmap();
 
 		}
 
@@ -306,7 +305,7 @@ void PageSettingDialogue::OnOK(wxCommandEvent & event)
 
 void PageSettingDialogue::OnQuit(wxCommandEvent & event)
 {
-	TransferDataToWindow();
+	//TransferDataToWindow();
 	Close(this);
 }
 
@@ -326,7 +325,22 @@ void PageSettingDialogue::OnCancel(wxCommandEvent & event)
 void PageSettingDialogue::OnFormatUpdate(wxCommandEvent & event)
 {
 	Card * cardPreview = (Card*)FindWindow(ID_CARD);
-	cardPreview->UpdateFormat(m_formats[ event.GetSelection()]);
+	SetFormat(m_formats[event.GetSelection()]);
+
+	if (GetOrientation() == 1)
+	{
+		// Landscape
+		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+		cardPreview->UpdateCard(temp);
+
+	}
+	else
+	{
+		cardPreview->UpdateCard(m_format);
+	}
+
+	//event.Skip();
+
 }
 
 void PageSettingDialogue::OnSourceUpdate(wxUpdateUIEvent & event)
@@ -352,17 +366,32 @@ void PageSettingDialogue::OnMarginBottomUpdate(wxUpdateUIEvent & event)
 void PageSettingDialogue::OnOrientationUpdate(wxCommandEvent & event)
 {
 	Card * cardPreview = (Card*)FindWindow(ID_CARD);
-	cardPreview->UpdateOrientation(event.GetInt());
+
+	SetOrientation(event.GetSelection());
+
+	if (event.GetSelection() == 1)
+	{
+
+		wxSize temp(m_format.GetHeight(), m_format.GetWidth());
+		cardPreview->UpdateCard(temp);
+	}
+	else
+	{
+		cardPreview->UpdateCard(m_format);
+	}
+
 
 }
 
 void PageSettingDialogue::Init()
 {
-
+	m_orientation = false;
 	m_formats = {
-	wxSize(132,187),
+	wxSize(112,157),
 	wxSize(100,132),
 	wxSize(80,100)};
+
+	m_format = m_formats[0];
 
 	m_sizes.Add(wxT("A2"));
 	m_sizes.Add(wxT("A3"));

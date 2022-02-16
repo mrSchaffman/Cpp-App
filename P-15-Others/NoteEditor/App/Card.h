@@ -4,7 +4,7 @@
 
 
 
-static wxSize PanelSize = wxSize(152, 252);
+static wxSize PanelSize = wxSize(162, 252);
 static wxSize CardDefaultSize = wxSize(132, 232);
 
 class Card: public wxPanel
@@ -40,7 +40,7 @@ public:
 	void UpdateMarginRight(int size);
 	void UpdateMarginTop(int size);
 	void UpdateMarginButtom(int size);
-	void UpdateOrientation(bool style);
+	void UpdateOrientation();
 
 	void UpdateCard(const wxSize&  size);
 
