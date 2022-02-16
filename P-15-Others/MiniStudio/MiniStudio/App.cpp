@@ -1,12 +1,19 @@
 
 #include "App.h"
 
-DECLARE_APP(App);
+wxDECLARE_APP(App);
 wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
-	wxImage::AddHandler(new wxPNGHandler);
+	if (!wxApp::OnInit())
+		return false;
 
+	wxImage::AddHandler(new wxPNGHandler());
+
+
+	MainFrame * frame = new MainFrame();
+
+	frame->Show(true);
 	return true;
 }
