@@ -226,7 +226,7 @@ bool PageSettingDialogue::TransferDataToWindow()	// setting the Dialog UI data u
 		// preview
 		{
 			Card* preview = (Card*)FindWindow(ID_CARD);
-
+			preview->SetFormat(m_format);
 		}
 
 	}
@@ -279,6 +279,7 @@ bool PageSettingDialogue::TransferDataFromWindow() // Setting the backend's data
 		// preview
 		{
 			Card* preview = (Card*)FindWindow(ID_CARD);
+			m_format = preview->GetFormat();
 
 		}
 
@@ -312,10 +313,12 @@ void PageSettingDialogue::OnQuit(wxCommandEvent & event)
 void PageSettingDialogue::OnResetClick(wxCommandEvent & event)
 {
 	Init();
-	TransferDataToWindow();
 
 	Card * cardPreview = (Card*)FindWindow(ID_CARD);
 	cardPreview->UpdateCard(m_format);
+
+	TransferDataToWindow();
+
 
 }
 
@@ -415,7 +418,8 @@ void PageSettingDialogue::Init()
 	m_header = wxEmptyString;
 	m_footer = wxEmptyString;
 
-
+	//m_preview_win = (Card*)FindWindow(ID_CARD);
+	//m_preview_win->UpdateCard(m_format);
 
 
 }
