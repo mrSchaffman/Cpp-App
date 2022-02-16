@@ -99,10 +99,10 @@ void MenuBar::OnNew(wxCommandEvent & evnt)
 void MenuBar::OnAbout(wxCommandEvent & evnt)
 {
 	wxString msg;
-	msg.Printf("This is my Own implementation of the existing Notepad called NoteEditor \n Copyright(C) Barth. Feudong \t 2022"
+	msg.Printf("This is A File Editor Studio \n Copyright(C) Barth. Feudong \t 2022"
 	);
 
-	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
+	wxMessageBox(msg, "About File Editor Studio", wxOK | wxICON_INFORMATION, this);
 
 }
 
