@@ -17,7 +17,8 @@ public:
 	MainFrame(const wxString & title);
 	virtual~MainFrame() = default;
 
-
+	void SetFilename(const wxString & name) { m_filename = name; }
+	wxString GetFilename() { return m_filename; }
 private:
 
 	MenuBar * m_menubar = nullptr;

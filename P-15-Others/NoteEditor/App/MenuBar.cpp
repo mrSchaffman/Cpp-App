@@ -9,9 +9,9 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSettingDialog)
 wxEND_EVENT_TABLE()
 
-MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text)
+MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
+
 {
-	m_parent = parent;
 	m_file = new wxMenu();
 	{
 		
@@ -99,7 +99,7 @@ void MenuBar::OnNew(wxCommandEvent & evnt)
 void MenuBar::OnAbout(wxCommandEvent & evnt)
 {
 	wxString msg;
-	msg.Printf("This is my Own implementation of the existing Notepad \n Copyright(C) Barth. Feudong \t 2022"
+	msg.Printf("This is my Own implementation of the existing Notepad called NoteEditor \n Copyright(C) Barth. Feudong \t 2022"
 	);
 
 	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
@@ -109,6 +109,12 @@ void MenuBar::OnAbout(wxCommandEvent & evnt)
 void MenuBar::OnExit(wxCommandEvent & evnt)
 {
 	m_parent->Close(true);
+}
+
+void MenuBar::OnSave(wxCommandEvent & evnt)
+{
+	//wxString filename = m_parent->GetFilename();
+	wxString DefaultDir = wxT("c:\\temp");
 }
 
 void MenuBar::OnZoomIn(wxCommandEvent & event)

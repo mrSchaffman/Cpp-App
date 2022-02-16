@@ -144,9 +144,9 @@ void PageSettingDialogue::CreateControls()
 				}
 				wxBoxSizer* m_row42 = new wxBoxSizer(wxHORIZONTAL);
 				{
-					wxButton*btReset = new wxButton(this, wxID_RESET, wxT("Reset"),wxDefaultPosition, wxSize(50, 30));
-					wxButton*btOK = new wxButton(this, wxID_OK, wxT("OK"), wxDefaultPosition, wxSize(50, 30));
-					wxButton*btCancel = new wxButton(this, wxID_CANCEL, wxT("Cancel"), wxDefaultPosition, wxSize(50, 30));
+					wxButton*btReset = new wxButton(this, wxID_RESET, wxT("Reset"),wxDefaultPosition, wxSize(50, 25));
+					wxButton*btOK = new wxButton(this, wxID_OK, wxT("OK"), wxDefaultPosition, wxSize(50, 25));
+					wxButton*btCancel = new wxButton(this, wxID_CANCEL, wxT("Cancel"), wxDefaultPosition, wxSize(50, 25));
 					m_row42->Add(btReset, 1, wxALIGN_CENTER | wxALL, 5);
 					m_row42->Add(btOK, 1, wxALIGN_CENTER | wxALL, 5);
 					m_row42->Add(btCancel, 1, wxALIGN_CENTER | wxALL, 5);

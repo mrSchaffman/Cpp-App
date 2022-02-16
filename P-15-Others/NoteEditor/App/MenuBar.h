@@ -62,6 +62,7 @@ public:
 	void OnNew(wxCommandEvent&evnt);
 	void OnAbout(wxCommandEvent&evnt);
 	void OnExit(wxCommandEvent&evnt);
+	void OnSave(wxCommandEvent&evnt);
 
 	void OnZoomIn(wxCommandEvent&event);
 	void OnZoomOut(wxCommandEvent&event);
