@@ -110,24 +110,24 @@ void Card::UpdateMargins(wxDC & dc,const wxRect & size)
 	dc.DrawRectangle(size);
 }
 
-void Card::UpdateFormat(const wxSize& size)
-{
-	//if (m_style == false)
-	//{
-	//	wxSize temp(size.GetHeight(), size.GetWidth());
-	//	SetFormat(temp);
-	//	UpdateCard(temp);
-
-	//	return;
-	//}
-	//	//wxSize temp(size.GetHeight(), size.GetWidth());
-		SetFormat(size);
-		UpdateCard(size);
-
-
-
-}
-
+//void Card::UpdateFormat(const wxSize& size)
+//{
+//	//if (m_style == false)
+//	//{
+//	//	wxSize temp(size.GetHeight(), size.GetWidth());
+//	//	SetFormat(temp);
+//	//	UpdateCard(temp);
+//
+//	//	return;
+//	//}
+//	//	//wxSize temp(size.GetHeight(), size.GetWidth());
+//		SetFormat(size);
+//		UpdateCard(size);
+//
+//
+//
+//}
+//
 void Card::UpdateMarginLeft(int size)
 {
 
@@ -145,12 +145,12 @@ void Card::UpdateMarginButtom(int size)
 {
 }
 
-void Card::UpdateOrientation()
-{
-		SetFormat(m_format);
-		UpdateCard(m_format);
-
-}
+//void Card::UpdateOrientation()
+//{
+//		SetFormat(m_format);
+//		UpdateCard(m_format);
+//
+//}
 
 void Card::UpdateCard(const wxSize&  size)
 {

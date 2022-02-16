@@ -35,12 +35,12 @@ public:
 	void DrawCardMargins();
 	void UpdateMargins(wxDC & dc,const wxRect& size);
 
-	void UpdateFormat(const wxSize& size);
+	//void UpdateFormat(const wxSize& size);
 	void UpdateMarginLeft(int size);
 	void UpdateMarginRight(int size);
 	void UpdateMarginTop(int size);
 	void UpdateMarginButtom(int size);
-	void UpdateOrientation();
+	//void UpdateOrientation();
 
 	void UpdateCard(const wxSize&  size);
 

@@ -313,6 +313,10 @@ void PageSettingDialogue::OnResetClick(wxCommandEvent & event)
 {
 	Init();
 	TransferDataToWindow();
+
+	Card * cardPreview = (Card*)FindWindow(ID_CARD);
+	cardPreview->UpdateCard(m_format);
+
 }
 
 void PageSettingDialogue::OnCancel(wxCommandEvent & event)
@@ -410,5 +414,8 @@ void PageSettingDialogue::Init()
 
 	m_header = wxEmptyString;
 	m_footer = wxEmptyString;
+
+
+
 
 }
