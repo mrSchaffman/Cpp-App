@@ -4,7 +4,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDefaultPosition,wxSize(580, 620))
+MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(580, 620))
 {
 
 	wxImage img(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
@@ -17,6 +17,9 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 	SetTitle(m_filename + " - " + title);
 
 
+
+
+
 #if wxUSE_STATUSBAR
 	int m_widths[5] = { 250,120,30,80,80 };
 
@@ -26,7 +29,7 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 	SetStatusBarPane(0);
 	wxString LinCol;
 	LinCol.Printf("Ln %d, Col %d", m_ln, m_col);
-	SetStatusText(LinCol,1);
+	SetStatusText(LinCol, 1);
 	SetStatusText(wxT("100%"), 2);
 	SetStatusText(wxT("Win...(CRLF)"), 3);
 	SetStatusText(wxT("UTF-8"), 4);
@@ -43,21 +46,58 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 			{
 				topSizer->Add(box, 1);
 
-				m_fileTree = new FileTreeCtrl(this, ID_TREE, wxDefaultPosition, wxSize(150, 620), wxTR_EDIT_LABELS | wxTR_NO_LINES);
-				m_text_screen = new  TextCtrl(this);
+				{
+					wxTreeCtrl * m_tree = new wxTreeCtrl(this, ID_TREE, wxPoint(0, 0), wxSize(100, 620), wxTR_HAS_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES);
 
+					wxImageList*imageList = new wxImageList(10, 10); // from size(10,10)
+					{
+						wxIcon rootIcon;
+						{
+							wxImage img2(wxT("treeRoot.png"), wxBITMAP_TYPE_PNG);
+							wxBitmap bmp2(img2);
+							rootIcon.CopyFromBitmap(bmp2);
+						}
+						imageList->Add(rootIcon);
 
-				box->Add(m_fileTree, 0);
-				box->AddSpacer(5);
-				box->Add(m_text_screen, 1);
+						wxIcon rootOpenIcon;
+						{
+							wxImage img3(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
+							wxBitmap bmp3(img3);
+							rootOpenIcon.CopyFromBitmap(bmp3);
+
+						}
+						imageList->Add(rootOpenIcon);
+
+						wxIcon fileIcon;
+						{
+							wxImage img3(wxT("header.png"), wxBITMAP_TYPE_PNG);
+							wxBitmap bmp3(img3);
+							fileIcon.CopyFromBitmap(bmp3);
+
+						}
+						imageList->Add(fileIcon);
+
+					}
+					m_tree->AssignImageList(imageList);
+
+					wxTreeItemId rootId = m_tree->AddRoot(wxT("Root"), 1, 1);// , new ModelTreeItemData(wxT("Root Item")));
+					wxTreeItemId itemId1 = m_tree->AppendItem(rootId, wxT("Model 1"), 0, 0);//, new ModelTreeItemData(wxT("File Item 1")));
+					wxTreeItemId itemId2 = m_tree->AppendItem(rootId, wxT("Model 2"), 0, 0);// , new ModelTreeItemData(wxT("File Item 2")));
+					wxTreeItemId itemId3 = m_tree->AppendItem(rootId, wxT("Model 3"), 1, 1);//, new ModelTreeItemData(wxT("File iten 3")));
+
+					m_text_screen = new  TextCtrl(this);
+
+					box->Add(m_text_screen, 1);
+					box->Add(m_tree, 0);
+				}
+
 			}
-
 		}
+
+		m_menubar = new MenuBar(this, m_text_screen);
+		SetMenuBar(m_menubar);
+
+
 	}
-
-	m_menubar = new MenuBar(this, m_text_screen);
-	SetMenuBar(m_menubar);
-
-
 }
 

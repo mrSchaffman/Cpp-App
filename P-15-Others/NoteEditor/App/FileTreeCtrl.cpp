@@ -2,8 +2,9 @@
 
 FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style) : wxTreeCtrl(parent, id, pos, size, style)
 {
-	CreateImageList();
-	AddSampleItemsToTree(NUM_CHILDREN_PER_NODE, NUM_LEVELS);
+	//CreateImageList();
+	//AddSampleItemsToTree(NUM_CHILDREN_PER_NODE, NUM_LEVELS);
+
 
 	SetBackgroundColour(wxColour(233, 236, 239));
 }
