@@ -50,7 +50,7 @@ enum {
 class MenuBar : public wxMenuBar
 {
 public:
-	MenuBar(wxFrame*parent,wxTextCtrl*text);
+	MenuBar(wxFrame*parent,wxTextCtrl*text = nullptr);
 	virtual~MenuBar() = default;/* {
 		delete m_file;
 		delete m_edit;

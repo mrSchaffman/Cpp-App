@@ -3,6 +3,8 @@
 #include"MenuBar.h"
 #include"StatusBar.h"
 #include"TextCtrl.h"
+#include"FileTreeCtrl.h"
+
 
 
 
@@ -10,6 +12,7 @@
 enum {
 
 	ID_MENU_FILE = 101,
+	ID_TREE,
 };
 class MainFrame : public wxFrame
 {
@@ -26,7 +29,7 @@ private:
 
 	wxString m_filename = "Untitled";
 	TextCtrl* m_text_screen = nullptr;
-
+	FileTreeCtrl * m_fileTree = nullptr;
 
 	int m_ln = 0;
 	int m_col = 0;

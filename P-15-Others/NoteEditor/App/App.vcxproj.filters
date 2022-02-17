@@ -39,6 +39,12 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileTreeCtrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTreeItemData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp">
@@ -62,6 +68,12 @@
     <ClCompile Include="Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileTreeCtrl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTreeItemData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -71,6 +83,39 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Icon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="cplusplus.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="folderClosed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="folderOpened.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="header.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="locked.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nodeClosed.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nodeClosedMouseOver.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nodeOpened.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nodeOpenedMouseOver.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="treeRoot.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="validate.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

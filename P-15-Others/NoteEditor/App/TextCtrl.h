@@ -8,7 +8,7 @@ class TextCtrl : public wxTextCtrl
 {
 public:
 
-	TextCtrl(wxFrame*parent);
+	TextCtrl(wxWindow*parent);
 	virtual ~TextCtrl() = default;
 
 	void OnTextChange(wxCommandEvent&event);
@@ -20,7 +20,7 @@ public:
 
 private:
 
-	wxFrame* m_parent = nullptr;
+	wxWindow* m_parent = nullptr;
 	bool m_txt_status;
 
 	wxDECLARE_EVENT_TABLE();
