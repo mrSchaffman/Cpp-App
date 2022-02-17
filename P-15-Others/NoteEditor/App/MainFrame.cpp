@@ -47,8 +47,9 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxDefaultPosition, wxSize(470, 620), wxTE_MULTILINE| wxHSCROLL /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
 					text->SetBackgroundColour(wxColour(216, 243, 220));
-					topSizer->Add(text, 1);
 					topSizer->Add(m_tree, 0);
+					topSizer->Add(text, 1);
+
 				}
 
 			

@@ -5,11 +5,11 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	//CreateImageList();
 	//AddSampleItemsToTree(NUM_CHILDREN_PER_NODE, NUM_LEVELS);
 
-	wxImageList*imageList = new wxImageList(10, 10); // from size(10,10)
+	wxImageList*imageList = new wxImageList(12, 12); // from size(10,10)
 	{
 		wxIcon rootIcon;
 		{
-			wxImage img2(wxT("treeRoot.png"), wxBITMAP_TYPE_PNG);
+			wxImage img2(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
 			wxBitmap bmp2(img2);
 			rootIcon.CopyFromBitmap(bmp2);
 		}
@@ -17,7 +17,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 
 		wxIcon rootOpenIcon;
 		{
-			wxImage img3(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
+			wxImage img3(wxT("folderOpened.png"), wxBITMAP_TYPE_PNG);
 			wxBitmap bmp3(img3);
 			rootOpenIcon.CopyFromBitmap(bmp3);
 
@@ -26,7 +26,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 
 		wxIcon fileIcon;
 		{
-			wxImage img3(wxT("header.png"), wxBITMAP_TYPE_PNG);
+			wxImage img3(wxT("textFile.png"), wxBITMAP_TYPE_PNG);
 			wxBitmap bmp3(img3);
 			fileIcon.CopyFromBitmap(bmp3);
 
@@ -36,16 +36,20 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	}
 	AssignImageList(imageList);
 
-	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 1, 1);// , new ModelTreeItemData(wxT("Root Item")));
+	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 0, 1);// , new ModelTreeItemData(wxT("Root Item")));
 	wxTreeItemId itemId1 = AppendItem(rootId, wxT("file1.txt"), 2, 2);//, new ModelTreeItemData(wxT("File Item 1")));
 	wxTreeItemId itemId2 = AppendItem(rootId, wxT("file2.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
-	wxTreeItemId itemId3 = AppendItem(rootId, wxT("Project 1.1"), 1, 1);//, new ModelTreeItemData(wxT("File iten 3")));
+	wxTreeItemId itemId3 = AppendItem(rootId, wxT("Project 1.1"), 0, 1);//, new ModelTreeItemData(wxT("File iten 3")));
+	wxTreeItemId itemId31 = AppendItem(itemId3, wxT("file11.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
+	wxTreeItemId itemId32 = AppendItem(itemId3, wxT("file12.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
+	wxTreeItemId itemId33 = AppendItem(itemId3, wxT("file13.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
+
 
 	//m_text_screen = new  TextCtrl(this);
 
 
 
-	SetBackgroundColour(wxColour(233, 236, 239));
+	SetBackgroundColour(wxColour(183, 228, 199));
 }
 
 void FileTreeCtrl::CreateImageList(int size)

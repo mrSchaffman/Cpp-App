@@ -2,6 +2,10 @@
 
 wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_NEW,MenuBar::OnNew)
+	EVT_MENU(M_OPEN,MenuBar::OnOpen)
+	EVT_MENU(M_OPEN_FOLDER,MenuBar::OnOpenNewFolder)
+	EVT_MENU(M_SAVE,MenuBar::OnSave)
+	EVT_MENU(M_SAVE_AS,MenuBar::OnSaveAs)
 	EVT_MENU(M_ABOUT,MenuBar::OnAbout)
 	EVT_MENU(M_EXIT,MenuBar::OnExit)
 	EVT_MENU(M_ZOOM_IN,MenuBar::OnZoomIn)
@@ -18,7 +22,13 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 
 		m_file->Append(M_NEW, wxT("New Project \tCtrl+N"), wxT("New File..."));
 		m_file->Append(M_NEW_WINDOW, wxT("New Window \tCtrl+Shift+N"), wxT("Create new Window..."));
-		m_file->Append(M_OPEN, wxT("Open... \tCtrl+O"), wxT("Open File..."));
+		wxMenu *subMenu = new wxMenu();
+		{
+			subMenu->Append(M_OPEN_FOLDER, wxT("Open Folder \t Ctrl+Plus"), wxT("Choose a Folder!"));
+		}
+		m_file->AppendSubMenu(subMenu, wxT("Open..."));
+
+		//m_file->Append(M_OPEN, wxT("Open... \tCtrl+O"), wxT("Open File..."));
 		m_file->Append(M_SAVE, wxT("Save \tCtrl+S"), wxT("Save File..."));
 		m_file->Append(M_SAVE_AS, wxT("Save As... \tCtrl+Shift+S"), wxT("Save File as..."));
 		m_file->AppendSeparator();
@@ -84,7 +94,7 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 
 void MenuBar::OnNew(wxCommandEvent & evnt)
 {
-	//auto win = GetParent();
+	//auto win = wxGetApp();
 	//auto win = new wxFrame(nullptr,wxID_ANY,m_parent->GetTitle(),m_parent->GetPosition(),m_parent->GetSize(),m_parent->GetWindowStyle());
 	//win->Show(true);
 	
@@ -96,13 +106,69 @@ void MenuBar::OnNew(wxCommandEvent & evnt)
 
 }
 
+void MenuBar::OnOpen(wxCommandEvent & evnt)
+{
+	// ToDo
+	//wxString filename = m_parent->GetFilename();
+	//if (...current content has not been saved...)
+	//{
+	//	if (wxMessageBox(_("Current content has not been saved! Proceed?"), _("Please confirm"),
+	//		wxICON_QUESTION | wxYES_NO, this) == wxNO)
+	//		return;
+	//	//else: proceed asking to the user the new file to open
+	//}
+	wxString caption = wxT("Choose a file");
+	wxString wildcard = wxT("Text Files(*.txt)|*.txt");
+	wxString defaultDir = wxT("c:\\temp");
+
+	wxString defaultFilename = wxEmptyString;
+
+	//wxSystemOptions::SetOption(wxT("NodeEditor"),1);
+	wxFileDialog dialog(this, caption, defaultDir, defaultFilename, wildcard, wxFD_OPEN|wxFD_FILE_MUST_EXIST);
+	if (dialog.ShowModal() == wxID_OK)
+	{
+		wxString path = dialog.GetPath();
+		int filterIndex = dialog.GetFilterIndex();
+	}
+
+	// proceed loading the file chosen by the user;
+	wxFileInputStream input_stream(dialog.GetPath());
+	if (!input_stream.IsOk())
+	{
+		wxLogError("Cannot open file '%s'.", dialog.GetPath());
+		return;
+	}
+
+	// read the file and write in the GUI
+	{
+		//wxMessageBox(dialog.GetFilename());
+		wxString buf;
+		buf.Printf("%s - NoteEditor", dialog.GetFilename());
+		m_parent->SetTitle(buf);
+	}
+
+}
+
+void MenuBar::OnOpenNewFolder(wxCommandEvent & evnt)
+{
+
+	wxString defaultPath = wxT("/");
+	wxDirDialog dialog(this,wxT("Select Directory"),defaultPath, wxDD_NEW_DIR_BUTTON);
+
+	if (dialog.ShowModal() == wxID_OK)
+	{
+		wxString path = dialog.GetPath();
+		wxMessageBox(path);
+	}
+}
+
 void MenuBar::OnAbout(wxCommandEvent & evnt)
 {
 	wxString msg;
 	msg.Printf("This is my Own implementation of the existing Notepad called NoteEditor \n Copyright(C) Barth. Feudong \t 2022"
 	);
 
-	wxMessageBox(msg, "About My NotePad", wxOK | wxICON_INFORMATION, this);
+	wxMessageBox(msg, "About NoteEditor", wxOK | wxICON_INFORMATION, this);
 
 }
 
@@ -114,7 +180,54 @@ void MenuBar::OnExit(wxCommandEvent & evnt)
 void MenuBar::OnSave(wxCommandEvent & evnt)
 {
 	//wxString filename = m_parent->GetFilename();
-	wxString DefaultDir = wxT("c:\\temp");
+	wxString caption = wxT("Save the file");
+	//wxString wildcard = wxT("BMP files(*.bmp)|*.bmp|PNG Files(*.png)|*.png|GIF files (*.gif)|*.gif");
+	//wxString wildcard = wxT("BMP and GIF files (*.bmp;*.gif)|*.bmp;*.gif|PNG files (*.png)|*.png");
+	wxString wildcard = wxT("Text Files (*.txt)|*.txt ");// | *.bmp | GIF files(*.gif) | *.gif");
+	//wxString wildcard = wxT("files (*.txt)|*.txt ");// | *.bmp | GIF files(*.gif) | *.gif");
+	wxString defaultDir = wxT("c:\\temp");
+
+	wxString defaultFilename = wxEmptyString;
+	wxFileDialog dialog(this, caption, defaultDir, defaultFilename,wildcard, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
+	if (dialog.ShowModal() == wxID_OK)
+	{
+		wxString path = dialog.GetPath();
+		int filterIndex = dialog.GetFilterIndex();
+	}
+}
+
+void MenuBar::OnSaveAs(wxCommandEvent & evnt)
+{
+	wxString caption = wxT("Save the file as");
+	wxString wildcard = wxT("Text Files (*.txt)|*.txt ");// | *.bmp | GIF files(*.gif) | *.gif");
+	wxString defaultDir = wxT("c:\\temp");
+
+	wxString defaultFilename = wxEmptyString;
+
+	wxSystemOptions::SetOption(wxT("NodeEditor"), 1);
+	wxFileDialog dialog(this, caption, defaultDir, defaultFilename, wildcard, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (dialog.ShowModal() == wxID_OK)
+	{
+		wxString path = dialog.GetPath();
+		int filterIndex = dialog.GetFilterIndex();
+	}
+
+	// proceed loading the file chosen by the user;
+	wxFileOutputStream output_stream(dialog.GetPath());
+	if (!output_stream.IsOk())
+	{
+		wxLogError("Cannot Save the file '%s'.", dialog.GetPath());
+		return;
+	}
+
+	// write in File.txt
+	{
+		//wxMessageBox(dialog.GetFilename());
+		wxString buf;
+		buf.Printf("%s - NoteEditor", dialog.GetFilename());
+		m_parent->SetTitle(buf);
+	}
+
 }
 
 void MenuBar::OnZoomIn(wxCommandEvent & event)

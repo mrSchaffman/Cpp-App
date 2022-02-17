@@ -1,5 +1,9 @@
 #pragma once
 #include"wx/wx.h"
+#include "wx/filedlg.h"
+#include "wx/dirdlg.h"
+#include "wx/wfstream.h"
+#include "wx/sysopt.h"
 #include"PageSettingDialogue.h"
 
 
@@ -9,6 +13,7 @@ enum {
 	M_NEW =1,
 	M_NEW_WINDOW ,
 	M_OPEN ,
+	M_OPEN_FOLDER,
 	M_SAVE ,
 	M_SAVE_AS ,
 	M_PAGE_SETUP ,
@@ -60,9 +65,12 @@ public:
 	};*/
 
 	void OnNew(wxCommandEvent&evnt);
+	void OnOpen(wxCommandEvent&evnt);
+	void OnOpenNewFolder(wxCommandEvent&evnt);
 	void OnAbout(wxCommandEvent&evnt);
 	void OnExit(wxCommandEvent&evnt);
 	void OnSave(wxCommandEvent&evnt);
+	void OnSaveAs(wxCommandEvent&evnt);
 
 	void OnZoomIn(wxCommandEvent&event);
 	void OnZoomOut(wxCommandEvent&event);

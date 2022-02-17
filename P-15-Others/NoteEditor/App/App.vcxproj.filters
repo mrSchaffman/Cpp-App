@@ -118,6 +118,9 @@
     <Image Include="validate.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="textFile.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="App.rc">
