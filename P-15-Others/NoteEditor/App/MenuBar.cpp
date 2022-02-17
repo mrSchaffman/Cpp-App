@@ -16,7 +16,7 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 	{
 		
 
-		m_file->Append(M_NEW, wxT("New \tCtrl+N"), wxT("New File..."));
+		m_file->Append(M_NEW, wxT("New Project \tCtrl+N"), wxT("New File..."));
 		m_file->Append(M_NEW_WINDOW, wxT("New Window \tCtrl+Shift+N"), wxT("Create new Window..."));
 		m_file->Append(M_OPEN, wxT("Open... \tCtrl+O"), wxT("Open File..."));
 		m_file->Append(M_SAVE, wxT("Save \tCtrl+S"), wxT("Save File..."));

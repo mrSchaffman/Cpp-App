@@ -5,6 +5,45 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	//CreateImageList();
 	//AddSampleItemsToTree(NUM_CHILDREN_PER_NODE, NUM_LEVELS);
 
+	wxImageList*imageList = new wxImageList(10, 10); // from size(10,10)
+	{
+		wxIcon rootIcon;
+		{
+			wxImage img2(wxT("treeRoot.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp2(img2);
+			rootIcon.CopyFromBitmap(bmp2);
+		}
+		imageList->Add(rootIcon);
+
+		wxIcon rootOpenIcon;
+		{
+			wxImage img3(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp3(img3);
+			rootOpenIcon.CopyFromBitmap(bmp3);
+
+		}
+		imageList->Add(rootOpenIcon);
+
+		wxIcon fileIcon;
+		{
+			wxImage img3(wxT("header.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp3(img3);
+			fileIcon.CopyFromBitmap(bmp3);
+
+		}
+		imageList->Add(fileIcon);
+
+	}
+	AssignImageList(imageList);
+
+	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 1, 1);// , new ModelTreeItemData(wxT("Root Item")));
+	wxTreeItemId itemId1 = AppendItem(rootId, wxT("file1.txt"), 2, 2);//, new ModelTreeItemData(wxT("File Item 1")));
+	wxTreeItemId itemId2 = AppendItem(rootId, wxT("file2.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
+	wxTreeItemId itemId3 = AppendItem(rootId, wxT("Project 1.1"), 1, 1);//, new ModelTreeItemData(wxT("File iten 3")));
+
+	//m_text_screen = new  TextCtrl(this);
+
+
 
 	SetBackgroundColour(wxColour(233, 236, 239));
 }

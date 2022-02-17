@@ -29,7 +29,7 @@ private:
 
 	wxString m_filename = "Untitled";
 	TextCtrl* m_text_screen = nullptr;
-	FileTreeCtrl * m_fileTree = nullptr;
+	FileTreeCtrl * m_tree = nullptr;
 
 	int m_ln = 0;
 	int m_col = 0;

@@ -7,7 +7,7 @@ wxBEGIN_EVENT_TABLE(TextCtrl, wxTextCtrl)
 
 wxEND_EVENT_TABLE()
 
-TextCtrl::TextCtrl(wxWindow * parent):wxTextCtrl(parent, TXT_CTRL,wxEmptyString,wxDefaultPosition, wxSize(430, 620),wxTE_MULTILINE|wxTE_DONTWRAP|wxTE_NOHIDESEL|wxBORDER_NONE)
+TextCtrl::TextCtrl(wxWindow * parent):wxTextCtrl(parent, TXT_CTRL,wxEmptyString,wxDefaultPosition, wxSize(470, 620),wxTE_MULTILINE|wxTE_NOHIDESEL|wxBORDER_NONE)
 {
 	m_parent = parent;
 	SetBackgroundColour(wxColour(216, 243, 220));

@@ -47,47 +47,11 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 				topSizer->Add(box, 1);
 
 				{
-					wxTreeCtrl * m_tree = new wxTreeCtrl(this, ID_TREE, wxPoint(0, 0), wxSize(100, 620), wxTR_HAS_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES);
+					 m_tree = new FileTreeCtrl(this, ID_TREE, wxPoint(0, 0), wxSize(100, 620), wxTR_HAS_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
 
-					wxImageList*imageList = new wxImageList(10, 10); // from size(10,10)
-					{
-						wxIcon rootIcon;
-						{
-							wxImage img2(wxT("treeRoot.png"), wxBITMAP_TYPE_PNG);
-							wxBitmap bmp2(img2);
-							rootIcon.CopyFromBitmap(bmp2);
-						}
-						imageList->Add(rootIcon);
-
-						wxIcon rootOpenIcon;
-						{
-							wxImage img3(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
-							wxBitmap bmp3(img3);
-							rootOpenIcon.CopyFromBitmap(bmp3);
-
-						}
-						imageList->Add(rootOpenIcon);
-
-						wxIcon fileIcon;
-						{
-							wxImage img3(wxT("header.png"), wxBITMAP_TYPE_PNG);
-							wxBitmap bmp3(img3);
-							fileIcon.CopyFromBitmap(bmp3);
-
-						}
-						imageList->Add(fileIcon);
-
-					}
-					m_tree->AssignImageList(imageList);
-
-					wxTreeItemId rootId = m_tree->AddRoot(wxT("Root"), 1, 1);// , new ModelTreeItemData(wxT("Root Item")));
-					wxTreeItemId itemId1 = m_tree->AppendItem(rootId, wxT("Model 1"), 0, 0);//, new ModelTreeItemData(wxT("File Item 1")));
-					wxTreeItemId itemId2 = m_tree->AppendItem(rootId, wxT("Model 2"), 0, 0);// , new ModelTreeItemData(wxT("File Item 2")));
-					wxTreeItemId itemId3 = m_tree->AppendItem(rootId, wxT("Model 3"), 1, 1);//, new ModelTreeItemData(wxT("File iten 3")));
-
-					m_text_screen = new  TextCtrl(this);
-
-					box->Add(m_text_screen, 1);
+					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxDefaultPosition, wxSize(470, 620), wxTE_MULTILINE| wxHSCROLL /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
+					text->SetBackgroundColour(wxColour(216, 243, 220));
+					box->Add(text, 1);
 					box->Add(m_tree, 0);
 				}
 
