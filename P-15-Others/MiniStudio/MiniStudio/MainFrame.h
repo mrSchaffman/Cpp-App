@@ -1,7 +1,13 @@
 #pragma once
 #include"wx/wx.h"
 #include"MenuBar.h"
+#include"FileTreeCtrl.h"
 
+enum 
+{
+	ID_TREE = wxID_HIGHEST,
+
+};
 class MainFrame : public wxFrame
 {
 public:

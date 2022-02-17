@@ -1,15 +1,19 @@
 #pragma once
+#include"wx/wx.h"
 #include"wx/treectrl.h"
+#include"FileTreeItemData.h"
+#include<array>
 
+static const int NUM_CHILDREN_PER_NODE = 5;
+static const int NUM_LEVELS = 2;
 
 class FileTreeCtrl : public wxTreeCtrl
 {
 public:
 	enum
 	{
-		TreeCtrlIcon_File,				 // 0
-		TreeCtrlIcon_FileSelected,		 // 1
-		TreeCtrlIcon_Folder,
+		TreeCtrlIcon_TreeRoot,				 // 0
+		TreeCtrlIcon_FolderClosed,
 		TreeCtrlIcon_FolderSelected,
 		TreeCtrlIcon_FolderOpened,
 		TreeCtrlIcon_NodeClosed,
@@ -18,10 +22,10 @@ public:
 		TreeCtrlIcon_NodeMouseOver,
 		TreeCtrlIcon_NodeSelectedMouseOver,
 		TreeCtrlIcon_NodeOpenedMouseOver,
-		TreeCtrlIcon_FileHeader,
-		TreeCtrlIcon_FileCpp,
+		TreeCtrlIcon_Header,
+		TreeCtrlIcon_Cplusplus,
 		TreeCtrlIcon_Validate,
-		TreeCtrlIcon_locked,
+		TreeCtrlIcon_Locked,
 
 	};
 
@@ -31,9 +35,13 @@ public:
 	void CreateImageList(int size = 16);
 	void CreateButtonsImageList(int size = 11);
 	void CreateStateImageList(bool del = false);
+	void AddSampleItemsToTree(size_t numChildren, size_t depth);
+	void AddItemsRecursively(const wxTreeItemId& idParent, size_t numChildren, size_t depth, size_t folder);
 
+	//void LoadIcons(const std::array)
 
 private:
+	int          m_imageSize;               // current size of images
 
 };
 
