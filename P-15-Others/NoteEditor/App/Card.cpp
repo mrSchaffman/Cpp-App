@@ -156,7 +156,7 @@ void Card::UpdateMarginButtom(int size)
 void Card::UpdateCard(const wxSize&  size)
 {
 	m_format = size;
-	//UpdateMargins(m_format);
+	UpdateMargins(m_format);
 
 	this->RefreshRect(PanelSize);
 
