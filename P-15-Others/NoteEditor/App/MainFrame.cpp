@@ -50,12 +50,13 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 					topSizer->Add(m_tree, 0);
 					topSizer->Add(text, 1);
 
+					m_menubar = new MenuBar(this, text);
+
 				}
 
 			
 		}
 
-		m_menubar = new MenuBar(this, m_text_screen);
 		SetMenuBar(m_menubar);
 
 

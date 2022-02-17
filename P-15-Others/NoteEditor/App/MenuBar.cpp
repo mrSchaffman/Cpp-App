@@ -222,6 +222,7 @@ void MenuBar::OnSaveAs(wxCommandEvent & evnt)
 
 	// write in File.txt
 	{
+		//output_stream << m_text;
 		//wxMessageBox(dialog.GetFilename());
 		wxString buf;
 		buf.Printf("%s - NoteEditor", dialog.GetFilename());
