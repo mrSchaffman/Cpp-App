@@ -37,31 +37,27 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 
 	// setting the Controls
-	{
-		wxBoxSizer*topSizer = new wxBoxSizer(wxVERTICAL);
+	
+		wxBoxSizer*topSizer = new wxBoxSizer(wxHORIZONTAL);
 		{
 			SetSizer(topSizer);
 
-			wxBoxSizer*box = new wxBoxSizer(wxHORIZONTAL);
-			{
-				topSizer->Add(box, 1);
-
 				{
-					 m_tree = new FileTreeCtrl(this, ID_TREE, wxPoint(0, 0), wxSize(100, 620), wxTR_HAS_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+					 m_tree = new FileTreeCtrl(this, ID_TREE, wxDefaultPosition, wxSize(100, 620), wxTR_HAS_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
 
 					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxDefaultPosition, wxSize(470, 620), wxTE_MULTILINE| wxHSCROLL /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
 					text->SetBackgroundColour(wxColour(216, 243, 220));
-					box->Add(text, 1);
-					box->Add(m_tree, 0);
+					topSizer->Add(text, 1);
+					topSizer->Add(m_tree, 0);
 				}
 
-			}
+			
 		}
 
 		m_menubar = new MenuBar(this, m_text_screen);
 		SetMenuBar(m_menubar);
 
 
-	}
+	
 }
 
