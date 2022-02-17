@@ -87,8 +87,9 @@ public:
 	void OnCancel(wxCommandEvent &event);
 
 	void OnFormatUpdate(wxCommandEvent &event);
+	void OnMarginLeftUpdate(wxCommandEvent &event);
 	void OnSourceUpdate(wxUpdateUIEvent &event);
-	void OnMarginLeftUpdate(wxUpdateUIEvent &event);
+	//void OnMarginLeftUpdate(wxUpdateUIEvent &event);
 	void OnMarginTopUpdate(wxUpdateUIEvent &event);
 	void OnMarginRightUpdate(wxUpdateUIEvent &event);
 	void OnMarginBottomUpdate(wxUpdateUIEvent &event);

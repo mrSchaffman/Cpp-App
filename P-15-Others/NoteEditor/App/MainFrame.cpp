@@ -41,14 +41,15 @@ MainFrame::MainFrame(const wxString & title):wxFrame(nullptr,wxID_ANY,title,wxDe
 
 			wxBoxSizer*box = new wxBoxSizer(wxHORIZONTAL);
 			{
-				topSizer->Add(box, 1, wxALL, 2);
+				topSizer->Add(box, 1);
 
 				m_fileTree = new FileTreeCtrl(this, ID_TREE, wxDefaultPosition, wxSize(150, 620), wxTR_EDIT_LABELS | wxTR_NO_LINES);
 				m_text_screen = new  TextCtrl(this);
 
 
-				box->Add(m_fileTree, 0, wxALL, 5);
-				box->Add(m_text_screen, 1, wxALL, 5);
+				box->Add(m_fileTree, 0);
+				box->AddSpacer(5);
+				box->Add(m_text_screen, 1);
 			}
 
 		}

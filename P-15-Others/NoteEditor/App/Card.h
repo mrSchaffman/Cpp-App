@@ -24,6 +24,7 @@ public:
 		m_margin_top = top;
 		m_margin_bottom = bottom;
 	}
+	void UpdateMargins(const wxRect& rect);
 
 	void SetMarginTop(size_t marg) { m_margin_top = marg; }
 	void SetMarginLeft(size_t marg) {m_margin_left = marg;}
@@ -31,8 +32,8 @@ public:
 	void SetMarginBottom(size_t marg) { m_margin_bottom = marg; }
 	//wxSize& UpdateDimensions(const wxSize& size);
 
-	void DrawCard(wxDC&dc);
-	void DrawCardMargins();
+	wxRect & DrawCard(wxDC&dc);
+	void DrawCardMargins(wxDC& dc, wxRect& rect);
 	void UpdateMargins(wxDC & dc,const wxRect& size);
 
 	//void UpdateFormat(const wxSize& size);
@@ -67,9 +68,9 @@ private:
 
 	wxSize m_shadow;
 	wxSize m_format;
-	wxSize m_margins;
+	wxRect m_margins;
 
-
+	wxPoint m_format_anchor;
 	wxBitmap m_preview_bmp{};
 
 

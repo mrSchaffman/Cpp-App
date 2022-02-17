@@ -3,7 +3,7 @@
 wxBEGIN_EVENT_TABLE(PageSettingDialogue, wxPanel)
 	EVT_COMBOBOX(ID_SIZE_CBOX,PageSettingDialogue::OnFormatUpdate)
 	EVT_UPDATE_UI(ID_SOURCE_CBOX,PageSettingDialogue::OnSourceUpdate)
-	EVT_UPDATE_UI(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftUpdate)
+	EVT_TEXT(ID_MARGIN_LEFT,PageSettingDialogue::OnMarginLeftUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_TOP,PageSettingDialogue::OnMarginTopUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_RIGHT,PageSettingDialogue::OnMarginRightUpdate)
 	EVT_UPDATE_UI(ID_MARGIN_BOTTOM,PageSettingDialogue::OnMarginBottomUpdate)
@@ -350,20 +350,26 @@ void PageSettingDialogue::OnFormatUpdate(wxCommandEvent & event)
 
 }
 
-void PageSettingDialogue::OnSourceUpdate(wxUpdateUIEvent & event)
+void PageSettingDialogue::OnMarginLeftUpdate(wxCommandEvent & event)
 {
+
+	wxTextCtrl* left = (wxTextCtrl*)FindWindow(ID_MARGIN_LEFT);
+
 }
 
-void PageSettingDialogue::OnMarginLeftUpdate(wxUpdateUIEvent & event)
+void PageSettingDialogue::OnSourceUpdate(wxUpdateUIEvent & event)
 {
+
 }
 
 void PageSettingDialogue::OnMarginTopUpdate(wxUpdateUIEvent & event)
 {
+
 }
 
 void PageSettingDialogue::OnMarginRightUpdate(wxUpdateUIEvent & event)
 {
+
 }
 
 void PageSettingDialogue::OnMarginBottomUpdate(wxUpdateUIEvent & event)
@@ -417,9 +423,6 @@ void PageSettingDialogue::Init()
 
 	m_header = wxEmptyString;
 	m_footer = wxEmptyString;
-
-	//m_preview_win = (Card*)FindWindow(ID_CARD);
-	//m_preview_win->UpdateCard(m_format);
 
 
 }
