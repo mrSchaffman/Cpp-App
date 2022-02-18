@@ -13,9 +13,9 @@ EVT_TREE_SET_INFO(ID_TREE, FileTreeCtrl::OnSetInfo)
 EVT_TREE_ITEM_EXPANDED(ID_TREE, FileTreeCtrl::OnItemExpanded)
 EVT_TREE_ITEM_EXPANDING(ID_TREE, FileTreeCtrl::OnItemExpanding)
 EVT_TREE_ITEM_COLLAPSED(ID_TREE, FileTreeCtrl::OnItemCollapsed)
-EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnSelChanged)
+EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnSelectionChanged)
 EVT_TREE_ITEM_COLLAPSING(ID_TREE, FileTreeCtrl::OnItemCollapsing)
-EVT_TREE_SEL_CHANGING(ID_TREE, FileTreeCtrl::OnSelChanging)
+EVT_TREE_SEL_CHANGING(ID_TREE, FileTreeCtrl::OnSelectionChanging)
 EVT_TREE_KEY_DOWN(ID_TREE, FileTreeCtrl::OnTreeKeyDown)
 EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnItemStateClick)
 EVT_TREE_ITEM_RIGHT_CLICK(ID_TREE, FileTreeCtrl::OnItemRClick)
@@ -35,8 +35,9 @@ wxEND_EVENT_TABLE()
 FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style) : wxTreeCtrl(parent, id, pos, size, style)
 {
 
-
-
+	// Create a cursor from a stock identifier
+	//wxCursor cursor(wxCURSOR_HAND);
+	//SetCursor(wxCursor(wxCURSOR_RIGHT_ARROW));
 	wxImageList*imageList = new wxImageList(12, 12); // from size(10,10)
 	{
 		wxIcon rootIcon;
@@ -391,22 +392,22 @@ void FileTreeCtrl::OnContextMenu(wxContextMenuEvent & event)
 
 void FileTreeCtrl::OnLMouseDown(wxMouseEvent & event)
 {
-	wxTreeItemId item = HitTest(event.GetPosition());
-	if (item.IsOk())
-	{
-		Unselect();
-		SetItemBackgroundColour(item, wxColour(216, 243, 220));
-		//wxMessageBox("Left mouse button down");
+	//wxTreeItemId item = HitTest(event.GetPosition());
+	//if (item.IsOk())
+	//{
+	//	UnselectItem(item);
+	//	SetItemBackgroundColour(item, wxColour(216, 243, 220));
+	//	//wxMessageBox("Left mouse button down");
 
-	}
+	//}
 
-	event.Skip();
+	//event.Skip();
 
 }
 
 void FileTreeCtrl::OnLMouseUp(wxMouseEvent & event)
 {
-	event.Skip();
+	//event.Skip();
 
 }
 
@@ -438,15 +439,48 @@ void FileTreeCtrl::OnItemCollapsing(wxTreeEvent & event)
 {
 }
 
-void FileTreeCtrl::OnSelChanged(wxTreeEvent & event)
+void FileTreeCtrl::OnSelectionChanged(wxTreeEvent & event)
 {
-	
-	Unselect();
+	//wxTreeItemId item = event.GetItem();
 
+	//if (!ItemHasChildren(item))
+	//{
+	//	if (GetItemBackgroundColour(item) == wxColour(216, 243, 220))
+	//	{
+	//		event.Skip();
+	//	}
+	//	else
+	//	{
+	//		SetItemBackgroundColour(item, wxColour(216, 243, 220));
+	//	}
+
+	//}
+	//else
+	//{
+	//	if (IsExpanded(item))
+	//	{
+	//		CollapseAllChildren(item);
+	//	}
+	//	else
+	//	{
+	//		Expand(item);
+
+	//	}
+
+	//}
+	//wxTreeItemId item = event.GetItem();
+	////wxTreeItemId prevItem = GetPrevSibling(event.GetItem());
+	//if (item.IsOk())
+	//{
+	//	UnselectItem(item);
+	//	SetItemBackgroundColour(item, wxColour(0, 243, 220));
+
+	//}
 }
 
-void FileTreeCtrl::OnSelChanging(wxTreeEvent & event)
+void FileTreeCtrl::OnSelectionChanging(wxTreeEvent & event)
 {
+
 }
 
 void FileTreeCtrl::OnTreeKeyDown(wxTreeEvent & event)
@@ -457,11 +491,31 @@ void FileTreeCtrl::OnItemActivated(wxTreeEvent & event)
 {
 	wxTreeItemId item = event.GetItem();
 
-	if (ItemHasChildren(item))
+	if (!ItemHasChildren(item))
 	{
-		Expand(item);
+		if (GetItemBackgroundColour(item) == wxColour(216, 243, 220))
+		{
+			event.Skip();
+		}
+		else
+		{
+			SetItemBackgroundColour(item, wxColour(183, 228, 199));
+		}
+
 	}
-	Unselect();
+	else
+	{
+		if (IsExpanded(item))
+		{
+			CollapseAllChildren(item);
+		}
+		else
+		{
+			Expand(item);
+
+		}
+
+	}
 }
 
 void FileTreeCtrl::OnItemStateClick(wxTreeEvent & event)

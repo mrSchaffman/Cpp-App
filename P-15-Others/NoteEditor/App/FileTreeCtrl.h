@@ -58,8 +58,8 @@ public:
 	void OnItemExpanding(wxTreeEvent& event);
 	void OnItemCollapsed(wxTreeEvent& event);
 	void OnItemCollapsing(wxTreeEvent& event);
-	void OnSelChanged(wxTreeEvent& event);
-	void OnSelChanging(wxTreeEvent& event);
+	void OnSelectionChanged(wxTreeEvent& event);
+	void OnSelectionChanging(wxTreeEvent& event);
 	void OnTreeKeyDown(wxTreeEvent& event);
 	void OnItemActivated(wxTreeEvent& event);
 	void OnItemStateClick(wxTreeEvent& event);
