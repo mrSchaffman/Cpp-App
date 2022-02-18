@@ -1,9 +1,41 @@
 #include "FileTreeCtrl.h"
 
+wxBEGIN_EVENT_TABLE(FileTreeCtrl,wxTreeCtrl)
+EVT_TREE_ITEM_ACTIVATED(ID_TREE, FileTreeCtrl::OnItemActivated)
+EVT_TREE_BEGIN_DRAG(ID_TREE, FileTreeCtrl::OnBeginDrag)
+EVT_TREE_BEGIN_RDRAG(ID_TREE, FileTreeCtrl::OnBeginRDrag)
+EVT_TREE_BEGIN_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnBeginLabelEdit)
+EVT_TREE_END_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnEndLabelEdit)
+EVT_TREE_DELETE_ITEM(ID_TREE, FileTreeCtrl::OnDeleteItem)
+EVT_TREE_ITEM_MENU(ID_TREE, FileTreeCtrl::OnItemMenu)
+EVT_TREE_GET_INFO(ID_TREE, FileTreeCtrl::OnGetInfo)
+EVT_TREE_SET_INFO(ID_TREE, FileTreeCtrl::OnSetInfo)
+EVT_TREE_ITEM_EXPANDED(ID_TREE, FileTreeCtrl::OnItemExpanded)
+EVT_TREE_ITEM_EXPANDING(ID_TREE, FileTreeCtrl::OnItemExpanding)
+EVT_TREE_ITEM_COLLAPSED(ID_TREE, FileTreeCtrl::OnItemCollapsed)
+EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnSelChanged)
+EVT_TREE_ITEM_COLLAPSING(ID_TREE, FileTreeCtrl::OnItemCollapsing)
+EVT_TREE_SEL_CHANGING(ID_TREE, FileTreeCtrl::OnSelChanging)
+EVT_TREE_KEY_DOWN(ID_TREE, FileTreeCtrl::OnTreeKeyDown)
+EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnItemStateClick)
+EVT_TREE_ITEM_RIGHT_CLICK(ID_TREE, FileTreeCtrl::OnItemRClick)
+EVT_TREE_STATE_IMAGE_CLICK(ID_TREE, FileTreeCtrl::OnImageStateClick)
+
+EVT_LEFT_DOWN(FileTreeCtrl::OnLMouseDown)
+EVT_LEFT_UP(FileTreeCtrl::OnLMouseUp)
+EVT_RIGHT_DOWN(FileTreeCtrl::OnRMouseDown)
+EVT_RIGHT_UP(FileTreeCtrl::OnRMouseUp)
+EVT_RIGHT_DCLICK(FileTreeCtrl::OnRMouseDClick)
+
+EVT_CONTEXT_MENU(FileTreeCtrl::OnContextMenu)
+
+
+wxEND_EVENT_TABLE()
+
 FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style) : wxTreeCtrl(parent, id, pos, size, style)
 {
-	//CreateImageList();
-	//AddSampleItemsToTree(NUM_CHILDREN_PER_NODE, NUM_LEVELS);
+
+
 
 	wxImageList*imageList = new wxImageList(12, 12); // from size(10,10)
 	{
@@ -36,19 +68,92 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	}
 	AssignImageList(imageList);
 
-	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 0, 1);// , new ModelTreeItemData(wxT("Root Item")));
+	wxImageList*statesImagesList = new wxImageList(10, 10); // from size(10,10)
+	{
+		wxIcon validate;
+		{
+			wxImage img2(wxT("validate.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp2(img2);
+			validate.CopyFromBitmap(bmp2);
+		}
+		statesImagesList->Add(validate);
+
+		wxIcon NodeClosed;
+		{
+			wxImage img2(wxT("NodeClosed.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp2(img2);
+			NodeClosed.CopyFromBitmap(bmp2);
+		}
+		statesImagesList->Add(NodeClosed);
+
+		wxIcon NodeOpened;
+		{
+			wxImage img3(wxT("NodeOpened.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp3(img3);
+			NodeOpened.CopyFromBitmap(bmp3);
+
+		}
+		statesImagesList->Add(NodeOpened);
+
+		wxIcon nodeClosedMouseOver;
+		{
+			wxImage img3(wxT("nodeClosedMouseOver.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp3(img3);
+			nodeClosedMouseOver.CopyFromBitmap(bmp3);
+
+		}
+		statesImagesList->Add(nodeClosedMouseOver);
+
+		wxIcon nodeOpenedMouseOver;
+		{
+			wxImage img3(wxT("nodeOpenedMouseOver.png"), wxBITMAP_TYPE_PNG);
+			wxBitmap bmp3(img3);
+			nodeOpenedMouseOver.CopyFromBitmap(bmp3);
+
+		}
+		statesImagesList->Add(nodeOpenedMouseOver);
+
+	}
+	//
+	AssignStateImageList(statesImagesList);
+
+	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 0, 0);// , new ModelTreeItemData(wxT("Root Item")));
+	{
+		Expand(rootId);
+		SetItemState(rootId, 1);
+		SetItemImage(rootId, 1, wxTreeItemIcon_Expanded);
+		// set the other image when the item is expanded using:
+		// EVT_TREE_ITEM_EXPANDED(id, func):
+		// The item has been expanded.Processes a wxEVT_TREE_ITEM_EXPANDED event type.
+
+	}
 	wxTreeItemId itemId1 = AppendItem(rootId, wxT("file1.txt"), 2, 2);//, new ModelTreeItemData(wxT("File Item 1")));
+	{
+		//SetItemBackgroundColour(itemId1, wxColour(216, 243, 220));
+		{
+			// use EVT_TREE_ITEM_ACTIVATED(id, func): to the set the ItemBackgroundColour
+		}
+		SetItemBold(itemId1, true);
+		SetItemFont(itemId1, wxFont(10, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial"), wxFONTENCODING_ISO8859_1));
+
+	}
 	wxTreeItemId itemId2 = AppendItem(rootId, wxT("file2.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
+	{
+		SetItemState(itemId2, 0);
+
+	}
 	wxTreeItemId itemId3 = AppendItem(rootId, wxT("Project 1.1"), 0, 1);//, new ModelTreeItemData(wxT("File iten 3")));
 	wxTreeItemId itemId31 = AppendItem(itemId3, wxT("file11.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
 	wxTreeItemId itemId32 = AppendItem(itemId3, wxT("file12.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
 	wxTreeItemId itemId33 = AppendItem(itemId3, wxT("file13.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
 
 
+
+
+
 	//m_text_screen = new  TextCtrl(this);
 
-
-
+	SetIndent(15);
 	SetBackgroundColour(wxColour(183, 228, 199));
 }
 
@@ -255,3 +360,136 @@ void FileTreeCtrl::AddItemsRecursively(const wxTreeItemId& idParent, size_t numC
 	}
 	//else: done!
 }
+
+void FileTreeCtrl::OnBeginDrag(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnBeginRDrag(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnEndDrag(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnBeginLabelEdit(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnEndLabelEdit(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnDeleteItem(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnContextMenu(wxContextMenuEvent & event)
+{
+}
+
+void FileTreeCtrl::OnLMouseDown(wxMouseEvent & event)
+{
+	wxTreeItemId item = HitTest(event.GetPosition());
+	if (item.IsOk())
+	{
+		Unselect();
+		SetItemBackgroundColour(item, wxColour(216, 243, 220));
+		//wxMessageBox("Left mouse button down");
+
+	}
+
+	event.Skip();
+
+}
+
+void FileTreeCtrl::OnLMouseUp(wxMouseEvent & event)
+{
+	event.Skip();
+
+}
+
+void FileTreeCtrl::OnItemMenu(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnGetInfo(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnSetInfo(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemExpanded(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemExpanding(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemCollapsed(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemCollapsing(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnSelChanged(wxTreeEvent & event)
+{
+	
+	Unselect();
+
+}
+
+void FileTreeCtrl::OnSelChanging(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnTreeKeyDown(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemActivated(wxTreeEvent & event)
+{
+	wxTreeItemId item = event.GetItem();
+
+	if (ItemHasChildren(item))
+	{
+		Expand(item);
+	}
+	Unselect();
+}
+
+void FileTreeCtrl::OnItemStateClick(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnItemRClick(wxTreeEvent & event)
+{
+}
+
+void FileTreeCtrl::OnRMouseDown(wxMouseEvent & event)
+{
+	wxMessageBox("Right mouse button down");
+
+	event.Skip();
+
+}
+
+void FileTreeCtrl::OnRMouseUp(wxMouseEvent & event)
+{
+
+}
+
+void FileTreeCtrl::OnRMouseDClick(wxMouseEvent & event)
+{
+}
+
+void FileTreeCtrl::OnImageStateClick(wxTreeEvent & event)
+{
+}
+

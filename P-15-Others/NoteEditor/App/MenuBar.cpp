@@ -16,6 +16,7 @@ wxEND_EVENT_TABLE()
 MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 
 {
+
 	m_file = new wxMenu();
 	{
 		

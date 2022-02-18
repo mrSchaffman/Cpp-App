@@ -12,7 +12,6 @@
 enum {
 
 	ID_MENU_FILE = 101,
-	ID_TREE,
 };
 class MainFrame : public wxFrame
 {
@@ -22,6 +21,10 @@ public:
 
 	void SetFilename(const wxString & name) { m_filename = name; }
 	wxString GetFilename() { return m_filename; }
+	void OnPaint(wxPaintEvent&event);
+
+
+
 private:
 
 	MenuBar * m_menubar = nullptr;
