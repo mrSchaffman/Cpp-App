@@ -6,6 +6,7 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_OPEN_FOLDER,MenuBar::OnOpenNewFolder)
 	EVT_MENU(M_SAVE,MenuBar::OnSave)
 	EVT_MENU(M_SAVE_AS,MenuBar::OnSaveAs)
+	EVT_MENU(M_STATUS_BAR,MenuBar::OnSetStatusBar)
 	EVT_MENU(M_ABOUT,MenuBar::OnAbout)
 	EVT_MENU(M_EXIT,MenuBar::OnExit)
 	EVT_MENU(M_ZOOM_IN,MenuBar::OnZoomIn)
@@ -230,6 +231,15 @@ void MenuBar::OnSaveAs(wxCommandEvent & evnt)
 		m_parent->SetTitle(buf);
 	}
 
+}
+
+void MenuBar::OnSetStatusBar(wxCommandEvent & evnt)
+{
+	if(!evnt.IsChecked());
+	{
+		m_parent->SetStatusBar(nullptr);
+		m_parent->Refresh();
+	}
 }
 
 void MenuBar::OnZoomIn(wxCommandEvent & event)

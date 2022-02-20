@@ -85,40 +85,31 @@
     <Image Include="Icon.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="cplusplus.png">
+    <Image Include="FileNormal.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="folderClosed.png">
+    <Image Include="FileStateAdded.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="folderOpened.png">
+    <Image Include="FileStateChanged.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="header.png">
+    <Image Include="FileStateSaved.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="locked.png">
+    <Image Include="FolderBtnExpanded.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="nodeClosed.png">
+    <Image Include="FolderBtnNormal.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="nodeClosedMouseOver.png">
+    <Image Include="FolderExpanded.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="nodeOpened.png">
+    <Image Include="FolderNormal.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="nodeOpenedMouseOver.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="treeRoot.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="validate.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="textFile.png">
+    <Image Include="NodeEditor.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

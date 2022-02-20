@@ -71,6 +71,7 @@ public:
 	void OnExit(wxCommandEvent&evnt);
 	void OnSave(wxCommandEvent&evnt);
 	void OnSaveAs(wxCommandEvent&evnt);
+	void OnSetStatusBar(wxCommandEvent&evnt);
 
 	void OnZoomIn(wxCommandEvent&event);
 	void OnZoomOut(wxCommandEvent&event);

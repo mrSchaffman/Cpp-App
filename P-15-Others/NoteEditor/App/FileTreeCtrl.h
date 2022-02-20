@@ -1,7 +1,7 @@
 #pragma once
 #include"wx/wx.h"
-//#include "wx/artprov.h"
 #include"wx/treectrl.h"
+#include"TextCtrl.h"
 #include"FileTreeItemData.h"
 #include<array>
 
@@ -16,22 +16,20 @@ enum
 class FileTreeCtrl : public wxTreeCtrl
 {
 public:
-	enum
+	enum 
 	{
-		TreeCtrlIcon_TreeRoot,				 // 0
-		TreeCtrlIcon_FolderClosed,
-		TreeCtrlIcon_FolderSelected,
-		TreeCtrlIcon_FolderOpened,
-		TreeCtrlIcon_NodeClosed,
-		TreeCtrlIcon_NodeSelected,
-		TreeCtrlIcon_NodeOpened,
-		TreeCtrlIcon_NodeMouseOver,
-		TreeCtrlIcon_NodeSelectedMouseOver,
-		TreeCtrlIcon_NodeOpenedMouseOver,
-		TreeCtrlIcon_Header,
-		TreeCtrlIcon_Cplusplus,
-		TreeCtrlIcon_Validate,
-		TreeCtrlIcon_Locked,
+		TreeItemIcon_FolderBtnNormal,
+		TreeItemIcon_FolderBtnExpanded,
+		TreeItemIcon_FolderNormal,
+		TreeItemIcon_FolderExpanded,
+		TreeItemIcon_FileNormal,
+		TreeItemIcon_FileSelected,
+	};
+	enum 
+	{
+		TreeItemState_FileAdded,
+		TreeItemState_FileChanged,
+		TreeItemState_FileSaved,
 
 	};
 

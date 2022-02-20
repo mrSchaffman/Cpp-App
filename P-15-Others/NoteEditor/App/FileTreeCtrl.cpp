@@ -38,123 +38,62 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	// Create a cursor from a stock identifier
 	//wxCursor cursor(wxCURSOR_HAND);
 	//SetCursor(wxCursor(wxCURSOR_RIGHT_ARROW));
-	wxImageList*imageList = new wxImageList(12, 12); // from size(10,10)
+	CreateImageList(12);
+	CreateStateImageList(false);
+
+	//  TreeItemIcon_FolderBtnNormal,
+	//	TreeItemIcon_FolderBtnExpanded,
+	//	TreeItemIcon_FolderNormal,
+	//	TreeItemIcon_FolderExpanded,
+	//	TreeItemIcon_FileNormal,
+	//	TreeItemIcon_FileSelected,
+
+	wxTreeItemId rootFolderId =  AddRoot(wxT("Physic"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
 	{
-		wxIcon rootIcon;
+		SetItemImage(rootFolderId, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+		wxTreeItemId itemFolderId1 = AppendItem(rootFolderId, wxT("chap1"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);//, new ModelTreeItemData(wxT("File Item 1")));
 		{
-			wxImage img2(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp2(img2);
-			rootIcon.CopyFromBitmap(bmp2);
-		}
-		imageList->Add(rootIcon);
+			SetItemImage(itemFolderId1, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+			SetItemBold(itemFolderId1, true);
 
-		wxIcon rootOpenIcon;
-		{
-			wxImage img3(wxT("folderOpened.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp3(img3);
-			rootOpenIcon.CopyFromBitmap(bmp3);
+			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lecon1.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			wxTreeItemId itemId2 = AppendItem(itemFolderId1, wxT("lecon2.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			wxTreeItemId itemId3 = AppendItem(itemFolderId1, wxT("lecon3.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			wxTreeItemId itemId4 = AppendItem(itemFolderId1, wxT("lecon4.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
 
 		}
-		imageList->Add(rootOpenIcon);
-
-		wxIcon fileIcon;
+		wxTreeItemId itemFolderId2 = AppendItem(rootFolderId, wxT("chap2"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
 		{
-			wxImage img3(wxT("textFile.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp3(img3);
-			fileIcon.CopyFromBitmap(bmp3);
+			SetItemImage(itemFolderId2, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+			SetItemBold(itemFolderId2, true);
+
+			wxTreeItemId itemId31 = AppendItem(itemFolderId2, wxT("lecon1.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			wxTreeItemId itemId32 = AppendItem(itemFolderId2, wxT("lecon2.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			wxTreeItemId itemId33 = AppendItem(itemFolderId2, wxT("lecon3.txt"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+
+			//{
+			//	SetItemState(itemId31, TreeItemState_FileAdded);
+			//	SetItemState(itemId32, TreeItemState_FileChanged);
+			//	SetItemState(itemId33, TreeItemState_FileSaved);
+			//}
 
 		}
-		imageList->Add(fileIcon);
+		wxTreeItemId itemFolderId3 = AppendItem(rootFolderId, wxT("chap3"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);//, new ModelTreeItemData(wxT("File iten 3")));
+		{
+			SetItemImage(itemFolderId3, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+			SetItemBold(itemFolderId3, true);
 
+
+		}
 	}
-	AssignImageList(imageList);
-
-	wxImageList*statesImagesList = new wxImageList(10, 10); // from size(10,10)
-	{
-		wxIcon validate;
-		{
-			wxImage img2(wxT("validate.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp2(img2);
-			validate.CopyFromBitmap(bmp2);
-		}
-		statesImagesList->Add(validate);
-
-		wxIcon NodeClosed;
-		{
-			wxImage img2(wxT("NodeClosed.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp2(img2);
-			NodeClosed.CopyFromBitmap(bmp2);
-		}
-		statesImagesList->Add(NodeClosed);
-
-		wxIcon NodeOpened;
-		{
-			wxImage img3(wxT("NodeOpened.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp3(img3);
-			NodeOpened.CopyFromBitmap(bmp3);
-
-		}
-		statesImagesList->Add(NodeOpened);
-
-		wxIcon nodeClosedMouseOver;
-		{
-			wxImage img3(wxT("nodeClosedMouseOver.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp3(img3);
-			nodeClosedMouseOver.CopyFromBitmap(bmp3);
-
-		}
-		statesImagesList->Add(nodeClosedMouseOver);
-
-		wxIcon nodeOpenedMouseOver;
-		{
-			wxImage img3(wxT("nodeOpenedMouseOver.png"), wxBITMAP_TYPE_PNG);
-			wxBitmap bmp3(img3);
-			nodeOpenedMouseOver.CopyFromBitmap(bmp3);
-
-		}
-		statesImagesList->Add(nodeOpenedMouseOver);
-
-	}
-	//
-	AssignStateImageList(statesImagesList);
-
-	wxTreeItemId rootId =  AddRoot(wxT("Project 1"), 0, 0);// , new ModelTreeItemData(wxT("Root Item")));
-	{
-		Expand(rootId);
-		SetItemState(rootId, 1);
-		SetItemImage(rootId, 1, wxTreeItemIcon_Expanded);
-		// set the other image when the item is expanded using:
-		// EVT_TREE_ITEM_EXPANDED(id, func):
-		// The item has been expanded.Processes a wxEVT_TREE_ITEM_EXPANDED event type.
-
-	}
-	wxTreeItemId itemId1 = AppendItem(rootId, wxT("file1.txt"), 2, 2);//, new ModelTreeItemData(wxT("File Item 1")));
-	{
-		//SetItemBackgroundColour(itemId1, wxColour(216, 243, 220));
-		{
-			// use EVT_TREE_ITEM_ACTIVATED(id, func): to the set the ItemBackgroundColour
-		}
-		SetItemBold(itemId1, true);
-		SetItemFont(itemId1, wxFont(10, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false, wxT("Arial"), wxFONTENCODING_ISO8859_1));
-
-	}
-	wxTreeItemId itemId2 = AppendItem(rootId, wxT("file2.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
-	{
-		SetItemState(itemId2, 0);
-
-	}
-	wxTreeItemId itemId3 = AppendItem(rootId, wxT("Project 1.1"), 0, 1);//, new ModelTreeItemData(wxT("File iten 3")));
-	wxTreeItemId itemId31 = AppendItem(itemId3, wxT("file11.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
-	wxTreeItemId itemId32 = AppendItem(itemId3, wxT("file12.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
-	wxTreeItemId itemId33 = AppendItem(itemId3, wxT("file13.txt"), 2, 2);// , new ModelTreeItemData(wxT("File Item 2")));
-
 
 
 
 
 	//m_text_screen = new  TextCtrl(this);
 
-	SetIndent(15);
+	SetIndent(10);
+	SetFont(wxFont(12, wxFONTFAMILY_SCRIPT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Arial"), wxFONTENCODING_SYSTEM));
 	SetBackgroundColour(wxColour(183, 228, 199));
 }
 
@@ -175,59 +114,36 @@ void FileTreeCtrl::CreateImageList(int size)
 
 	wxBusyCursor wait;
 
-	std::array<wxIcon, 17> icons;
+	wxIcon icons[6];
 
-
-	wxImage icon1(wxT("treeRoot.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon2(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
-	//wxImage icon3(wxT("folderSelected.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon4(wxT("folderOpened.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon5(wxT("nodeClosed.png"), wxBITMAP_TYPE_PNG);
-	//wxImage icon6(wxT("nodeSelected.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon7(wxT("nodeOpened.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon8(wxT("nodeClosedMouseOver.png"), wxBITMAP_TYPE_PNG);
-	//wxImage icon9(wxT("nodeSelectedMouseOver.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon10(wxT("nodeOpenedMouseOver.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon11(wxT("header.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon12(wxT("cplusplus.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon13(wxT("validate.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon14(wxT("locked.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon1(wxT("FolderBtnNormal.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon2(wxT("FolderBtnExpanded.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon3(wxT("FolderNormal.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon4(wxT("FolderExpanded.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon5(wxT("FileNormal.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon6(wxT("FileSelected.png"), wxBITMAP_TYPE_PNG);
 
 	wxBitmap iconBmp1(icon1);
 	wxBitmap iconBmp2(icon2);
-	//wxBitmap iconBmp3(icon3);
+	wxBitmap iconBmp3(icon3);
 	wxBitmap iconBmp4(icon4);
 	wxBitmap iconBmp5(icon5);
-	//wxBitmap iconBmp6(icon6);
-	wxBitmap iconBmp7(icon7);
-	wxBitmap iconBmp8(icon8);
-	//wxBitmap iconBmp9(icon9);
-	wxBitmap iconBmp10(icon10);
-	wxBitmap iconBmp11(icon11);
-	wxBitmap iconBmp12(icon12);
-	wxBitmap iconBmp13(icon13);
-	wxBitmap iconBmp14(icon14);
+	wxBitmap iconBmp6(icon6);
 
-	icons[TreeCtrlIcon_TreeRoot].CopyFromBitmap(iconBmp1);
-	icons[TreeCtrlIcon_FolderClosed].CopyFromBitmap(iconBmp2);
-	//icons[TreeCtrlIcon_FolderSelected].CopyFromBitmap(iconBmp3);
-	icons[TreeCtrlIcon_FolderOpened].CopyFromBitmap(iconBmp4);
-	icons[TreeCtrlIcon_NodeClosed].CopyFromBitmap(iconBmp5);
-	//icons[TreeCtrlIcon_NodeSelected].CopyFromBitmap(iconBmp6);
-	icons[TreeCtrlIcon_NodeOpened].CopyFromBitmap(iconBmp7);
-	icons[TreeCtrlIcon_NodeMouseOver].CopyFromBitmap(iconBmp8);
-	//icons[TreeCtrlIcon_NodeSelectedMouseOver].CopyFromBitmap(iconBmp9);
-	icons[TreeCtrlIcon_NodeOpenedMouseOver].CopyFromBitmap(iconBmp10);
-	icons[TreeCtrlIcon_Header].CopyFromBitmap(iconBmp11);
-	icons[TreeCtrlIcon_Cplusplus].CopyFromBitmap(iconBmp12);
-	icons[TreeCtrlIcon_Validate].CopyFromBitmap(iconBmp13);
-	icons[TreeCtrlIcon_Locked].CopyFromBitmap(iconBmp14);
 
-	for (const auto& i : icons)
+	icons[TreeItemIcon_FolderBtnNormal].CopyFromBitmap(iconBmp1);
+	icons[TreeItemIcon_FolderBtnExpanded].CopyFromBitmap(iconBmp2);
+	icons[TreeItemIcon_FolderNormal].CopyFromBitmap(iconBmp3);
+	icons[TreeItemIcon_FolderExpanded].CopyFromBitmap(iconBmp4);
+	icons[TreeItemIcon_FileNormal].CopyFromBitmap(iconBmp5);
+	icons[TreeItemIcon_FileSelected].CopyFromBitmap(iconBmp6);
+
+	for (size_t i = 0; i < WXSIZEOF(icons); i++)
 	{
-		images->Add(i);
+	
+		images->Add(icons[i]);
+		
 	}
-
 	AssignImageList(images);
 
 }
@@ -245,120 +161,88 @@ void FileTreeCtrl::CreateStateImageList(bool del)
 		return;
 	}
 	// make an image list containing small icons
-	wxImageList * states = new wxImageList(16, 16, true);
+	wxImageList * states = new wxImageList(10, 10, true);
+
+	// make an image list containing small icons
 	wxBusyCursor wait;
 
-	std::array<wxIcon, 14> icons;
+	wxIcon icons[3];
 
+	wxImage icon1(wxT("FileStateAdded.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon2(wxT("FileStateChanged.png"), wxBITMAP_TYPE_PNG);
+	wxImage icon3(wxT("FileStateSaved.png"), wxBITMAP_TYPE_PNG);
 
-	wxImage icon2(wxT("folderClosed.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon5(wxT("nodeClosed.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon8(wxT("nodeMouseOver.png"), wxBITMAP_TYPE_PNG);
-
-	wxImage icon11(wxT("header.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon12(wxT("cplusplus.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon13(wxT("validate.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon14(wxT("locked.png"), wxBITMAP_TYPE_PNG);
-
-	wxImage icon3(wxT("folderSelected.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon6(wxT("nodeSelected.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon9(wxT("nodeSelectedMouseOver.png"), wxBITMAP_TYPE_PNG);
-
-	wxImage icon4(wxT("folderOpened.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon7(wxT("nodeOpened.png"), wxBITMAP_TYPE_PNG);
-	wxImage icon10(wxT("nodeOpenedMouseOver.png"), wxBITMAP_TYPE_PNG);
-
-
+	wxBitmap iconBmp1(icon1);
 	wxBitmap iconBmp2(icon2);
 	wxBitmap iconBmp3(icon3);
-	wxBitmap iconBmp4(icon4);
-	wxBitmap iconBmp5(icon5);
-	wxBitmap iconBmp6(icon6);
-	wxBitmap iconBmp7(icon7);
-	wxBitmap iconBmp8(icon8);
-	wxBitmap iconBmp9(icon9);
-	wxBitmap iconBmp10(icon10);
-	wxBitmap iconBmp11(icon11);
-	wxBitmap iconBmp12(icon12);
-	wxBitmap iconBmp13(icon13);
-	wxBitmap iconBmp14(icon14);
 
-	icons[TreeCtrlIcon_FolderClosed].CopyFromBitmap(iconBmp2);
-	icons[TreeCtrlIcon_FolderSelected].CopyFromBitmap(iconBmp3);
-	icons[TreeCtrlIcon_FolderOpened].CopyFromBitmap(iconBmp4);
-	icons[TreeCtrlIcon_NodeClosed].CopyFromBitmap(iconBmp5);
-	icons[TreeCtrlIcon_NodeSelected].CopyFromBitmap(iconBmp6);
-	icons[TreeCtrlIcon_NodeOpened].CopyFromBitmap(iconBmp7);
-	icons[TreeCtrlIcon_NodeMouseOver].CopyFromBitmap(iconBmp8);
-	icons[TreeCtrlIcon_NodeSelectedMouseOver].CopyFromBitmap(iconBmp9);
-	icons[TreeCtrlIcon_NodeOpenedMouseOver].CopyFromBitmap(iconBmp10);
-	icons[TreeCtrlIcon_Header].CopyFromBitmap(iconBmp11);
-	icons[TreeCtrlIcon_Cplusplus].CopyFromBitmap(iconBmp12);
-	icons[TreeCtrlIcon_Validate].CopyFromBitmap(iconBmp13);
-	icons[TreeCtrlIcon_Locked].CopyFromBitmap(iconBmp14);
-
-	for (size_t i = 0; i <= icons.size(); i++)
+	icons[TreeItemState_FileAdded].CopyFromBitmap(iconBmp1);
+	icons[TreeItemState_FileChanged].CopyFromBitmap(iconBmp2);
+	icons[TreeItemState_FileSaved].CopyFromBitmap(iconBmp3);
+	for (size_t i = 0; i < WXSIZEOF(states); i++)
 	{
+
 		states->Add(icons[i]);
+
 	}
 
-	AssignImageList(states);
+	AssignStateImageList(states);
 
 }
 
 void FileTreeCtrl::AddSampleItemsToTree(size_t numChildren, size_t depth)
 {
-	int root = TreeCtrlIcon_TreeRoot;
-	wxTreeItemId rootId = AddRoot("Root", root, root);// , new FileTreeItemData("Root item"));
+	//int root = TreeCtrlIcon_TreeRoot;
+	//wxTreeItemId rootId = AddRoot("Root", root, root);// , new FileTreeItemData("Root item"));
 
-	if (!HasFlag(wxTR_HIDE_ROOT))
-	{
-		SetItemImage(rootId, TreeCtrlIcon_FolderOpened, wxTreeItemIcon_Expanded);
+	//if (!HasFlag(wxTR_HIDE_ROOT))
+	//{
+	//	SetItemImage(rootId, TreeCtrlIcon_FolderOpened, wxTreeItemIcon_Expanded);
 
-	}
-	AddItemsRecursively(rootId, numChildren, depth, 0);
+	//}
+	//AddItemsRecursively(rootId, numChildren, depth, 0);
 }
 void FileTreeCtrl::AddItemsRecursively(const wxTreeItemId& idParent, size_t numChildren, size_t depth, size_t folder)
 {
-	if (depth > 0)
-	{
-		bool hasChildren = depth > 1;
+	//if (depth > 0)
+	//{
+	//	bool hasChildren = depth > 1;
 
-		wxString str;
-		for (size_t n = 0; n < numChildren; n++)
-		{
-			// at depth 1 elements won't have any more children
-			if (hasChildren)
-				str.Printf("%s child %u", "Folder", unsigned(n + 1));
-			else
-				str.Printf("%s child %u.%u", "File", unsigned(folder), unsigned(n + 1));
+	//	wxString str;
+	//	for (size_t n = 0; n < numChildren; n++)
+	//	{
+	//		// at depth 1 elements won't have any more children
+	//		if (hasChildren)
+	//			str.Printf("%s child %u", "Folder", unsigned(n + 1));
+	//		else
+	//			str.Printf("%s child %u.%u", "File", unsigned(folder), unsigned(n + 1));
 
-			// here we pass to AppendItem() normal and selected item images (we
-			// suppose that selected image follows the normal one in the enum)
-			int image, imageSel;
-			//if (wxGetApp().ShowImages())
-			//{
-			image = depth == 1 ? TreeCtrlIcon_Header : TreeCtrlIcon_FolderClosed;
-			imageSel = image + 1;
-			//}
-			//else
-			//{
-				//image = imageSel = -1;
-			//}
-			wxTreeItemId id = AppendItem(idParent, str, image, imageSel);// , new FileTreeItemData(str));
+	//		// here we pass to AppendItem() normal and selected item images (we
+	//		// suppose that selected image follows the normal one in the enum)
+	//		int image, imageSel;
+	//		//if (wxGetApp().ShowImages())
+	//		//{
+	//		image = depth == 1 ? TreeCtrlIcon_Header : TreeCtrlIcon_FolderClosed;
+	//		imageSel = image + 1;
+	//		//}
+	//		//else
+	//		//{
+	//			//image = imageSel = -1;
+	//		//}
+	//		wxTreeItemId id = AppendItem(idParent, str, image, imageSel);// , new FileTreeItemData(str));
 
-			//if (wxGetApp().ShowStates())
-			SetItemState(id, 0);
+	//		//if (wxGetApp().ShowStates())
+	//		SetItemState(id, 0);
 
-			// and now we also set the expanded one (only for the folders)
-			if (hasChildren)//&& wxGetApp().ShowImages())
-			{
-				SetItemImage(id, TreeCtrlIcon_FolderOpened, wxTreeItemIcon_Expanded);
-			}
+	//		// and now we also set the expanded one (only for the folders)
+	//		if (hasChildren)//&& wxGetApp().ShowImages())
+	//		{
+	//			SetItemImage(id, TreeCtrlIcon_FolderOpened, wxTreeItemIcon_Expanded);
+	//		}
 
-			AddItemsRecursively(id, numChildren, depth - 1, n + 1);
-		}
-	}
+	//		AddItemsRecursively(id, numChildren, depth - 1, n + 1);
+	//	}
+	//}
 	//else: done!
 }
 
@@ -392,22 +276,11 @@ void FileTreeCtrl::OnContextMenu(wxContextMenuEvent & event)
 
 void FileTreeCtrl::OnLMouseDown(wxMouseEvent & event)
 {
-	//wxTreeItemId item = HitTest(event.GetPosition());
-	//if (item.IsOk())
-	//{
-	//	UnselectItem(item);
-	//	SetItemBackgroundColour(item, wxColour(216, 243, 220));
-	//	//wxMessageBox("Left mouse button down");
-
-	//}
-
-	//event.Skip();
 
 }
 
 void FileTreeCtrl::OnLMouseUp(wxMouseEvent & event)
 {
-	//event.Skip();
 
 }
 
@@ -441,41 +314,6 @@ void FileTreeCtrl::OnItemCollapsing(wxTreeEvent & event)
 
 void FileTreeCtrl::OnSelectionChanged(wxTreeEvent & event)
 {
-	//wxTreeItemId item = event.GetItem();
-
-	//if (!ItemHasChildren(item))
-	//{
-	//	if (GetItemBackgroundColour(item) == wxColour(216, 243, 220))
-	//	{
-	//		event.Skip();
-	//	}
-	//	else
-	//	{
-	//		SetItemBackgroundColour(item, wxColour(216, 243, 220));
-	//	}
-
-	//}
-	//else
-	//{
-	//	if (IsExpanded(item))
-	//	{
-	//		CollapseAllChildren(item);
-	//	}
-	//	else
-	//	{
-	//		Expand(item);
-
-	//	}
-
-	//}
-	//wxTreeItemId item = event.GetItem();
-	////wxTreeItemId prevItem = GetPrevSibling(event.GetItem());
-	//if (item.IsOk())
-	//{
-	//	UnselectItem(item);
-	//	SetItemBackgroundColour(item, wxColour(0, 243, 220));
-
-	//}
 }
 
 void FileTreeCtrl::OnSelectionChanging(wxTreeEvent & event)
@@ -499,7 +337,7 @@ void FileTreeCtrl::OnItemActivated(wxTreeEvent & event)
 		}
 		else
 		{
-			SetItemBackgroundColour(item, wxColour(183, 228, 199));
+			SetItemBackgroundColour(item, wxColour(216, 243, 220));
 		}
 
 	}
@@ -514,6 +352,7 @@ void FileTreeCtrl::OnItemActivated(wxTreeEvent & event)
 			Expand(item);
 
 		}
+		SetItemBackgroundColour(item, wxColour(216, 243, 220));
 
 	}
 }

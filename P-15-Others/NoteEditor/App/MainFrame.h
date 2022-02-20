@@ -23,7 +23,8 @@ public:
 	wxString GetFilename() { return m_filename; }
 	void OnPaint(wxPaintEvent&event);
 
-
+	void SetTextCtrl(TextCtrl& text) { m_text = &text; }
+	TextCtrl GetTextCtrl()const { return m_text; }
 
 private:
 
@@ -31,7 +32,7 @@ private:
 	StatusBar * m_statusbar = nullptr;
 
 	wxString m_filename = "Untitled";
-	TextCtrl* m_text_screen = nullptr;
+	TextCtrl* m_text = nullptr;
 	FileTreeCtrl * m_tree = nullptr;
 
 	int m_ln = 0;

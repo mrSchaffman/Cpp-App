@@ -6,7 +6,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(720, 580))
+MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxDefaultPosition, wxSize(820, 580))
 {
 
 	wxImage img(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
@@ -39,44 +39,59 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 
 	// setting the Controls
-	
-		wxBoxSizer*topSizer = new wxBoxSizer(wxVERTICAL);
+	wxBoxSizer*topSizer = new wxBoxSizer(wxVERTICAL);
+	{
+		SetSizer(topSizer);
+		//topSizer->Fit(this);
+		//topSizer->SetSizeHints(this);
+
+		wxFlexGridSizer* flexGridSizer = new wxFlexGridSizer(1, 2, 0, 0);
 		{
-			SetSizer(topSizer);
-			//SetSizeHints(wxSize(720, 580), wxSize(720, 580));
-
-			wxBoxSizer*box = new wxBoxSizer(wxHORIZONTAL);
+			// Make the 1st row growable
+			flexGridSizer->AddGrowableCol(1);
 			{
-				topSizer->Add(box, 1, wxALL);
+				topSizer->Add(flexGridSizer, 1, wxEXPAND);
 
-				wxBoxSizer*col1 = new wxBoxSizer(wxVERTICAL);
 				{
-					box->Add(col1, 1, wxALL);
-					m_tree = new FileTreeCtrl(this, ID_TREE, wxDefaultPosition, wxSize(130, 450));// wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/ | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+					m_tree = new FileTreeCtrl(this, ID_TREE, wxPoint(0, 10), wxSize(130, 580));// wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/ | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
 
-						wxPanel * card = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(130, 50));
-						card->SetBackgroundColour(wxColour(217, 237, 146));
-				
-					col1->Add(m_tree, 1, wxALL);
-					col1->Add(card, 0, wxALL);
+					//wxPanel * card = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(130, 50));
+					//card->SetBackgroundColour(wxColour(217, 237, 146));
+
+					flexGridSizer->Add(m_tree, 0);
+					//flexGridSizer->Add(card, 0, wxGROW);
 
 				}
-				wxBoxSizer*col2 = new wxBoxSizer(wxVERTICAL);
 				{
-					box->Add(col2, 1, wxALL);
-
-
-					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxDefaultPosition, wxSize(580, 580), wxTE_MULTILINE | wxHSCROLL /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
+					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxHSCROLL /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
 					text->SetBackgroundColour(wxColour(216, 243, 220));
-					col2->Add(text, 1, wxALL);
+					text->SetValue(wxT("DYNAMIQUE DES FLUIDES INCOMPRESSIBLES\n\n")
+						wxT("L’hydrodynamique est la branche de la mécanique des fluides qui étudie le mouvement des particules fluides \n")
+						wxT("soumises à un système de forces.Bien souvent, on commence par l’étude les fluides fictifs dit « fluides parfaits\n")
+						wxT("».Ils ont la particularité de ne pas avoir de viscosité et de ne pas développer de la turbulence.Les fluides réels\n")
+						wxT("engendrent des forces de frottement dues à la turbulence et à la viscosité.La présence de ces forces induit une\n")
+						wxT("perte de charge(énergie) qui est une transformation irréversible de l’énergie mécanique en énergie thermique.\n")
+						wxT("Pour résoudre un problème d’écoulement d’un fluide réel, on fait appel à des résultats expérimentaux, en\n")
+						wxT("particulier ceux de l’ingénieur et physicien britannique Osborne Reynolds.Ce chapitre aborde, dans un premier\n")
+						wxT("temps, l’équation de continuité et surtout l’établissement de l’équation de Bernoulli.Dans un deuxième temps,\n")
+						wxT("l’évaluation des pertes de charges ainsi que les méthodes de calcul des réseaux hydrauliques en charge sont\n")
+						wxT("exposées.Elles sont indispensables pour le dimensionnement des diverses installations hydrauliques(de\n")
+						wxT("pompage, de turbines, de machines hydrauliques et thermiques dans lesquelles est véhiculé un fluide réel…etc.)\n"));
+
+					// i need consolas font regular
+					text->SetFont(wxFont(11, wxFONTFAMILY_SCRIPT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false, wxT("Arial"), wxFONTENCODING_SYSTEM));
+					text->SetMargins(wxPoint(10, 20));
+					flexGridSizer->Add(text, 1, wxGROW);
 
 					m_menubar = new MenuBar(this, text);
 
 				}
 
 			}
-			
 		}
+
+	}
+
 
 		SetMenuBar(m_menubar);
 		//SetBackgroundColour(wxColour(217, 237, 146));
