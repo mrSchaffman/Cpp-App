@@ -3,6 +3,7 @@
 #include"MenuBar.h"
 #include"StatusBar.h"
 #include"TextCtrl.h"
+#include"MainPanel.h"
 #include"FileTreeCtrl.h"
 
 
@@ -21,7 +22,6 @@ public:
 
 	void SetFilename(const wxString & name) { m_filename = name; }
 	wxString GetFilename() { return m_filename; }
-	void OnPaint(wxPaintEvent&event);
 
 	void SetTextCtrl(TextCtrl& text) { m_text = &text; }
 	TextCtrl GetTextCtrl()const { return m_text; }
@@ -34,6 +34,8 @@ private:
 	wxString m_filename = "Untitled";
 	TextCtrl* m_text = nullptr;
 	FileTreeCtrl * m_tree = nullptr;
+
+	MainPanel * m_panel = nullptr;
 
 	int m_ln = 0;
 	int m_col = 0;
