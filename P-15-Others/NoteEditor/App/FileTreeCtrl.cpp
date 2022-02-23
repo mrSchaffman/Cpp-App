@@ -51,25 +51,41 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	wxTreeItemId rootFolderId =  AddRoot(wxT("Physic"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
 	{
 		SetItemImage(rootFolderId, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+		SetItemTextColour(rootFolderId, *wxWHITE);
+
 		wxTreeItemId itemFolderId1 = AppendItem(rootFolderId, wxT("Chap1"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);//, new ModelTreeItemData(wxT("File Item 1")));
 		{
 			SetItemImage(itemFolderId1, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
 			SetItemBold(itemFolderId1, true);
+			SetItemTextColour(itemFolderId1, *wxWHITE);
 
 			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId1, *wxWHITE);
+
 			wxTreeItemId itemId2 = AppendItem(itemFolderId1, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId2, *wxWHITE);
+
 			wxTreeItemId itemId3 = AppendItem(itemFolderId1, wxT("lesson3"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId3, *wxWHITE);
+
 			wxTreeItemId itemId4 = AppendItem(itemFolderId1, wxT("lesson4"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId4, *wxWHITE);
 
 		}
 		wxTreeItemId itemFolderId2 = AppendItem(rootFolderId, wxT("Chap2"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
 		{
 			SetItemImage(itemFolderId2, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
 			SetItemBold(itemFolderId2, true);
+			SetItemTextColour(itemFolderId2, *wxWHITE);
 
 			wxTreeItemId itemId31 = AppendItem(itemFolderId2, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId31, *wxWHITE);
+
 			wxTreeItemId itemId32 = AppendItem(itemFolderId2, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId32, *wxWHITE);
+
 			wxTreeItemId itemId33 = AppendItem(itemFolderId2, wxT("lesson3"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			SetItemTextColour(itemId33, *wxWHITE);
 
 			//{
 			//	SetItemState(itemId31, TreeItemState_FileAdded);
@@ -82,6 +98,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 		{
 			SetItemImage(itemFolderId3, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
 			SetItemBold(itemFolderId3, true);
+			SetItemTextColour(itemFolderId3, *wxWHITE);
 
 
 		}
