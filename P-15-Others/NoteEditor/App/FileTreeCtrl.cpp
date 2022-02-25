@@ -63,6 +63,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 			FileTreeItemData* data1 = new FileTreeItemData("hello");
 			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new FileTreeItemData("lesson1"));
 			SetItemTextColour(itemId1, *wxWHITE);
+			SetItemData(itemId1, data1);
 
 			wxTreeItemId itemId2 = AppendItem(itemFolderId1, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
 			SetItemTextColour(itemId2, *wxWHITE);
