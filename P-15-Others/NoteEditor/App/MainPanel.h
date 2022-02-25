@@ -14,9 +14,15 @@ public:
 	wxBitmap CreateLogo();
 	wxBitmap CreateSideButtons();
 
+	// Accessors
+	void SetText(const wxString& value) { m_text->SetValue( value); }
+	wxTextCtrl* GetText()const { return m_text; }
+
+	void ControlLayout();
+
 private:
 
-	TextCtrl* m_text{};
+	wxTextCtrl* m_text{};
 	FileTreeCtrl*m_tree{};
 
 	wxDECLARE_EVENT_TABLE();

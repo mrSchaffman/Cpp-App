@@ -4,6 +4,7 @@
 #include"StatusBar.h"
 #include"TextCtrl.h"
 #include"MainPanel.h"
+#include "wx/splitter.h"
 #include"FileTreeCtrl.h"
 
 

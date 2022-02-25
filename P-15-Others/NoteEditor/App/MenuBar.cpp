@@ -2,6 +2,7 @@
 
 wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_NEW,MenuBar::OnNew)
+	EVT_MENU(M_NEW_PROJECT,MenuBar::OnNewProject)
 	EVT_MENU(M_OPEN,MenuBar::OnOpen)
 	EVT_MENU(M_OPEN_FOLDER,MenuBar::OnOpenNewFolder)
 	EVT_MENU(M_SAVE,MenuBar::OnSave)
@@ -14,11 +15,11 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSettingDialog)
 wxEND_EVENT_TABLE()
 
-MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
+MenuBar::MenuBar(wxFrame*parent,  FileTreeCtrl* tree,wxTextCtrl*text): m_parent(parent), m_tree(tree),m_text(text)
 
 {
 
-	m_file = new wxMenu();
+	wxMenu*m_file = new wxMenu();
 	{
 		
 
@@ -40,7 +41,7 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 		m_file->Append(M_EXIT, wxT("Exit"), wxT("Exit the App..."));
 
 	}
-	m_edit = new wxMenu();
+	wxMenu*m_edit = new wxMenu();
 	{
 		m_edit->Append(M_UNDO, wxT("Undo \tCtrl+Z"), wxT("Undo"));
 		m_edit->AppendSeparator();
@@ -62,12 +63,12 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 		m_edit->Append(M_TIME_DATE, wxT("Time/Date \tF5"), wxT("Undo"));
 
 	}
-	m_format = new wxMenu();
+	wxMenu*m_format = new wxMenu();
 	{
 		m_format->Append(M_WRAP_WORD, wxT("Wrap Word"), wxT("Wrap word style"));
 		m_format->Append(M_FONT, wxT("Font..."), wxT("Font styles"));
 	}
-	m_view = new wxMenu();
+	wxMenu*m_view = new wxMenu();
 	{
 		wxMenu *subMenu = new wxMenu();
 		{
@@ -78,7 +79,7 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 		m_view->AppendSubMenu(subMenu, wxT("Zoom"));
 		m_view->AppendCheckItem(M_STATUS_BAR, wxT("Status Bar"),wxT("Show Status Bar"))->Check();
 	}
-	m_help = new wxMenu();
+	wxMenu*m_help = new wxMenu();
 	{
 		m_help -> Append(M_VIEW_HELP, wxT("View Help"),wxT("need Help?"));
 		m_help -> Append(M_SEND_FEEDBACK, wxT("Send Feedback"),wxT("send some Feedbacks"));
@@ -96,15 +97,11 @@ MenuBar::MenuBar(wxFrame*parent,wxTextCtrl*text):m_text(text),	m_parent( parent)
 
 void MenuBar::OnNew(wxCommandEvent & evnt)
 {
-	//auto win = wxGetApp();
-	//auto win = new wxFrame(nullptr,wxID_ANY,m_parent->GetTitle(),m_parent->GetPosition(),m_parent->GetSize(),m_parent->GetWindowStyle());
-	//win->Show(true);
 	
-	//auto nWin = new wxFrame(&m_parent);
-	//nWin->Show(true);
-	//wxDialog* dia = new wxDialog(m_parent, wxID_ANY, "New");
-	//wxButton*bt = new wxButton(dia, wxID_OK,wxString("ooook"),wxPoint(30,50),wxSize(60,60),wxBORDER_NONE );
-	//dia->Show();
+}
+
+void MenuBar::OnNewProject(wxCommandEvent & evnt)
+{
 
 }
 
@@ -167,8 +164,7 @@ void MenuBar::OnOpenNewFolder(wxCommandEvent & evnt)
 void MenuBar::OnAbout(wxCommandEvent & evnt)
 {
 	wxString msg;
-	msg.Printf("This is my Own implementation of the existing Notepad called NoteEditor \n Copyright(C) Barth. Feudong \t 2022"
-	);
+	msg.Printf("This is my Own implementation of the existing Notepad called NoteEditor \n Copyright(C) Barth. Feudong \t 2022");
 
 	wxMessageBox(msg, "About NoteEditor", wxOK | wxICON_INFORMATION, this);
 
@@ -182,20 +178,21 @@ void MenuBar::OnExit(wxCommandEvent & evnt)
 void MenuBar::OnSave(wxCommandEvent & evnt)
 {
 	//wxString filename = m_parent->GetFilename();
-	wxString caption = wxT("Save the file");
-	//wxString wildcard = wxT("BMP files(*.bmp)|*.bmp|PNG Files(*.png)|*.png|GIF files (*.gif)|*.gif");
-	//wxString wildcard = wxT("BMP and GIF files (*.bmp;*.gif)|*.bmp;*.gif|PNG files (*.png)|*.png");
+	wxString caption = wxT("Save the Current File");
 	wxString wildcard = wxT("Text Files (*.txt)|*.txt ");// | *.bmp | GIF files(*.gif) | *.gif");
-	//wxString wildcard = wxT("files (*.txt)|*.txt ");// | *.bmp | GIF files(*.gif) | *.gif");
 	wxString defaultDir = wxT("c:\\temp");
 
-	wxString defaultFilename = wxEmptyString;
+	wxString defaultFilename = wxT("Untitled");
 	wxFileDialog dialog(this, caption, defaultDir, defaultFilename,wildcard, wxFD_SAVE|wxFD_OVERWRITE_PROMPT);
-	if (dialog.ShowModal() == wxID_OK)
-	{
-		wxString path = dialog.GetPath();
-		int filterIndex = dialog.GetFilterIndex();
-	}
+	if (dialog.ShowModal() == wxID_CANCEL)
+		return;
+	
+		wxFileOutputStream stream(dialog.GetPath());
+		wxTextOutputStream file(stream);
+
+		file << m_text->GetValue();
+
+	
 }
 
 void MenuBar::OnSaveAs(wxCommandEvent & evnt)

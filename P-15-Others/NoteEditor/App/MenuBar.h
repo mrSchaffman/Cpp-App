@@ -2,15 +2,18 @@
 #include"wx/wx.h"
 #include "wx/filedlg.h"
 #include "wx/dirdlg.h"
+#include "wx/txtstrm.h"
 #include "wx/wfstream.h"
 #include "wx/sysopt.h"
 #include"PageSettingDialogue.h"
+#include"FileTreeCtrl.h"
 
 
 enum {
 
 	// menu file 
 	M_NEW =1,
+	M_NEW_PROJECT,
 	M_NEW_WINDOW ,
 	M_OPEN ,
 	M_OPEN_FOLDER,
@@ -55,16 +58,11 @@ enum {
 class MenuBar : public wxMenuBar
 {
 public:
-	MenuBar(wxFrame*parent,wxTextCtrl*text = nullptr);
-	virtual~MenuBar() = default;/* {
-		delete m_file;
-		delete m_edit;
-		delete m_format;
-		delete m_view;
-		delete m_help;
-	};*/
+	MenuBar(wxFrame*parent, FileTreeCtrl* tree = nullptr,wxTextCtrl*text = nullptr);
+	virtual~MenuBar() = default;
 
 	void OnNew(wxCommandEvent&evnt);
+	void OnNewProject(wxCommandEvent&evnt);
 	void OnOpen(wxCommandEvent&evnt);
 	void OnOpenNewFolder(wxCommandEvent&evnt);
 	void OnAbout(wxCommandEvent&evnt);
@@ -79,15 +77,10 @@ public:
 
 private:
 
-	wxMenu * m_file = nullptr;
-	wxMenu * m_edit = nullptr;
-	wxMenu * m_format = nullptr;
-	wxMenu * m_view = nullptr;
-	wxMenu * m_help = nullptr;
 	wxTextCtrl*m_text = nullptr;
+	FileTreeCtrl* m_tree = nullptr;
 
 	wxFrame*m_parent = nullptr;
-	//PageSettingDialogue* m_page_setting_dialog = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 };

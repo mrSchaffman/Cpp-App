@@ -35,18 +35,9 @@ wxEND_EVENT_TABLE()
 FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style,wxTextCtrl* text) : wxTreeCtrl(parent, id, pos, size, style)
 {
 	m_text = text;
-	// Create a cursor from a stock identifier
-	//wxCursor cursor(wxCURSOR_HAND);
-	//SetCursor(wxCursor(wxCURSOR_RIGHT_ARROW));
 	CreateImageList(20);
 	CreateStateImageList(false);
 
-	//  TreeItemIcon_FolderBtnNormal,
-	//	TreeItemIcon_FolderBtnExpanded,
-	//	TreeItemIcon_FolderNormal,
-	//	TreeItemIcon_FolderExpanded,
-	//	TreeItemIcon_FileNormal,
-	//	TreeItemIcon_FileSelected,
 
 	wxTreeItemId rootFolderId =  AddRoot(wxT("Physic"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
 	{
@@ -63,7 +54,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 			FileTreeItemData* data1 = new FileTreeItemData("hello");
 			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new FileTreeItemData("lesson1"));
 			SetItemTextColour(itemId1, *wxWHITE);
-			SetItemData(itemId1, data1);
+			//SetItemData(itemId1, data1);
 
 			wxTreeItemId itemId2 = AppendItem(itemFolderId1, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
 			SetItemTextColour(itemId2, *wxWHITE);
