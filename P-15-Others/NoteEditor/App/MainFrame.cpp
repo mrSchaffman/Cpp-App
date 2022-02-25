@@ -18,8 +18,8 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 	SetTitle(m_filename + " - " + title);
 
-	//m_menubar = new MenuBar(this, nullptr);
-	//SetMenuBar(m_menubar);
+	m_menubar = new MenuBar(this, nullptr);
+	SetMenuBar(m_menubar);
 
 
 

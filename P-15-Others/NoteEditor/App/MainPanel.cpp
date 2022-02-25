@@ -16,7 +16,7 @@ MainPanel::MainPanel(wxFrame * frame): wxPanel(frame,wxID_ANY,wxPoint(48,0	), wx
 			// Make the 1st row growable
 			{
 				{
-					wxPanel * row1 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(920, 75));
+					wxPanel * row1 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(920, 48));
 					row1->SetBackgroundColour(wxColour(100, 100, 100));
 					{
 						
@@ -26,6 +26,7 @@ MainPanel::MainPanel(wxFrame * frame): wxPanel(frame,wxID_ANY,wxPoint(48,0	), wx
 
 				}
 				topSizer->Add(sizer, 1, wxALL | wxEXPAND);
+				wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxPoint(210, 0), wxSize(695, 640), wxTE_MULTILINE /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
 
 				{
 
@@ -36,7 +37,7 @@ MainPanel::MainPanel(wxFrame * frame): wxPanel(frame,wxID_ANY,wxPoint(48,0	), wx
 
 					wxBoxSizer*colomn2= new wxBoxSizer(wxVERTICAL);
 					{
-						m_tree = new FileTreeCtrl(this, ID_TREE, wxPoint(50, 0), wxSize(166, 590), wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/ | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+						m_tree = new FileTreeCtrl(this, ID_TREE, wxPoint(50, 0), wxSize(166, 590), wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/ | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE, text);
 						wxPanel * card2 = new wxPanel(this, wxID_ANY, wxPoint(50, 540), wxSize(166, 48));
 						card2->SetBackgroundColour(wxColour(75, 75, 75));
 
@@ -49,7 +50,6 @@ MainPanel::MainPanel(wxFrame * frame): wxPanel(frame,wxID_ANY,wxPoint(48,0	), wx
 
 				}
 				{
-					wxTextCtrl * text = new wxTextCtrl(this, TXT_CTRL, wxEmptyString, wxPoint(210, 0), wxSize(695, 640), wxTE_MULTILINE /*| wxTE_NO_VSCROLL*/ | wxTE_NOHIDESEL | wxBORDER_NONE);
 					text->SetBackgroundColour(wxColour(90, 90, 90));
 					text->SetValue(wxT("DYNAMIQUE DES FLUIDES INCOMPRESSIBLES\n\n")
 						wxT("L’hydrodynamique est la branche de la mécanique des fluides qui étudie le mouvement des particules fluides \n")

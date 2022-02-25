@@ -1,12 +1,23 @@
 #pragma once
 #include"wx/wx.h"
 #include"wx/treectrl.h"
-#include"TextCtrl.h"
+//#include"TextCtrl.h"
 #include"FileTreeItemData.h"
-#include<array>
+//#include<array>
 
 static const int NUM_CHILDREN_PER_NODE = 5;
 static const int NUM_LEVELS = 2;
+
+//#define USE_GENERIC_TREECTRL 0
+//
+//#if USE_GENERIC_TREECTRL
+//#include "wx/generic/treectlg.h"
+//#ifndef wxTreeCtrl
+//#define wxTreeCtrl wxGenericTreeCtrl
+//#define sm_classwxTreeCtrl sm_classwxGenericTreeCtrl
+//#endif
+//#endif
+
 enum 
 {
 	ID_TREE,
@@ -33,7 +44,7 @@ public:
 
 	};
 
-	FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint& pos, const wxSize& size, long style = wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/| wxTR_FULL_ROW_HIGHLIGHT | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+	FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint& pos, const wxSize& size, long style = wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/| wxTR_FULL_ROW_HIGHLIGHT | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE, wxTextCtrl* text = nullptr);
 	virtual~FileTreeCtrl() = default;
 
 	void CreateImageList(int size = 16);
@@ -74,7 +85,9 @@ public:
 
 private:
 	int          m_imageSize{};               // current size of images
+	wxTreeItemId m_previous;
 	wxWindow * m_parent{};
+	wxTextCtrl* m_text{};
 
 	wxDECLARE_EVENT_TABLE();
 };

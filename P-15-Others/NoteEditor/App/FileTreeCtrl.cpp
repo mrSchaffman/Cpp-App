@@ -1,44 +1,44 @@
 #include "FileTreeCtrl.h"
 
 wxBEGIN_EVENT_TABLE(FileTreeCtrl,wxTreeCtrl)
-EVT_TREE_ITEM_ACTIVATED(ID_TREE, FileTreeCtrl::OnItemActivated)
-EVT_TREE_BEGIN_DRAG(ID_TREE, FileTreeCtrl::OnBeginDrag)
-EVT_TREE_BEGIN_RDRAG(ID_TREE, FileTreeCtrl::OnBeginRDrag)
-EVT_TREE_BEGIN_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnBeginLabelEdit)
-EVT_TREE_END_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnEndLabelEdit)
-EVT_TREE_DELETE_ITEM(ID_TREE, FileTreeCtrl::OnDeleteItem)
+//EVT_TREE_ITEM_ACTIVATED(ID_TREE, FileTreeCtrl::OnItemActivated)
+//EVT_TREE_BEGIN_DRAG(ID_TREE, FileTreeCtrl::OnBeginDrag)
+//EVT_TREE_BEGIN_RDRAG(ID_TREE, FileTreeCtrl::OnBeginRDrag)
+//EVT_TREE_BEGIN_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnBeginLabelEdit)
+//EVT_TREE_END_LABEL_EDIT(ID_TREE, FileTreeCtrl::OnEndLabelEdit)
+//EVT_TREE_DELETE_ITEM(ID_TREE, FileTreeCtrl::OnDeleteItem)
 EVT_TREE_ITEM_MENU(ID_TREE, FileTreeCtrl::OnItemMenu)
-EVT_TREE_GET_INFO(ID_TREE, FileTreeCtrl::OnGetInfo)
-EVT_TREE_SET_INFO(ID_TREE, FileTreeCtrl::OnSetInfo)
-EVT_TREE_ITEM_EXPANDED(ID_TREE, FileTreeCtrl::OnItemExpanded)
-EVT_TREE_ITEM_EXPANDING(ID_TREE, FileTreeCtrl::OnItemExpanding)
-EVT_TREE_ITEM_COLLAPSED(ID_TREE, FileTreeCtrl::OnItemCollapsed)
-EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnSelectionChanged)
-EVT_TREE_ITEM_COLLAPSING(ID_TREE, FileTreeCtrl::OnItemCollapsing)
-EVT_TREE_SEL_CHANGING(ID_TREE, FileTreeCtrl::OnSelectionChanging)
-EVT_TREE_KEY_DOWN(ID_TREE, FileTreeCtrl::OnTreeKeyDown)
-EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnItemStateClick)
-EVT_TREE_ITEM_RIGHT_CLICK(ID_TREE, FileTreeCtrl::OnItemRClick)
-EVT_TREE_STATE_IMAGE_CLICK(ID_TREE, FileTreeCtrl::OnImageStateClick)
-
-EVT_LEFT_DOWN(FileTreeCtrl::OnLMouseDown)
-EVT_LEFT_UP(FileTreeCtrl::OnLMouseUp)
-EVT_RIGHT_DOWN(FileTreeCtrl::OnRMouseDown)
-EVT_RIGHT_UP(FileTreeCtrl::OnRMouseUp)
-EVT_RIGHT_DCLICK(FileTreeCtrl::OnRMouseDClick)
-
-EVT_CONTEXT_MENU(FileTreeCtrl::OnContextMenu)
+//EVT_TREE_GET_INFO(ID_TREE, FileTreeCtrl::OnGetInfo)
+//EVT_TREE_SET_INFO(ID_TREE, FileTreeCtrl::OnSetInfo)
+//EVT_TREE_ITEM_EXPANDED(ID_TREE, FileTreeCtrl::OnItemExpanded)
+//EVT_TREE_ITEM_EXPANDING(ID_TREE, FileTreeCtrl::OnItemExpanding)
+//EVT_TREE_ITEM_COLLAPSED(ID_TREE, FileTreeCtrl::OnItemCollapsed)
+//EVT_TREE_SEL_CHANGED(ID_TREE, FileTreeCtrl::OnSelectionChanged)
+//EVT_TREE_SEL_CHANGING(ID_TREE, FileTreeCtrl::OnSelectionChanging)
+//
+//EVT_TREE_ITEM_COLLAPSING(ID_TREE, FileTreeCtrl::OnItemCollapsing)
+//EVT_TREE_KEY_DOWN(ID_TREE, FileTreeCtrl::OnTreeKeyDown)
+//EVT_TREE_ITEM_RIGHT_CLICK(ID_TREE, FileTreeCtrl::OnItemRClick)
+//EVT_TREE_STATE_IMAGE_CLICK(ID_TREE, FileTreeCtrl::OnImageStateClick)
+//
+//EVT_LEFT_DOWN(FileTreeCtrl::OnLMouseDown)
+//EVT_LEFT_UP(FileTreeCtrl::OnLMouseUp)
+//EVT_RIGHT_DOWN(FileTreeCtrl::OnRMouseDown)
+//EVT_RIGHT_UP(FileTreeCtrl::OnRMouseUp)
+//EVT_RIGHT_DCLICK(FileTreeCtrl::OnRMouseDClick)
+//
+//EVT_CONTEXT_MENU(FileTreeCtrl::OnContextMenu)
 
 
 wxEND_EVENT_TABLE()
 
-FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style) : wxTreeCtrl(parent, id, pos, size, style)
+FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint & pos, const wxSize & size, long style,wxTextCtrl* text) : wxTreeCtrl(parent, id, pos, size, style)
 {
-
+	m_text = text;
 	// Create a cursor from a stock identifier
 	//wxCursor cursor(wxCURSOR_HAND);
 	//SetCursor(wxCursor(wxCURSOR_RIGHT_ARROW));
-	CreateImageList(35);
+	CreateImageList(20);
 	CreateStateImageList(false);
 
 	//  TreeItemIcon_FolderBtnNormal,
@@ -52,6 +52,7 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 	{
 		SetItemImage(rootFolderId, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
 		SetItemTextColour(rootFolderId, *wxWHITE);
+		//m_previous = rootFolderId;
 
 		wxTreeItemId itemFolderId1 = AppendItem(rootFolderId, wxT("Chap1"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);//, new ModelTreeItemData(wxT("File Item 1")));
 		{
@@ -59,7 +60,8 @@ FileTreeCtrl::FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint
 			SetItemBold(itemFolderId1, true);
 			SetItemTextColour(itemFolderId1, *wxWHITE);
 
-			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+			FileTreeItemData* data1 = new FileTreeItemData("hello");
+			wxTreeItemId itemId1 = AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new FileTreeItemData("lesson1"));
 			SetItemTextColour(itemId1, *wxWHITE);
 
 			wxTreeItemId itemId2 = AppendItem(itemFolderId1, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
@@ -289,6 +291,15 @@ void FileTreeCtrl::OnDeleteItem(wxTreeEvent & event)
 
 void FileTreeCtrl::OnContextMenu(wxContextMenuEvent & event)
 {
+	auto clientPt = event.GetPosition();
+
+	wxMenu menu(wxT("Add"));
+	menu.Append(1, wxT("..."));
+	menu.Append(2, wxT("..."));
+	menu.AppendSeparator();
+	menu.Append(3, wxT("&..."));
+	PopupMenu(&menu, clientPt);
+
 }
 
 void FileTreeCtrl::OnLMouseDown(wxMouseEvent & event)
@@ -303,6 +314,38 @@ void FileTreeCtrl::OnLMouseUp(wxMouseEvent & event)
 
 void FileTreeCtrl::OnItemMenu(wxTreeEvent & event)
 {
+	wxTreeItemId item = event.GetItem();
+	auto id = event.GetId();
+	auto clientPt = event.GetPoint();
+	if (item.IsOk())
+	{
+		wxMenu menu;
+
+		if (GetItemImage(item) == TreeItemIcon_FolderExpanded || GetItemImage(item) == TreeItemIcon_FolderNormal)
+		{
+			menu.Append(id, wxT("Edit Name"));
+			menu.AppendSeparator();
+			menu.Append(id, wxT("Add New File"));
+			menu.Append(id, wxT("Add New Folder"));
+			menu.AppendSeparator();
+			menu.Append(id, wxT("Delete"));
+
+		}
+		else
+		{
+			menu.Append(id, wxT("Edit Name"));
+			menu.AppendSeparator();
+			menu.Append(id, wxT("Delete"));
+
+
+		}
+		PopupMenu(&menu, clientPt);
+
+		
+	}
+	
+
+	//DoE
 }
 
 void FileTreeCtrl::OnGetInfo(wxTreeEvent & event)
@@ -331,10 +374,35 @@ void FileTreeCtrl::OnItemCollapsing(wxTreeEvent & event)
 
 void FileTreeCtrl::OnSelectionChanged(wxTreeEvent & event)
 {
+	wxTreeItemId item = event.GetItem();
+	if (item.IsOk())
+	{
+		if (GetItemImage(item) != TreeItemIcon_FolderExpanded || GetItemImage(item) != TreeItemIcon_FolderNormal)
+		{
+			m_previous = GetSelection();
+
+
+		}
+	}
 }
 
 void FileTreeCtrl::OnSelectionChanging(wxTreeEvent & event)
 {
+	//wxMessageBox(wxT("Selection changing!"));
+
+
+	wxTreeItemId item = event.GetItem();
+	if (item.IsOk())
+	{
+		if (GetItemImage(item) != TreeItemIcon_FolderExpanded || GetItemImage(item) != TreeItemIcon_FolderNormal)
+		{
+			m_previous = GetSelection();
+			SetItemBold(item, true);
+
+
+		}
+	}
+
 
 }
 
@@ -346,32 +414,49 @@ void FileTreeCtrl::OnItemActivated(wxTreeEvent & event)
 {
 	wxTreeItemId item = event.GetItem();
 
-	if (!ItemHasChildren(item))
+	if (item.IsOk())
 	{
-		if (GetItemBackgroundColour(item) == wxColour(216, 216, 216))
+		// the item is a folder
+		if (GetItemImage(item) == TreeItemIcon_FolderExpanded || GetItemImage(item) == TreeItemIcon_FolderNormal)
 		{
-			event.Skip();
+			wxTreeItemIdValue cookie;
+			wxTreeItemId id = GetFirstChild(item, cookie);
+
+			if (IsExpanded(item))
+			{
+				CollapseAllChildren(item);
+
+			}
+			else
+			{
+				Expand(item);
+
+			}
 		}
 		else
 		{
-			SetItemBackgroundColour(item, wxColour(216, 216, 216));
+			if (!IsBold(item))
+			{
+				SetItemBold(item, true);
+			}else
+				SetItemBold(item, false);
+
+			m_text->SetValue("hello");
+
+
+			//wxMessageBox(wxT("Data item!"));
+			//event.Skip();
 		}
+
+
 
 	}
 	else
 	{
-		if (IsExpanded(item))
-		{
-			CollapseAllChildren(item);
-		}
-		else
-		{
-			Expand(item);
-
-		}
-		SetItemBackgroundColour(item, wxColour(90, 90, 90));
-
+		wxMessageBox(wxT("Invalide item!"));
+		event.Skip();
 	}
+
 }
 
 void FileTreeCtrl::OnItemStateClick(wxTreeEvent & event)
@@ -384,7 +469,7 @@ void FileTreeCtrl::OnItemRClick(wxTreeEvent & event)
 
 void FileTreeCtrl::OnRMouseDown(wxMouseEvent & event)
 {
-	wxMessageBox("Right mouse button down");
+	//wxMessageBox("Right mouse button down");
 
 	event.Skip();
 
