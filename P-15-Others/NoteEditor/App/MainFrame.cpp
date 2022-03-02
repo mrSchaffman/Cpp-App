@@ -17,7 +17,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 	SetIcon(AppIcon);
 
 	SetTitle(m_filename + " - " + title);
-
+	SetMinSize(wxSize(400, 500));
 
 
 
@@ -40,53 +40,42 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 	{
 		wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 		{
-			wxSplitterWindow *splittermain = new wxSplitterWindow(this, wxID_ANY);
+			wxBoxSizer *sizer2 = new wxBoxSizer(wxHORIZONTAL);
 			{
-				splittermain->SetSashGravity(0.1);
-				splittermain->SetBackgroundColour(wxColour(35, 35, 35));
-				splittermain->SetMinimumPaneSize(20); // Smalest size the
-				topSizer->Add(splittermain, 1, wxEXPAND, 0);
-
-				wxPanel *pnl1 = new wxPanel(splittermain, wxID_ANY);
+				topSizer->Add(sizer2, 1, wxEXPAND, 0);
+				wxPanel * card1 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(40, -1));
 				{
-					wxBoxSizer *txt1sizer = new wxBoxSizer(wxHORIZONTAL);
+					card1->SetBackgroundColour(wxColour(100, 100, 100));
+				}
+				sizer2->Add(card1, 0, wxEXPAND, 0);
+
+				wxSplitterWindow *splittermain = new wxSplitterWindow(this, wxID_ANY);
+				{
+					splittermain->SetMinimumPaneSize(100); // Smalest size the
+					sizer2->Add(splittermain, 1, wxEXPAND, 0);
+
+
+					SplitterItemWin* spliter2 = new SplitterItemWin(splittermain);
+
+					wxPanel *pnl3 = new wxPanel(splittermain, wxID_ANY);
 					{
-						wxPanel * card1 = new wxPanel(pnl1, wxID_ANY, wxDefaultPosition, wxSize(30, -1));
+						wxBoxSizer *txt2sizer = new wxBoxSizer(wxVERTICAL);
 						{
-							card1->SetBackgroundColour(wxColour(0, 130, 0));
+							m_text = new TextCtrl(pnl3);
+							txt2sizer->Add(m_text, 1, wxEXPAND, 0);
+
 						}
-
-						SplitterItemWin* spliter2 = new SplitterItemWin(pnl1);
-					
-						txt1sizer->Add(card1, 0, wxEXPAND, 0);
-						txt1sizer->Add(spliter2, 1, wxEXPAND|wxALL, 1);
+						pnl3->SetSizer(txt2sizer);
 
 					}
-
-						
-					pnl1->SetSizer(txt1sizer);
+					splittermain->SplitVertically(spliter2, pnl3);
 
 				}
 
-
-
-				wxPanel *pnl3 = new wxPanel(splittermain, wxID_ANY);
-				{
-					wxBoxSizer *txt2sizer = new wxBoxSizer(wxVERTICAL);
-					{
-						m_text = new TextCtrl(pnl3);
-						txt2sizer->Add(m_text, 1, wxEXPAND, 0);
-
-					}
-					pnl3->SetSizer(txt2sizer);
-
-				}
-				splittermain->SplitVertically(pnl1, pnl3);
 
 			}
-
 			wxPanel * card2 = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxSize(-1, 30));
-			card2->SetBackgroundColour(wxColour(70, 70, 70));
+			card2->SetBackgroundColour(wxColour(100, 100, 100));
 
 			topSizer->Add(card2, 0, wxEXPAND, 0);
 
@@ -94,8 +83,8 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 
 		}
 
-		this->SetSizer(topSizer);
-		topSizer->SetSizeHints(this);
+		SetSizer(topSizer);
+		//topSizer->SetSizeHints(this);
 	}
 
 	m_menubar = new MenuBar(this, nullptr);
