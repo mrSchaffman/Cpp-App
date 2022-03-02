@@ -1,6 +1,7 @@
 #pragma once
 #include"wx/splitter.h"
 #include"wx/wx.h"
+#include"wx/listCtrl.h"
 #include"FileTreeCtrl.h"
 
 class SplitterItemWin: public wxSplitterWindow

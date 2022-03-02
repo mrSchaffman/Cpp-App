@@ -6,7 +6,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxPoint(100,100), wxSize(990, 700))
+MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxPoint(200,100), wxSize(990, 700))
 {
 
 	wxImage img(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
