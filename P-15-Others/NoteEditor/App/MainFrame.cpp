@@ -55,7 +55,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 					sizer2->Add(splittermain, 1, wxEXPAND, 0);
 
 
-					SplitterItemWin* spliter2 = new SplitterItemWin(splittermain);
+					m_trees = new SplitterItemWin(splittermain);
 
 					wxPanel *pnl3 = new wxPanel(splittermain, wxID_ANY);
 					{
@@ -68,7 +68,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 						pnl3->SetSizer(txt2sizer);
 
 					}
-					splittermain->SplitVertically(spliter2, pnl3);
+					splittermain->SplitVertically(m_trees, pnl3);
 
 				}
 
@@ -87,7 +87,7 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 		//topSizer->SetSizeHints(this);
 	}
 
-	m_menubar = new MenuBar(this, nullptr);
+	m_menubar = new MenuBar(this,m_trees);
 	SetMenuBar(m_menubar);
 
 	{

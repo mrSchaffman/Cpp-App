@@ -15,7 +15,7 @@ wxBEGIN_EVENT_TABLE(MenuBar,wxMenuBar)
 	EVT_MENU(M_PAGE_SETUP,MenuBar::OnPageSettingDialog)
 wxEND_EVENT_TABLE()
 
-MenuBar::MenuBar(wxFrame*parent,  FileTreeCtrl* tree,wxTextCtrl*text): m_parent(parent), m_tree(tree),m_text(text)
+MenuBar::MenuBar(wxFrame*parent, SplitterItemWin *treesWin): m_parent(parent), m_trees(treesWin)
 
 {
 
@@ -151,13 +151,46 @@ void MenuBar::OnOpen(wxCommandEvent & evnt)
 void MenuBar::OnOpenNewFolder(wxCommandEvent & evnt)
 {
 
-	wxString defaultPath = wxT("/");
-	wxDirDialog dialog(this,wxT("Select Directory"),defaultPath, wxDD_NEW_DIR_BUTTON);
+	wxString defaultPath = wxT("c:\\temp");
+	wxDirDialog dialog(this, wxT("Select Directory"), defaultPath, wxDD_DEFAULT_STYLE|wxDD_NEW_DIR_BUTTON);
 
-	if (dialog.ShowModal() == wxID_OK)
+	if (dialog.ShowModal() == wxID_CANCEL)
+		return;
 	{
-		wxString path = dialog.GetPath();
-		wxMessageBox(path);
+		wxString title = dialog.GetPath();
+		//wxMessageBox(path);
+
+		FileTreeCtrl *tree = m_trees->GetFirstTree();
+		tree->DeleteAllItems();
+		wxTreeItemId rootFolderId = tree->AddRoot(title, TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);// , new ModelTreeItemData(wxT("Root Item")));
+
+		tree->SetItemImage(rootFolderId, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+		tree->SetItemTextColour(rootFolderId, *wxWHITE);
+		//m_previous = rootFolderId;
+		{
+			wxTreeItemId itemFolderId1 = tree->AppendItem(rootFolderId, wxT("Chap1"), TreeItemIcon_FolderNormal, TreeItemIcon_FolderNormal);//, new ModelTreeItemData(wxT("File Item 1")));
+			{
+				tree->SetItemImage(itemFolderId1, TreeItemIcon_FolderExpanded, wxTreeItemIcon_Expanded);
+				tree->SetItemBold(itemFolderId1, true);
+				tree->SetItemTextColour(itemFolderId1, *wxWHITE);
+
+				FileTreeItemData* data1 = new FileTreeItemData("hello");
+				wxTreeItemId itemId1 = tree->AppendItem(itemFolderId1, wxT("lesson1"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new FileTreeItemData("lesson1"));
+				tree->SetItemTextColour(itemId1, *wxWHITE);
+				//SetItemData(itemId1, data1);
+
+				wxTreeItemId itemId2 = tree->AppendItem(itemFolderId1, wxT("lesson2"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+				tree->SetItemTextColour(itemId2, *wxWHITE);
+
+				wxTreeItemId itemId3 = tree->AppendItem(itemFolderId1, wxT("lesson3"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+				tree->SetItemTextColour(itemId3, *wxWHITE);
+
+				wxTreeItemId itemId4 = tree->AppendItem(itemFolderId1, wxT("lesson4"), TreeItemIcon_FileNormal, TreeItemIcon_FileSelected);// , new ModelTreeItemData(wxT("File Item 2")));
+				tree->SetItemTextColour(itemId4, *wxWHITE);
+
+			}
+
+		}
 	}
 }
 

@@ -23,26 +23,26 @@ enum
 	ID_TREE,
 
 };
+enum
+{
+	TreeItemIcon_FolderBtnNormal,
+	TreeItemIcon_FolderBtnExpanded,
+	TreeItemIcon_FolderNormal,
+	TreeItemIcon_FolderExpanded,
+	TreeItemIcon_FileNormal,
+	TreeItemIcon_FileSelected,
+};
+enum
+{
+	TreeItemState_FileAdded,
+	TreeItemState_FileChanged,
+	TreeItemState_FileSaved,
+
+};
 
 class FileTreeCtrl : public wxTreeCtrl
 {
 public:
-	enum 
-	{
-		TreeItemIcon_FolderBtnNormal,
-		TreeItemIcon_FolderBtnExpanded,
-		TreeItemIcon_FolderNormal,
-		TreeItemIcon_FolderExpanded,
-		TreeItemIcon_FileNormal,
-		TreeItemIcon_FileSelected,
-	};
-	enum 
-	{
-		TreeItemState_FileAdded,
-		TreeItemState_FileChanged,
-		TreeItemState_FileSaved,
-
-	};
 
 	FileTreeCtrl(wxWindow * parent, const wxWindowID id, const wxPoint& pos, const wxSize& size, long style = wxTR_NO_BUTTONS/*wxTR_HAS_BUTTONS*/| wxTR_FULL_ROW_HIGHLIGHT | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE, wxTextCtrl* text = nullptr);
 	virtual~FileTreeCtrl() = default;

@@ -35,7 +35,7 @@ private:
 
 	wxString m_filename = "Untitled";
 	TextCtrl* m_text = nullptr;
-	FileTreeCtrl * m_tree = nullptr;
+	SplitterItemWin * m_trees = nullptr;
 
 	MainPanel * m_panel = nullptr;
 

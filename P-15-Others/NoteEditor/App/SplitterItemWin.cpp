@@ -20,7 +20,7 @@ SplitterItemWin::SplitterItemWin(wxWindow * parent): wxSplitterWindow(parent, wx
 		{
 			wxBoxSizer* panel1Sizer = new wxBoxSizer(wxVERTICAL);
 			{
-				FileTreeCtrl *m_tree1 = new FileTreeCtrl(panel1, ID_TREE, wxDefaultPosition, wxSize(100, 650), wxTR_NO_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+				m_tree1 = new FileTreeCtrl(panel1, ID_TREE, wxDefaultPosition, wxSize(100, 650), wxTR_NO_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
 				wxPanel * card2 = new wxPanel(panel1, wxID_ANY, wxDefaultPosition, wxSize(75, 40));
 				card2->SetBackgroundColour(wxColour(70, 70, 70));
 
@@ -35,7 +35,7 @@ SplitterItemWin::SplitterItemWin(wxWindow * parent): wxSplitterWindow(parent, wx
 		{
 			wxBoxSizer* panel2Sizer = new wxBoxSizer(wxVERTICAL);
 			{
-				FileTreeCtrl *m_tree2 = new FileTreeCtrl(panel2, ID_TREE, wxDefaultPosition, wxSize(130, 650), wxTR_NO_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
+				m_tree2 = new FileTreeCtrl(panel2, ID_TREE, wxDefaultPosition, wxSize(130, 650), wxTR_NO_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
 				wxPanel * card2 = new wxPanel(panel2, wxID_ANY, wxDefaultPosition, wxSize(75, 40));
 				card2->SetBackgroundColour(wxColour(70, 70, 70));
 				

@@ -7,6 +7,8 @@
 #include "wx/sysopt.h"
 #include"PageSettingDialogue.h"
 #include"FileTreeCtrl.h"
+#include"SplitterItemWin.h"
+
 
 
 enum {
@@ -58,7 +60,7 @@ enum {
 class MenuBar : public wxMenuBar
 {
 public:
-	MenuBar(wxFrame*parent, FileTreeCtrl* tree = nullptr,wxTextCtrl*text = nullptr);
+	MenuBar(wxFrame*parent, SplitterItemWin *splittermain = nullptr);
 	virtual~MenuBar() = default;
 
 	void OnNew(wxCommandEvent&evnt);
@@ -81,7 +83,7 @@ private:
 	FileTreeCtrl* m_tree = nullptr;
 
 	wxFrame*m_parent = nullptr;
-
+	SplitterItemWin* m_trees = nullptr;
 	wxDECLARE_EVENT_TABLE();
 };
 
