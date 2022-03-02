@@ -6,7 +6,7 @@ wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxPoint(100,100), wxSize(920, 700))
+MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, wxPoint(100,100), wxSize(990, 700))
 {
 
 	wxImage img(wxT("Icon.png"), wxBITMAP_TYPE_PNG);
@@ -52,39 +52,36 @@ MainFrame::MainFrame(const wxString & title) :wxFrame(nullptr, wxID_ANY, title, 
 					wxBoxSizer *txt1sizer = new wxBoxSizer(wxHORIZONTAL);
 					{
 						wxPanel * card1 = new wxPanel(pnl1, wxID_ANY, wxDefaultPosition, wxSize(30, -1));
-						card1->SetBackgroundColour(wxColour(0, 130, 0));
-						txt1sizer->Add(card1, 0, wxEXPAND, 0);
-
-						wxBoxSizer *txt2sizer = new wxBoxSizer(wxVERTICAL);
 						{
-							m_tree = new FileTreeCtrl(pnl1, ID_TREE, wxDefaultPosition, wxDefaultSize, wxTR_NO_BUTTONS | wxTR_SINGLE | wxTR_NO_LINES | wxBORDER_NONE);
-							txt2sizer->Add(m_tree, 1, wxEXPAND, 0);
-
-							wxPanel * card2 = new wxPanel(pnl1, wxID_ANY, wxDefaultPosition, wxSize(110, 30));
-							card2->SetBackgroundColour(wxColour(0, 130, 0));
-							txt2sizer->Add(card2, 0, wxEXPAND, 0);
-
+							card1->SetBackgroundColour(wxColour(0, 130, 0));
 						}
-						txt1sizer->Add(txt2sizer, 1, wxEXPAND, 0);
+
+						SplitterItemWin* spliter2 = new SplitterItemWin(pnl1);
+					
+						txt1sizer->Add(card1, 0, wxEXPAND, 0);
+						txt1sizer->Add(spliter2, 1, wxEXPAND|wxALL, 1);
 
 					}
+
+						
 					pnl1->SetSizer(txt1sizer);
 
 				}
 
 
-				wxPanel *pnl2 = new wxPanel(splittermain, wxID_ANY);
+
+				wxPanel *pnl3 = new wxPanel(splittermain, wxID_ANY);
 				{
 					wxBoxSizer *txt2sizer = new wxBoxSizer(wxVERTICAL);
 					{
-						m_text = new TextCtrl(pnl2);
+						m_text = new TextCtrl(pnl3);
 						txt2sizer->Add(m_text, 1, wxEXPAND, 0);
 
 					}
-					pnl2->SetSizer(txt2sizer);
+					pnl3->SetSizer(txt2sizer);
 
 				}
-				splittermain->SplitVertically(pnl1, pnl2);
+				splittermain->SplitVertically(pnl1, pnl3);
 
 			}
 

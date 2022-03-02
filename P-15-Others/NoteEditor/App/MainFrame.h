@@ -6,6 +6,7 @@
 #include"MainPanel.h"
 #include "wx/splitter.h"
 #include"FileTreeCtrl.h"
+#include"SplitterItemWin.h"
 
 
 
