@@ -10,7 +10,7 @@ SplitterItemWin::SplitterItemWin(wxWindow * parent): wxSplitterWindow(parent, wx
 {
 	SetSashGravity(0.1);
 	SetBackgroundColour(wxColour(35, 35, 35));
-	SetMinimumPaneSize(100); // Smalest size the
+	SetMinimumPaneSize(120); // Smalest size the
 	//Add(splitter2, 1, wxEXPAND, 0);
 
 	//wxBoxSizer* topSizer = new wxBoxSizer(wxHORIZONTAL);
