@@ -1,6 +1,11 @@
 #include "App.h"
 
-wxIMPLEMENT_APP(App);
+// Implements App& GetApp()
+//#define wxDECLARE_APP(appname)     extern appname& wxGetApp()
+
+DECLARE_APP(App)
+// Give wxWidgets the means to create a MyApp object
+IMPLEMENT_APP(App)
 
 bool App::OnInit()
 {
