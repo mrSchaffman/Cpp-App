@@ -13,8 +13,16 @@ bool App::OnInit()
 	{
 		return false;
 	}
-	MainFrame* frame = new MainFrame(wxT("Access"));
+
+#if wxUSE_ACCESSIBILITY
+	wxHelpProvider::Set(new wxSimpleHelpProvider());
+	MainFrame* frame = new MainFrame(wxT("Access"), wxDefaultPosition, wxSize(480, 320));
 	frame->Show(true);
 
 	return true;
+#else
+	wxMessageBox(wxT("This App. has to be compile with wxUSE_ACCESSIBILITY"));
+	return false;
+#endif // wxUSE_ACCESSIBILITY
+
 }

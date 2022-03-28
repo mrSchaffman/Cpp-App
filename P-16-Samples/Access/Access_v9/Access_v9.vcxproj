@@ -144,11 +144,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="FrameAccessible.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="SplitterWindowAccessible.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="FrameAccessible.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="SplitterWindowAccessible.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Access_v9.ico" />

@@ -1,8 +1,8 @@
 #pragma once
-#include"wx/wx.h"
-#include"MainFrame.h"
-#include"wx/cshelp.h"
 
+#if wxUSE_ACCESSIBILITY
+#include"wx/access.h"
+#endif // wxUSE_ACCESSIBILITY
 #ifdef __WXMSW__
 #include "windows.h"
 #include <ole2.h>
@@ -20,16 +20,20 @@
 #endif
 #endif
 
+#if wxUSE_ACCESSIBILITY
 
-
-class App: public wxApp
+class SplitterWindowAccessible : public wxWindowAccessible
 {
 public:
-	App() = default;
-	virtual~App() = default;
+	SplitterWindowAccessible(wxWindow* window) : wxWindowAccessible(window) {}
 
-	bool OnInit();
+protected:
+
 
 private:
+
 };
+
+
+#endif // wxUSE_ACCESSIBILITY
 
