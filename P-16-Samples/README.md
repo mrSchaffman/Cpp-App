@@ -1,50 +1,14 @@
-# Cpp-App
+# Animation Sample
+### Goals
 
-This repo is a collection of my own written App using C++ and wxWidgets Technologies
-I will probably update this Readme from time to time.
-
-## Getting Started
-
-I'm using visual studio on 2017 for those project and C++17
-
-### Prerequisites
-
-The things you need before installing the software.
-
-* You need visual studion 2017 or above versions
-* And you need wxWidgets 
-
-### Installation
-
-To be able to run or understand the source code of those projects, you need to install
-
-```
-$ wxWidgets from https://docs.wxwidgets.org/
-$ step - 2
-$ step - 3
-$ step - 4
-```
-
-## Deployment
-
-Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special).
-
-### Server
-
-* Live:
-* Release:
-* Development:
-
-### Branches
-
-* Master:
-* Feature:
-* Bugfix:
-* etc...
-
-## Additional Documentation and Acknowledgments
-
-* Project folder on server:
-* Confluence link:
-* Asana board:
-* etc...
+1. Understand the use of The **`[wxAnimation](https://docs.wxwidgets.org/trunk/classwx_animation.html)` C**lass .It’s handles the interface between the animation control and the details of the animation image or data.
+2. Understand the use of the **[Preprocessor Symbols](https://docs.wxwidgets.org/trunk/page_cppconst.html) [](https://docs.wxwidgets.org/3.0/classwx_update_u_i_event.html)** like  `wxUSE_ANIMATIONCTRL,`**__WXMSW__,...**
+3. Understand the use of the **[wxLog**](https://docs.wxwidgets.org/trunk/classwx_log.html) Class
+4. Understand the use of the **[wxAnimationCtrl](https://docs.wxwidgets.org/trunk/classwx_animation_ctrl.html) Class,**  it’s a static control which displays an animation, this API  won't give me full control on the animation. If i need more control i need to use the **[wxMediaCtrl](https://docs.wxwidgets.org/trunk/classwx_media_ctrl.html)**.
+5. Understand the use of the **[wxArtProvider](https://docs.wxwidgets.org/trunk/classwx_art_provider.html)** Class
+6. Understand the use of **|**
+7. Understand the use of the **[wxAboutBox**](https://wiki.wxwidgets.org/WxAboutBox) Class
+8. Understand the use of the **[wxFileDialog](https://docs.wxwidgets.org/trunk/classwx_file_dialog.html)** Class
+9. Understand the use of the [**wxGetColourFromUser**](https://wiki.wxwidgets.org/WxGetColourFromUser) Class
+10. Understand the use of **.gif** files
+11. Understand the use of the **[wxUpdateUIEvent](https://docs.wxwidgets.org/3.0/classwx_update_u_i_event.html)** Class
