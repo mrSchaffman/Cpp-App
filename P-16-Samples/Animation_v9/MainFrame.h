@@ -1,5 +1,6 @@
 #pragma once
 #include"wx/wx.h"
+#include"MathChallenge.h"
 class MainFrame : public wxFrame
 {
 public:

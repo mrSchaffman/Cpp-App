@@ -145,10 +145,12 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="MainFrame.h" />
+    <ClInclude Include="MathChallenge.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainFrame.cpp" />
+    <ClCompile Include="MathChallenge.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Animation_v9.ico" />
