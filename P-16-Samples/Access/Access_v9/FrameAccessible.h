@@ -1,4 +1,6 @@
 #pragma once
+#include"wx/wx.h"
+
 #if wxUSE_ACCESSIBILITY
 #include"wx/access.h"
 #endif // wxUSE_ACCESSIBILITY

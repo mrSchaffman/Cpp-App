@@ -36,7 +36,7 @@ public:
 	void LogMessageInTextCtrl(const wxString& message,wxTextCtrl*logger);
 	void LogObject(int intent, IAccessible* object);
 
-	// void GetInfo(IAccessible* accessible,int id, wxString& name, wxString&role);
+	void GetInfo(IAccessible* accessible,int id, wxString& name, wxString&role);
 
 private:
 	wxString CreateText(const wxString&message);
