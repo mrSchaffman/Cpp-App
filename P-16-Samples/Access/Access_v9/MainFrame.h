@@ -33,13 +33,13 @@ public:
 	void OnQuery(wxCommandEvent& event);
 	void OnQuit(wxCommandEvent& event);
 
-	void Log(const wxString& message);
+	void LogMessageInTextCtrl(const wxString& message,wxTextCtrl*logger);
 	void LogObject(int intent, IAccessible* object);
 
 	// void GetInfo(IAccessible* accessible,int id, wxString& name, wxString&role);
 
 private:
-
+	wxString CreateText(const wxString&message);
 	wxTextCtrl* m_logger;
 	wxDECLARE_EVENT_TABLE();
 };

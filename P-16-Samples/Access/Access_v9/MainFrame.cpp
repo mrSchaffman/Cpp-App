@@ -98,12 +98,31 @@ void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 	Close(this);
 }
 
-void MainFrame::Log(const wxString& message)
+void MainFrame::LogMessageInTextCtrl(const wxString& message, wxTextCtrl* logger)
 {
+	m_logger = logger;
+	if (m_logger)
+	{
+		m_logger->SetInsertionPointEnd();
+		m_logger->WriteText(CreateText(message));
+	}
+	else
+	{
+		//wxLogError()
+	}
+}
+wxString MainFrame::CreateText(const wxString& message)
+{
+	wxString text(message);
+	text.Replace("\n", " ");
+	text.Replace("\t", " ");
+
+	return text + "\n";
 }
 
 void MainFrame::LogObject(int intent, IAccessible* object)
 {
 }
+
 
 #endif // wxUSE_ACCESSIBILITY
