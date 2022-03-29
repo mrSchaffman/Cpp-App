@@ -1,5 +1,6 @@
 #include "MainFrame.h"
 #include"wx/aboutdlg.h"
+#include"wx/filedlg.h"
 
 
 
@@ -120,9 +121,32 @@ void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 }
 
+#if wxUSE_FILEDLG
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
+    wxFileDialog dialog(this,
+        wxT("Choose and Animation"),
+        wxEmptyString,
+        wxEmptyString,
+        "*.gif;*.ani",
+        wxFD_OPEN);
+    if (dialog.ShowModal()== wxOK)
+    {
+        wxString filename = dialog.GetPath();
+        wxAnimation tmp(m_animationCtrl->CreateAnimation());
+        if (!tmp.LoadFile(filename))
+        {
+            // Error message
+        }
+
+        m_animationCtrl->SetAnimation(tmp);
+        m_animationCtrl->Play();
+    }
+    GetSizer()->Layout();
 }
+
+#endif // wxUSE_FILEDLG
+
 
 void MainFrame::LayoutControl()
 {
@@ -137,7 +161,7 @@ void MainFrame::LayoutControl()
     
 
          m_animationCtrl = new wxAnimationCtrl(this, wxID_ANY);
-         if (m_animationCtrl->LoadFile("throbber.gif"))
+         if (m_animationCtrl->LoadFile("hourglass.ani", wxANIMATION_TYPE_ANI))
          {
              m_animationCtrl->Play();
          }
