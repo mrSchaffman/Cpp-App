@@ -1,4 +1,7 @@
 #include "MainFrame.h"
+#include"wx/aboutdlg.h"
+
+
 
 wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 EVT_MENU(ID_PLAY, MainFrame::OnPlay)
@@ -26,51 +29,128 @@ wxEND_EVENT_TABLE()
 
 MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(370,220))
 {
+	wxMenu* menuFile = new wxMenu;
+	{
+#if wxUSE_FILEDLG
+		menuFile->Append(wxID_OPEN,"&Open Animation...\tCtrl+O","Loads an Animation");
+#endif // wxUSE_FILEDLG
+		menuFile->Append(wxID_EXIT);
+	}
+	wxMenu* menuPlay = new wxMenu;
+	{
+        menuPlay->Append(ID_PLAY, "Play\tCtrl+P", "Play the animation");
+        menuPlay->Append(wxID_STOP, "Stop\tCtrl+S", "Stop the animation");
+        menuPlay->AppendSeparator();
+        menuPlay->Append(ID_SET_NULL_ANIMATION, "Set null animation",
+            "Sets the empty animation in the control");
+        menuPlay->AppendCheckItem(ID_SET_INACTIVE_BITMAP, "Set inactive bitmap",
+            "Sets an inactive bitmap for the control");
+        menuPlay->AppendCheckItem(ID_SET_NO_AUTO_RESIZE, "Set no autoresize",
+            "Tells the control not to resize automatically");
+        menuPlay->Append(ID_SET_BGCOLOR, "Set background colour...",
+            "Sets the background colour of the control");
+#ifdef wxHAS_NATIVE_ANIMATIONCTRL
+        menuPlay->AppendSeparator();
+        menuPlay->AppendCheckItem(ID_USE_GENERIC, "Use &generic animation\tCtrl+G",
+            "Selects whether native or generic version is used");
+#endif // wxHAS_NATIVE_ANIMATIONCTRL
+	}
+    wxMenu* menuHelp = new wxMenu;
+    menuHelp->Append(wxID_ABOUT);
 
+    wxMenuBar* menuBar = new wxMenuBar;
+    menuBar->Append(menuFile,wxT("File"));
+    menuBar->Append(menuPlay,wxT("Play"));
+    menuBar->Append(menuHelp,wxT("Help"));
+
+    SetMenuBar(menuBar);
+#if wxUSE_STATUSBAR
+    CreateStatusBar();
+#endif // wxUSE_STATUSBAR
+    LayoutControl();
 }
 
 MainFrame::~MainFrame()
 {
 }
 
-void MainFrame::OnAbout(wxCommandEvent& event)
+void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
+{
+    wxAboutDialogInfo info;
+    info.SetName(_("wxAnimation and wxAnimationCtrl"));
+    info.SetDescription(_("This is About the wxAnimationCtrl an the wxAnimation Classes"));
+    info.SetCopyright("(C) 2022,Barth. Feudong");
+    info.AddDeveloper("Barth. Feudong");
+
+    wxAboutBox(info,this);
+}
+
+void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
+{
+    Close();
+}
+
+void MainFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnQuit(wxCommandEvent& event)
+void MainFrame::OnSetNullAnimation(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnPlay(wxCommandEvent& event)
+void MainFrame::OnSetInactiveBitmap(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnSetNullAnimation(wxCommandEvent& event)
+void MainFrame::OnSetNoAutoResize(wxCommandEvent& WXUNUSED(event))
+{
+    m_animationCtrl->SetAnimation(wxNullAnimation);
+}
+
+void MainFrame::OnSetBgColor(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnSetInactiveBitmap(wxCommandEvent& event)
+void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
+{
+    m_animationCtrl->Stop();
+}
+
+void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnSetNoAutoResize(wxCommandEvent& event)
+void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
 }
 
-void MainFrame::OnSetBgColor(wxCommandEvent& event)
+void MainFrame::LayoutControl()
 {
-}
+    wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+    {
+        sizer->Add(
+            new wxStaticText(this,wxID_ANY,wxT("Animation")),
+            1,
+            wxALL||wxCENTER,
+            5
+        );
+    
 
-void MainFrame::OnStop(wxCommandEvent& event)
-{
-}
+         m_animationCtrl = new wxAnimationCtrl(this, wxID_ANY);
+         if (m_animationCtrl->LoadFile("throbber.gif"))
+         {
+             m_animationCtrl->Play();
+         }
 
-void MainFrame::OnUpdateUI(wxUpdateUIEvent& event)
-{
-}
+         sizer->Add(
+             m_animationCtrl,
+             1,
+             wxALL|wxCENTER,
+             5
+         );
 
-void MainFrame::OnOpen(wxCommandEvent& event)
-{
+         SetSizer(sizer);
+    }
 }
 
 void MainFrame::RecreateAnimation()

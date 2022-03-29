@@ -4,6 +4,14 @@
 
 #include"MathChallenge.h"
 
+#if !wxUSE_ANIMATIONCTRL
+#error Cannot compile this sample if wxAnimationCtrl is not enabled
+#endif
+
+#ifdef wxHAS_NATIVE_ANIMATIONCTRL
+#include "wx/generic/animate.h"
+#endif
+
 enum
 {
 	ID_PLAY = 1,
@@ -45,6 +53,7 @@ public:
 
 private:
 
+	void LayoutControl();
 	void RecreateAnimation();
 	wxAnimationCtrlBase* m_animationCtrl;
 	wxDECLARE_EVENT_TABLE();

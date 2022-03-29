@@ -146,6 +146,7 @@
     <ClInclude Include="App.h" />
     <ClInclude Include="MainFrame.h" />
     <ClInclude Include="MathChallenge.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -155,6 +156,10 @@
   <ItemGroup>
     <Image Include="Animation_v9.ico" />
     <Image Include="small.ico" />
+    <Image Include="throbber.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Animation_v9.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

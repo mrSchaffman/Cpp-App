@@ -4,6 +4,8 @@ wxIMPLEMENT_APP(App);
 
 bool App::OnInit()
 {
+	wxImage::AddHandler(new wxGIFHandler());
+
 	if (!wxApp::OnInit())
 	{
 		return false;
