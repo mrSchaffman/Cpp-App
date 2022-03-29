@@ -1,6 +1,7 @@
 #include "MainFrame.h"
 #include"wx/aboutdlg.h"
 #include"wx/filedlg.h"
+#include"wx/colordlg.h"
 
 
 
@@ -114,6 +115,12 @@ void MainFrame::OnSetNoAutoResize(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnSetBgColor(wxCommandEvent& WXUNUSED(event))
 {
+    wxColour color = wxGetColourFromUser(this,
+        m_animationCtrl->GetBackgroundColour(),
+        "Choose the Background Color");
+
+    if(color.IsOk())
+    m_animationCtrl->SetBackgroundColour(color);
 }
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
