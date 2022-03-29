@@ -93,6 +93,10 @@ void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
 {
+    if (!m_animationCtrl->Play())
+    {
+        wxLogError("Invalide Animation");
+    }
 }
 
 void MainFrame::OnSetNullAnimation(wxCommandEvent& WXUNUSED(event))
@@ -119,6 +123,9 @@ void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
+    GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
+    GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
+    GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
 }
 
 #if wxUSE_FILEDLG
@@ -130,13 +137,13 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
         wxEmptyString,
         "*.gif;*.ani",
         wxFD_OPEN);
-    if (dialog.ShowModal()== wxOK)
+    if (dialog.ShowModal()== wxID_OK)
     {
         wxString filename = dialog.GetPath();
         wxAnimation tmp(m_animationCtrl->CreateAnimation());
         if (!tmp.LoadFile(filename))
         {
-            // Error message
+             wxLogError("Cannot load the File %s ",dialog.GetFilename());
         }
 
         m_animationCtrl->SetAnimation(tmp);
@@ -144,7 +151,6 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
     }
     GetSizer()->Layout();
 }
-
 #endif // wxUSE_FILEDLG
 
 
