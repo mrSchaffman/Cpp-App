@@ -6,12 +6,7 @@
 class MainFrame : public wxFrame
 {
 public:
-	MainFrame(wxWindow* parent, 
-		const wxWindowID id, 
-		const wxString& caption,
-		const wxPoint& pos, 
-		const wxSize& size, 
-		const long style);
+	MainFrame(const wxString& caption);
 
 	 ~MainFrame();
 

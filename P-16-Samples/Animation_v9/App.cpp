@@ -8,7 +8,7 @@ bool App::OnInit()
 	{
 		return false;
 	}
-	MainFrame* frame = new MainFrame(wxT("Access"));
+	MainFrame* frame = new MainFrame(wxT("Animation"));
 	frame->Show(true);
 
 	return true;
