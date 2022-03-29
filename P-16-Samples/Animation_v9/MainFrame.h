@@ -3,6 +3,17 @@
 #include"wx/animate.h"
 
 #include"MathChallenge.h"
+
+enum
+{
+	ID_PLAY = 1,
+	ID_SET_NULL_ANIMATION,
+	ID_SET_INACTIVE_BITMAP,
+	ID_SET_NO_AUTO_RESIZE,
+	ID_SET_BGCOLOR,
+	ID_USE_GENERIC
+};
+
 class MainFrame : public wxFrame
 {
 public:
