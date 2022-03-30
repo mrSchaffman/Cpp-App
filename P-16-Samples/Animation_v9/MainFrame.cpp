@@ -29,7 +29,7 @@ EVT_MENU(ID_USE_GENERIC,MainFrame::OnUseGeneric)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(370,220))
+MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(420,680))
 {
 	wxMenu* menuFile = new wxMenu;
 	{
@@ -38,6 +38,22 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
 #endif // wxUSE_FILEDLG
 		menuFile->Append(wxID_EXIT);
 	}
+    wxMenu* menuEdit = new wxMenu;
+    {
+
+    }
+    wxMenu* menuOptions = new wxMenu;
+    {
+
+    }
+    wxMenu* menuTools = new wxMenu;
+    {
+
+    }
+    wxMenu* menuWindow = new wxMenu;
+    {
+
+    }
 	wxMenu* menuPlay = new wxMenu;
 	{
         menuPlay->Append(ID_PLAY, "Play\tCtrl+P", "Play the animation");
@@ -62,6 +78,10 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
 
     wxMenuBar* menuBar = new wxMenuBar;
     menuBar->Append(menuFile,wxT("File"));
+    menuBar->Append(menuEdit,wxT("Edit"));
+    menuBar->Append(menuOptions,wxT("Option"));
+    menuBar->Append(menuTools,wxT("Tools"));
+    menuBar->Append(menuWindow,wxT("Window"));
     menuBar->Append(menuPlay,wxT("Play"));
     menuBar->Append(menuHelp,wxT("Help"));
 
@@ -136,7 +156,7 @@ void MainFrame::OnSetBgColor(wxCommandEvent& event)
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
-    wxLogMessage("MenuItem Stop selected ",);
+    wxLogMessage("MenuItem Stop selected ");
 
     m_animationCtrl->Stop();
 }

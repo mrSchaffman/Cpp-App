@@ -21,6 +21,10 @@ enum
 	ID_SET_BGCOLOR,
 	ID_USE_GENERIC
 };
+enum menubarItemID
+{
+
+};
 
 class MainFrame : public wxFrame
 {
