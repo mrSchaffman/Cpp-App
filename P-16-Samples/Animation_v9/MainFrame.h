@@ -19,7 +19,13 @@ enum
 	ID_SET_INACTIVE_BITMAP,
 	ID_SET_NO_AUTO_RESIZE,
 	ID_SET_BGCOLOR,
-	ID_USE_GENERIC
+	ID_USE_GENERIC,
+	ID_TEXT_MATH1,
+	ID_BTN_RUN, 
+	ID_LOG_WINDOW,
+	ID_TEXT_1_MATH2,
+	ID_TEXT_2_MATH2,
+	ID_LOG_TEXT_CTRL
 };
 enum menubarItemID
 {
@@ -42,6 +48,7 @@ public:
 	 void OnSetNoAutoResize(wxCommandEvent& event);
 	 void OnSetBgColor(wxCommandEvent& event);
 	 void OnStop(wxCommandEvent& event);
+	 void OnLogWindow(wxCommandEvent& event);
 
 	 void OnUpdateUI(wxUpdateUIEvent& event);
 
@@ -56,6 +63,7 @@ public:
 
 
 private:
+
 
 	void DisplayControls();
 	void RecreateAnimation();

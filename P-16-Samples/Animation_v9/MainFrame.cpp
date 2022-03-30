@@ -13,6 +13,7 @@ EVT_MENU(ID_SET_NO_AUTO_RESIZE, MainFrame::OnSetNoAutoResize)
 EVT_MENU(ID_SET_BGCOLOR, MainFrame::OnSetBgColor)
 
 EVT_MENU(wxID_STOP, MainFrame::OnStop)
+EVT_MENU(ID_LOG_WINDOW, MainFrame::OnLogWindow)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_MENU(wxID_EXIT, MainFrame::OnQuit) 
 EVT_UPDATE_UI(wxID_ANY, MainFrame::OnUpdateUI)
@@ -29,8 +30,9 @@ EVT_MENU(ID_USE_GENERIC,MainFrame::OnUseGeneric)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(420,680))
+MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(500,680))
 {
+    SetMaxSize(wxSize(500, 680));
 	wxMenu* menuFile = new wxMenu;
 	{
 #if wxUSE_FILEDLG
@@ -52,6 +54,7 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
     }
     wxMenu* menuWindow = new wxMenu;
     {
+        menuWindow->Append(ID_LOG_WINDOW, "&Log Window\tCtrl+W", "Open the Log Window");
 
     }
 	wxMenu* menuPlay = new wxMenu;
@@ -95,7 +98,7 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
 
 MainFrame::~MainFrame()
 {
-    wxLogMessage("The Destructor is called");
+   delete wxLog::GetActiveTarget();
 }
 
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -112,15 +115,11 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     //wxLogWindow logWin(nullptr, "The log Window", true, true);
-
-
     Close();
 }
 
 void MainFrame::OnPlay(wxCommandEvent& event)
-{
-    //wxWindow* log = (wxWindow*)wxLog::GetActiveTarget();
-    
+{   
     wxLogMessage("MenuItem %s selected ", event.GetString().c_str());
 
     if (!m_animationCtrl->Play())
@@ -161,12 +160,18 @@ void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
     m_animationCtrl->Stop();
 }
 
+void MainFrame::OnLogWindow(wxCommandEvent& event)
+{
+    wxLogWindow* logTarget = (wxLogWindow*)wxLog::GetActiveTarget();
+    logTarget->Show(true);
+}
+
 void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 
-    GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
-    GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
-    GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
+    //GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
+    //GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
+    //GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
 }
 
 #if wxUSE_FILEDLG
@@ -199,26 +204,112 @@ void MainFrame::DisplayControls()
 {
     wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     {
-        sizer->Add(
-            new wxStaticText(this,wxID_ANY,wxT("Animation")),
-            1,
-            wxALL||wxCENTER,
-            5
-        );
-    
+        wxSizer* rowMaths = new wxBoxSizer(wxVERTICAL);
+        {
+            wxSizer* row1 = new wxBoxSizer(wxHORIZONTAL);
+            {
+                wxSizer* math1 = new wxStaticBoxSizer(wxVERTICAL, this, _("Math1"));
+                {
+                    math1->Add(
+                        new wxStaticText(this, wxID_ANY, _("Number of naturals divible by 3 and 5")),
+                        0,
+                        wxLEFT,
+                        5
+                    );
+                    wxSizer* row1_2 = new wxBoxSizer(wxHORIZONTAL);
+                    {
+                        wxTextCtrl* input = new wxTextCtrl(this,
+                            ID_TEXT_MATH1,
+                            wxEmptyString,
+                            wxDefaultPosition,
+                            wxSize(175, 20));
+                        input->SetInsertionPointEnd();
+                        input->SetHint(_("Number"));
+                        input->SetValidator(wxTextValidator(wxFILTER_DIGITS));
+                        row1_2->Add(input, 1, wxALL | wxEXPAND, 1);
 
-         m_animationCtrl = new wxAnimationCtrl(this, wxID_ANY);
-         if (m_animationCtrl->LoadFile("hourglass.ani", wxANIMATION_TYPE_ANI))
-         {
-             m_animationCtrl->Play();
-         }
+                        row1_2->Add(new wxButton(this,
+                            ID_BTN_RUN,
+                            _("Run"),
+                            wxDefaultPosition,
+                            wxSize(30, 20)), 0, wxALL, 1);
+                    }
 
-         sizer->Add(
-             m_animationCtrl,
-             1,
-             wxALL|wxCENTER,
-             5
-         );
+                    math1->Add(row1_2, 0, wxALL, 5);
+                }
+                wxSizer* math2 = new wxStaticBoxSizer(wxVERTICAL, this, _("Math2"));
+                {
+                    math2->Add(
+                        new wxStaticText(this, wxID_ANY, _("Greatest common divider")),
+                        0,
+                        wxLEFT,
+                        5
+                    );
+                    wxSizer* row1_2 = new wxBoxSizer(wxHORIZONTAL);
+                    {
+                        wxTextCtrl* input1 = new wxTextCtrl(this,
+                            ID_TEXT_1_MATH2,
+                            wxEmptyString,
+                            wxDefaultPosition,
+                            wxSize(86, 20));
+                        input1->SetInsertionPointEnd();
+                        input1->SetHint(_("first number"));
+                        input1->SetValidator(wxTextValidator(wxFILTER_DIGITS));
+                        row1_2->Add(input1, 1, wxALL | wxEXPAND, 1);
+
+                        wxTextCtrl* input2 = new wxTextCtrl(this,
+                            ID_TEXT_2_MATH2,
+                            wxEmptyString,
+                            wxDefaultPosition,
+                            wxSize(86, 20));
+                        input2->SetInsertionPointEnd();
+                        input2->SetHint(_("second number"));
+                        input2->SetValidator(wxTextValidator(wxFILTER_DIGITS));
+                        row1_2->Add(input2, 1, wxALL | wxEXPAND, 1);
+
+                        row1_2->Add(new wxButton(this,
+                            ID_BTN_RUN,
+                            _("Run"),
+                            wxDefaultPosition,
+                            wxSize(30, 20)), 0, wxALL, 1);
+                    }
+
+                    math2->Add(row1_2, 0, wxALL, 5);
+                }
+                row1->Add(math1, 0, wxALL, 5);
+                row1->Add(math2, 0, wxALL, 5);
+
+            }
+            rowMaths->Add(row1, 0);
+
+        }
+
+        wxSizer* lastRow = new wxBoxSizer(wxHORIZONTAL);
+        {
+            m_animationCtrl = new wxAnimationCtrl(this, wxID_ANY);
+            m_animationCtrl->SetBackgroundColour(*wxWHITE);
+             if (m_animationCtrl->LoadFile("hourglass.ani", wxANIMATION_TYPE_ANI))
+             {
+                 m_animationCtrl->Play();
+             }
+             lastRow->Add(
+                 m_animationCtrl,
+                 1,
+                 wxRIGHT,
+                 1
+             );
+             lastRow->Add(new wxTextCtrl(this,
+                 ID_LOG_TEXT_CTRL,
+                 wxEmptyString,
+                 wxDefaultPosition,
+                 wxSize(450,32),
+                 wxTE_MULTILINE|wxTE_READONLY|wxBORDER_NONE),1);
+
+
+        }
+        sizer->Add(rowMaths, 1, wxALL, 5);
+        sizer->Add(lastRow, 0, wxALL, 5);
+
 
          SetSizer(sizer);
     }
