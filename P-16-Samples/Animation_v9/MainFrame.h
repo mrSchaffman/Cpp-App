@@ -53,7 +53,7 @@ public:
 
 private:
 
-	void LayoutControl();
+	void DisplayControls();
 	void RecreateAnimation();
 	wxAnimationCtrlBase* m_animationCtrl;
 	wxDECLARE_EVENT_TABLE();

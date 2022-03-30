@@ -13,5 +13,8 @@ bool App::OnInit()
 	MainFrame* frame = new MainFrame(wxT("Animation"));
 	frame->Show(true);
 
+	wxLogWindow* logWin = new wxLogWindow(nullptr, "The log Window", true, true);
+
+
 	return true;
 }

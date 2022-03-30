@@ -69,11 +69,13 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
 #if wxUSE_STATUSBAR
     CreateStatusBar();
 #endif // wxUSE_STATUSBAR
-    LayoutControl();
+    DisplayControls();
+
 }
 
 MainFrame::~MainFrame()
 {
+    wxLogMessage("The Destructor is called");
 }
 
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
@@ -89,11 +91,18 @@ void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
+    //wxLogWindow logWin(nullptr, "The log Window", true, true);
+
+
     Close();
 }
 
-void MainFrame::OnPlay(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnPlay(wxCommandEvent& event)
 {
+    //wxWindow* log = (wxWindow*)wxLog::GetActiveTarget();
+    
+    wxLogMessage("MenuItem %s selected ", event.GetString().c_str());
+
     if (!m_animationCtrl->Play())
     {
         wxLogError("Invalide Animation");
@@ -113,8 +122,10 @@ void MainFrame::OnSetNoAutoResize(wxCommandEvent& WXUNUSED(event))
     m_animationCtrl->SetAnimation(wxNullAnimation);
 }
 
-void MainFrame::OnSetBgColor(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetBgColor(wxCommandEvent& event)
 {
+    wxLogVerbose("MenuItem %s selected ",event.GetString().c_str());
+
     wxColour color = wxGetColourFromUser(this,
         m_animationCtrl->GetBackgroundColour(),
         "Choose the Background Color");
@@ -125,11 +136,14 @@ void MainFrame::OnSetBgColor(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
+    wxLogMessage("MenuItem Stop selected ",);
+
     m_animationCtrl->Stop();
 }
 
 void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
+
     GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
     GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
     GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
@@ -161,7 +175,7 @@ void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 #endif // wxUSE_FILEDLG
 
 
-void MainFrame::LayoutControl()
+void MainFrame::DisplayControls()
 {
     wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     {
