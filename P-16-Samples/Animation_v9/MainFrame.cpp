@@ -132,21 +132,37 @@ void MainFrame::OnPlay(wxCommandEvent& event)
     }
 }
 
-void MainFrame::OnSetNullAnimation(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetNullAnimation(wxCommandEvent& event)
 {
     wxLogMessage("MenuItem Set Null Animation selected ");
 
 }
 
-void MainFrame::OnSetInactiveBitmap(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetInactiveBitmap(wxCommandEvent& event)
 {
     wxLogMessage("MenuItem Set Inactive Bitmap selected ");
+    if (event.IsChecked())
+    {
+        wxBitmap bmp = wxArtProvider::GetBitmap(wxART_MISSING_IMAGE);
+        m_animationCtrl->SetInactiveBitmap(bmp);
+    }
+    else
+        m_animationCtrl->SetInactiveBitmap(wxNullBitmap);
 
 }
 
-void MainFrame::OnSetNoAutoResize(wxCommandEvent& WXUNUSED(event))
+void MainFrame::OnSetNoAutoResize(wxCommandEvent& event)
 {
     wxLogMessage("MenuItem Set No Auto Resize selected ");
+
+    // wxAC_DEFAULT_STYLE = wxBORDER_NONE
+    long style = wxAC_DEFAULT_STYLE |
+        (event.IsChecked() ? wxAC_NO_AUTORESIZE : 0);
+
+    if (style != m_animationCtrl->GetWindowStyle())
+    {
+        RecreateAnimation(style);
+    }
 
     m_animationCtrl->SetAnimation(wxNullAnimation);
 }
@@ -341,6 +357,51 @@ void MainFrame::DisplayControls()
     }
 }
 
-void MainFrame::RecreateAnimation()
+void MainFrame::RecreateAnimation(long style)
 {
+    wxAnimation curr;
+#ifdef wxHAS_NATIVE_ANIMATIONCTRL
+    if (style != m_animationCtrl->GetWindowStyle())
+        curr = m_animationCtrl->GetAnimation();
+#endif // wxHAS_NATIVE_ANIMATIONCTRL
+
+    wxBitmap inactiveBitmap = m_animationCtrl->GetInactiveBitmap();
+    wxColour bg = m_animationCtrl->GetBackgroundColour();
+
+    wxAnimationCtrlBase* oldCtrl = m_animationCtrl;
+#ifdef wxHAS_NATIVE_ANIMATIONCTRL
+    if (GetMenuBar()->IsChecked(ID_USE_GENERIC))
+    {
+        m_animationCtrl = new wxGenericAnimationCtrl(this,
+            wxID_ANY,
+            curr,
+            wxDefaultPosition,
+            wxDefaultSize,
+            style)
+    }
+    else
+#endif // wxHAS_NATIVE_ANIMATIONCTRL
+        m_animationCtrl = new wxAnimationCtrl(this,
+            wxID_ANY,
+            curr,
+            wxDefaultPosition,
+            wxDefaultSize,
+            style);
+
+    GetSizer()->Replace(oldCtrl, m_animationCtrl);
+    delete oldCtrl;
+
+
+    m_animationCtrl->SetInactiveBitmap(inactiveBitmap);
+    m_animationCtrl->SetBackgroundColour(bg);
+
+    GetSizer()->Layout();
 }
+#ifdef wxHAS_NATIVE_ANIMATIONCTRL
+
+void MainFrame::OnUseGeneric(wxCommandEvent& WXUNUSED(event))
+{
+    RecreateAnimation(m_animationCtrl->GetWindowStyle());
+}
+
+#endif // wxHAS_NATIVE_ANIMATIONCTRL

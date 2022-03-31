@@ -1,6 +1,7 @@
 #pragma once
 #include"wx/wx.h"
 #include"wx/animate.h"
+#include"wx/artprov.h"
 
 #include"MathChallenge.h"
 
@@ -71,7 +72,7 @@ private:
 
 
 	void DisplayControls();
-	void RecreateAnimation();
+	void RecreateAnimation(long style);
 	wxAnimationCtrlBase* m_animationCtrl;
 	wxDECLARE_EVENT_TABLE();
 };
