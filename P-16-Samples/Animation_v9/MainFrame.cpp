@@ -14,6 +14,8 @@ EVT_MENU(ID_SET_BGCOLOR, MainFrame::OnSetBgColor)
 
 EVT_MENU(wxID_STOP, MainFrame::OnStop)
 EVT_MENU(ID_LOG_WINDOW, MainFrame::OnLogWindow)
+EVT_MENU(ID_OPEN_IN_NOTEPAD, MainFrame::OnOpenInNotepad)
+EVT_MENU(ID_WRITE_REPORT, MainFrame::OnWriteReport)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_MENU(wxID_EXIT, MainFrame::OnQuit) 
 EVT_UPDATE_UI(wxID_ANY, MainFrame::OnUpdateUI)
@@ -55,6 +57,8 @@ MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,w
     wxMenu* menuWindow = new wxMenu;
     {
         menuWindow->Append(ID_LOG_WINDOW, "&Log Window\tCtrl+W", "Open the Log Window");
+        menuWindow->Append(ID_WRITE_REPORT, "&Write Report\tCtrl+R", "write the Log Messages to a file");
+        menuWindow->Append(ID_OPEN_IN_NOTEPAD, "&See in Notepad\tCtrl+L", "Open in Notepad");
 
     }
 	wxMenu* menuPlay = new wxMenu;
@@ -120,7 +124,7 @@ void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MainFrame::OnPlay(wxCommandEvent& event)
 {   
-    wxLogMessage("MenuItem %s selected ", event.GetString().c_str());
+    wxLogMessage("MenuItem Play selected ");
 
     if (!m_animationCtrl->Play())
     {
@@ -130,14 +134,20 @@ void MainFrame::OnPlay(wxCommandEvent& event)
 
 void MainFrame::OnSetNullAnimation(wxCommandEvent& WXUNUSED(event))
 {
+    wxLogMessage("MenuItem Set Null Animation selected ");
+
 }
 
 void MainFrame::OnSetInactiveBitmap(wxCommandEvent& WXUNUSED(event))
 {
+    wxLogMessage("MenuItem Set Inactive Bitmap selected ");
+
 }
 
 void MainFrame::OnSetNoAutoResize(wxCommandEvent& WXUNUSED(event))
 {
+    wxLogMessage("MenuItem Set No Auto Resize selected ");
+
     m_animationCtrl->SetAnimation(wxNullAnimation);
 }
 
@@ -156,6 +166,7 @@ void MainFrame::OnSetBgColor(wxCommandEvent& event)
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
     wxLogMessage("MenuItem Stop selected ");
+    wxLogWarning("MenuItem Stop selected ");
 
     m_animationCtrl->Stop();
 }
@@ -166,17 +177,30 @@ void MainFrame::OnLogWindow(wxCommandEvent& event)
     logTarget->Show(true);
 }
 
+void MainFrame::OnOpenInNotepad(wxCommandEvent& event)
+{
+
+    wxExecute(wxT("c:\\windows\\notepad.exe C:\\Users\\BFA2\\Desktop\\Utile_Link.txt"),wxEXEC_ASYNC);
+
+}
+
+void MainFrame::OnWriteReport(wxCommandEvent& event)
+{
+}
+
 void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 
-    //GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
-    //GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
-    //GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
+    GetMenuBar()->FindItem(wxID_STOP)->Enable(m_animationCtrl->IsPlaying());
+    GetMenuBar()->FindItem(ID_PLAY)->Enable(!m_animationCtrl->IsPlaying());
+    GetMenuBar()->FindItem(ID_SET_NO_AUTO_RESIZE)->Enable(!m_animationCtrl->IsPlaying());
 }
 
 #if wxUSE_FILEDLG
 void MainFrame::OnOpen(wxCommandEvent& WXUNUSED(event))
 {
+    wxLogMessage("MenuItem Open Animation selected ");
+
     wxFileDialog dialog(this,
         wxT("Choose and Animation"),
         wxEmptyString,
@@ -298,14 +322,16 @@ void MainFrame::DisplayControls()
                  wxRIGHT,
                  1
              );
-             lastRow->Add(new wxTextCtrl(this,
+             wxTextCtrl* logCtrl = new wxTextCtrl(this,
                  ID_LOG_TEXT_CTRL,
                  wxEmptyString,
                  wxDefaultPosition,
-                 wxSize(450,32),
-                 wxTE_MULTILINE|wxTE_READONLY|wxBORDER_NONE),1);
+                 wxSize(450, 32),
+                 wxTE_MULTILINE | wxTE_READONLY | wxBORDER_NONE);
+             lastRow->Add(logCtrl,1);
 
-
+             wxLog::SetActiveTarget(new wxLogTextCtrl(logCtrl));
+             wxLog::SetActiveTarget(new wxLogWindow(this,"Log Window",false,true));
         }
         sizer->Add(rowMaths, 1, wxALL, 5);
         sizer->Add(lastRow, 0, wxALL, 5);

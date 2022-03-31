@@ -25,7 +25,9 @@ enum
 	ID_LOG_WINDOW,
 	ID_TEXT_1_MATH2,
 	ID_TEXT_2_MATH2,
-	ID_LOG_TEXT_CTRL
+	ID_LOG_TEXT_CTRL,
+	ID_OPEN_IN_NOTEPAD,
+	ID_WRITE_REPORT
 };
 enum menubarItemID
 {
@@ -49,8 +51,11 @@ public:
 	 void OnSetBgColor(wxCommandEvent& event);
 	 void OnStop(wxCommandEvent& event);
 	 void OnLogWindow(wxCommandEvent& event);
+	 void OnOpenInNotepad(wxCommandEvent& event);
+	 void OnWriteReport(wxCommandEvent& event);
 
 	 void OnUpdateUI(wxUpdateUIEvent& event);
+
 
 #ifdef wxHAS_NATIVE_ANIMATIONCTRL
 	 void OnUseGeneric(wxCommandEvent& event);
