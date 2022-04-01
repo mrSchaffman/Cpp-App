@@ -18,6 +18,11 @@ EVT_MENU(ID_OPEN_IN_NOTEPAD, MainFrame::OnOpenInNotepad)
 EVT_MENU(ID_WRITE_REPORT, MainFrame::OnWriteReport)
 EVT_MENU(wxID_ABOUT, MainFrame::OnAbout)
 EVT_MENU(wxID_EXIT, MainFrame::OnQuit) 
+
+EVT_BUTTON(ID_BTN_RUN_1, MainFrame::OnRun)
+EVT_BUTTON(ID_BTN_RUN_2, MainFrame::OnRun)
+EVT_MENU(wxID_EXIT, MainFrame::OnQuit) 
+
 EVT_UPDATE_UI(wxID_ANY, MainFrame::OnUpdateUI)
 
 EVT_SIZE(MainFrame::OnSize)
@@ -32,9 +37,9 @@ EVT_MENU(ID_USE_GENERIC,MainFrame::OnUseGeneric)
 
 wxEND_EVENT_TABLE()
 
-MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(500,680))
+MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(500,280))
 {
-    SetMaxSize(wxSize(500, 680));
+    SetMaxSize(wxSize(500, 480));
 	wxMenu* menuFile = new wxMenu;
 	{
 #if wxUSE_FILEDLG
@@ -204,6 +209,19 @@ void MainFrame::OnWriteReport(wxCommandEvent& event)
 {
 }
 
+void MainFrame::OnRun(wxCommandEvent& event)
+{
+    wxTextCtrl* input1 = (wxTextCtrl*)FindWindowById(ID_TEXT_MATH1);
+
+    m_animationCtrl->Play();
+    for (const auto& i : MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(input1->GetValue())))
+    {
+        wxLogMessage("%d", i);
+    }
+    //m_animationCtrl->Stop();
+
+}
+
 void MainFrame::OnUpdateUI(wxUpdateUIEvent& WXUNUSED(event))
 {
 
@@ -269,7 +287,7 @@ void MainFrame::DisplayControls()
                         row1_2->Add(input, 1, wxALL | wxEXPAND, 1);
 
                         row1_2->Add(new wxButton(this,
-                            ID_BTN_RUN,
+                            ID_BTN_RUN_1,
                             _("Run"),
                             wxDefaultPosition,
                             wxSize(30, 20)), 0, wxALL, 1);
@@ -330,7 +348,7 @@ void MainFrame::DisplayControls()
             m_animationCtrl->SetBackgroundColour(*wxWHITE);
              if (m_animationCtrl->LoadFile("hourglass.ani", wxANIMATION_TYPE_ANI))
              {
-                 m_animationCtrl->Play();
+                 m_animationCtrl->Stop();
              }
              lastRow->Add(
                  m_animationCtrl,

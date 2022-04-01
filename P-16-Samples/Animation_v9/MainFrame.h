@@ -2,8 +2,7 @@
 #include"wx/wx.h"
 #include"wx/animate.h"
 #include"wx/artprov.h"
-
-#include"MathChallenge.h"
+#include"MathFunctions.h"
 
 #if !wxUSE_ANIMATIONCTRL
 #error Cannot compile this sample if wxAnimationCtrl is not enabled
@@ -23,6 +22,8 @@ enum
 	ID_USE_GENERIC,
 	ID_TEXT_MATH1,
 	ID_BTN_RUN, 
+	ID_BTN_RUN_1, 
+	ID_BTN_RUN_2, 
 	ID_LOG_WINDOW,
 	ID_TEXT_1_MATH2,
 	ID_TEXT_2_MATH2,
@@ -30,10 +31,7 @@ enum
 	ID_OPEN_IN_NOTEPAD,
 	ID_WRITE_REPORT
 };
-enum menubarItemID
-{
 
-};
 
 class MainFrame : public wxFrame
 {
@@ -54,6 +52,7 @@ public:
 	 void OnLogWindow(wxCommandEvent& event);
 	 void OnOpenInNotepad(wxCommandEvent& event);
 	 void OnWriteReport(wxCommandEvent& event);
+	 void OnRun(wxCommandEvent& event);
 
 	 void OnUpdateUI(wxUpdateUIEvent& event);
 
