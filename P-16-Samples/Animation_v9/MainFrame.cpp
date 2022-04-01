@@ -212,12 +212,24 @@ void MainFrame::OnWriteReport(wxCommandEvent& event)
 void MainFrame::OnRun(wxCommandEvent& event)
 {
     wxTextCtrl* input1 = (wxTextCtrl*)FindWindowById(ID_TEXT_MATH1);
+    wxFileOutputStream output(wxT("tmp.txt"));
+    wxTextOutputStream cout(output);
 
     m_animationCtrl->Play();
+    int count = 0;
     for (const auto& i : MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(input1->GetValue())))
     {
         wxLogMessage("%d", i);
+        cout << wxString::Format("%d",i) << ", ";
+        if (count == 10)
+        {
+            cout << "\n";
+            count = -1;
+        }
+        count++;
     }
+    cout << "\n";
+
     //m_animationCtrl->Stop();
 
 }

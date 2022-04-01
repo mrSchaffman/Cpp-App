@@ -1,6 +1,8 @@
 #pragma once
 #include"wx/wx.h"
 #include"wx/animate.h"
+#include"wx/wfstream.h"
+#include"wx/txtstrm.h"
 #include"wx/artprov.h"
 #include"MathFunctions.h"
 
@@ -69,7 +71,7 @@ public:
 
 private:
 
-
+	//void WriteToTempFile(const wxString& functionName);
 	void DisplayControls();
 	void RecreateAnimation(long style);
 	wxAnimationCtrlBase* m_animationCtrl;
