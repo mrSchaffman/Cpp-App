@@ -40,6 +40,7 @@ wxEND_EVENT_TABLE()
 MainFrame::MainFrame(const wxString& caption):wxFrame(nullptr,wxID_ANY,caption,wxDefaultPosition,wxSize(500,280))
 {
     SetMaxSize(wxSize(500, 480));
+	SetBackgroundColour(*wxWHITE);
 	wxMenu* menuFile = new wxMenu;
 	{
 #if wxUSE_FILEDLG
@@ -278,7 +279,7 @@ void MainFrame::DisplayControls()
         {
             wxSizer* row1 = new wxBoxSizer(wxHORIZONTAL);
             {
-                wxSizer* math1 = new wxStaticBoxSizer(wxVERTICAL, this, _("Math1"));
+                wxSizer* math1 = new wxStaticBoxSizer(wxVERTICAL, this );
                 {
                     math1->Add(
                         new wxStaticText(this, wxID_ANY, _("Number of naturals divible by 3 and 5")),
@@ -307,7 +308,7 @@ void MainFrame::DisplayControls()
 
                     math1->Add(row1_2, 0, wxALL, 5);
                 }
-                wxSizer* math2 = new wxStaticBoxSizer(wxVERTICAL, this, _("Math2"));
+                wxSizer* math2 = new wxStaticBoxSizer(wxVERTICAL, this);
                 {
                     math2->Add(
                         new wxStaticText(this, wxID_ANY, _("Greatest common divider")),
@@ -321,7 +322,8 @@ void MainFrame::DisplayControls()
                             ID_TEXT_1_MATH2,
                             wxEmptyString,
                             wxDefaultPosition,
-                            wxSize(86, 20));
+                            wxSize(86, 20),
+							wxTE_PROCESS_TAB);
                         input1->SetInsertionPointEnd();
                         input1->SetHint(_("first number"));
                         input1->SetValidator(wxTextValidator(wxFILTER_DIGITS));
@@ -331,7 +333,8 @@ void MainFrame::DisplayControls()
                             ID_TEXT_2_MATH2,
                             wxEmptyString,
                             wxDefaultPosition,
-                            wxSize(86, 20));
+                            wxSize(86, 20),
+							wxTE_PROCESS_TAB);
                         input2->SetInsertionPointEnd();
                         input2->SetHint(_("second number"));
                         input2->SetValidator(wxTextValidator(wxFILTER_DIGITS));
