@@ -212,26 +212,54 @@ void MainFrame::OnWriteReport(wxCommandEvent& event)
 
 void MainFrame::OnRun(wxCommandEvent& event)
 {
-    wxTextCtrl* input1 = (wxTextCtrl*)FindWindowById(ID_TEXT_MATH1);
-    wxFileOutputStream output(wxT("tmp.txt"));
-    wxTextOutputStream cout(output);
+	wxFileOutputStream output(wxT("tmp.txt"));
+	wxTextOutputStream cout(output);
+	wxString buf;
+	int count = 0;
+	size_t a = 0;
+	size_t b = 0;
+	size_t result = 0;
 
-    m_animationCtrl->Play();
-    int count = 0;
-    for (const auto& i : MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(input1->GetValue())))
-    {
-        wxLogMessage("%d", i);
-        cout << wxString::Format("%d",i) << ", ";
-        if (count == 10)
-        {
-            cout << "\n";
-            count = -1;
-        }
-        count++;
-    }
-    cout << "\n";
+	switch (event.GetId())
+	{
+	case ID_BTN_RUN_1:
 
-    //m_animationCtrl->Stop();
+		buf.Printf("\t Interger Divisible by 3 and 5 smaller than %d are...", wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue()));
+		wxLogMessage(buf);
+		cout << buf << endl;
+
+		m_animationCtrl->Play();
+		for (const auto& i : MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue())))
+		{
+			wxLogMessage("%d", i);
+			cout << wxString::Format("%d", i) << ", ";
+			if (count == 10)
+			{
+				cout << "\n";
+				count = -1;
+			}
+			count++;
+		}
+		cout << "\n";
+
+		break;
+	case ID_BTN_RUN_2:
+
+		result = MathFunctions::greaterCommonDivisorFrom(
+			(wxAtoi(((wxTextCtrl*)FindWindowById(ID_TEXT_1_MATH2))->GetValue())),
+			(wxAtoi(((wxTextCtrl*)FindWindowById(ID_TEXT_2_MATH2))->GetValue()))
+		);
+
+		buf.Printf("\t The Greatest common divider from %d and %d is %d",
+			wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_1_MATH2))->GetValue()),
+			wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_2_MATH2))->GetValue()),
+			result);
+
+		wxLogMessage("%s ",buf);
+		cout << buf << endl;
+
+		break;
+	} 
 
 }
 
@@ -295,7 +323,7 @@ void MainFrame::DisplayControls()
                             wxDefaultPosition,
                             wxSize(175, 20));
                         input->SetInsertionPointEnd();
-                        input->SetHint(_("Number"));
+                        input->SetHint(_("0"));
                         input->SetValidator(wxTextValidator(wxFILTER_DIGITS));
                         row1_2->Add(input, 1, wxALL | wxEXPAND, 1);
 
@@ -325,7 +353,7 @@ void MainFrame::DisplayControls()
                             wxSize(86, 20),
 							wxTE_PROCESS_TAB);
                         input1->SetInsertionPointEnd();
-                        input1->SetHint(_("first number"));
+                        input1->SetHint(_("0"));
                         input1->SetValidator(wxTextValidator(wxFILTER_DIGITS));
                         row1_2->Add(input1, 1, wxALL | wxEXPAND, 1);
 
@@ -336,12 +364,12 @@ void MainFrame::DisplayControls()
                             wxSize(86, 20),
 							wxTE_PROCESS_TAB);
                         input2->SetInsertionPointEnd();
-                        input2->SetHint(_("second number"));
+                        input2->SetHint(_("0"));
                         input2->SetValidator(wxTextValidator(wxFILTER_DIGITS));
                         row1_2->Add(input2, 1, wxALL | wxEXPAND, 1);
 
                         row1_2->Add(new wxButton(this,
-                            ID_BTN_RUN,
+                            ID_BTN_RUN_2,
                             _("Run"),
                             wxDefaultPosition,
                             wxSize(30, 20)), 0, wxALL, 1);

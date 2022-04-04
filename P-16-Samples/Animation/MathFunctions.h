@@ -2,6 +2,7 @@
 #pragma once
 #include<vector>
 #include<string>
+#include<numeric>
 class MathFunctions
 {
 public:
@@ -16,13 +17,15 @@ public:
 		return vect;
 	}
 
-	static inline long greaterCommonDivisorFrom(long, long)
+	static inline size_t greaterCommonDivisorFrom(size_t a, size_t b)
 	{
-
+		//return std::gcd(a, b);
+		return b == 0 ? a : greaterCommonDivisorFrom(b, a%b);
 	}
-	static inline long leastCommonMultipleFrom(long, long)
+	static inline size_t leastCommonMultipleFrom(size_t a, size_t b)
 	{
-
+		int temp = greaterCommonDivisorFrom(a, b);
+		return temp ? (a*(b / temp)) : 0;
 	}
 
 	static inline std::vector<long> largestPrimeSmallerThan(long)
@@ -42,12 +45,12 @@ public:
 
 	static inline std::vector<long> amicalNumbersSmallerThan(long)
 	{
-
+		
 	}
 
 	static inline std::vector<long> armstrongNumbersSmallerThan(long)
 	{
-
+		
 	}
 
 	static inline std::vector<long> primeFactorsOfNumber(long)
@@ -59,7 +62,7 @@ public:
 	//+grayCode();
 	std::string toRoman(long)
 	{
-
+		
 	}
 
 	std::string largestCollatzSequence(long)
@@ -77,7 +80,5 @@ public:
 
 	}
 
-private:
-	std::vector<long> m_numbers;
 };
 
