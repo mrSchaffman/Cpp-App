@@ -2,6 +2,8 @@
 #include"wx/aboutdlg.h"
 #include"wx/filedlg.h"
 #include"wx/colordlg.h"
+#include"wx/filename.h"
+#include<algorithm>
 
 
 
@@ -188,7 +190,6 @@ void MainFrame::OnSetBgColor(wxCommandEvent& event)
 void MainFrame::OnStop(wxCommandEvent& WXUNUSED(event))
 {
     wxLogMessage("MenuItem Stop selected ");
-    wxLogWarning("MenuItem Stop selected ");
 
     m_animationCtrl->Stop();
 }
@@ -201,9 +202,8 @@ void MainFrame::OnLogWindow(wxCommandEvent& event)
 
 void MainFrame::OnOpenInNotepad(wxCommandEvent& event)
 {
-
-    wxExecute(wxT("c:\\windows\\notepad.exe C:\\Users\\BFA2\\Desktop\\Utile_Link.txt"),wxEXEC_ASYNC);
-
+	
+    wxExecute(wxT("c:\\windows\\notepad.exe tmp.txt"),wxEXEC_ASYNC);
 }
 
 void MainFrame::OnWriteReport(wxCommandEvent& event)
@@ -219,21 +219,27 @@ void MainFrame::OnRun(wxCommandEvent& event)
 	size_t a = 0;
 	size_t b = 0;
 	size_t result = 0;
-
+	std::vector<long> resluts;
 	switch (event.GetId())
 	{
 	case ID_BTN_RUN_1:
 
-		buf.Printf("\t Interger Divisible by 3 and 5 smaller than %d are...", wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue()));
+		buf.Printf("  Interger Divisible by 3 and 5 smaller than %d are: ",
+			wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue()));
+		
 		wxLogMessage(buf);
-		cout << buf << endl;
+		cout.WriteString(buf);
+		cout << "\n";
 
 		m_animationCtrl->Play();
-		for (const auto& i : MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue())))
+
+		resluts = MathFunctions::IntegerDivibleBy3and5SmallerThan(wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue()));
+		
+		for (const auto& i : resluts)
 		{
-			wxLogMessage("%d", i);
-			cout << wxString::Format("%d", i) << ", ";
-			if (count == 10)
+			wxLogMessage("   %d", i);
+			cout << wxString::Format("   %d", i) << ", ";
+			if (count == 9)
 			{
 				cout << "\n";
 				count = -1;
