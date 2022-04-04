@@ -208,6 +208,7 @@ void MainFrame::OnOpenInNotepad(wxCommandEvent& event)
 
 void MainFrame::OnWriteReport(wxCommandEvent& event)
 {
+	wxMessageBox("Update to Pro to get this feature!");
 }
 
 void MainFrame::OnRun(wxCommandEvent& event)
