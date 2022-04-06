@@ -154,10 +154,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="App.h" />
+    <ClInclude Include="ArchiveApp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="App.cpp" />
+    <ClCompile Include="ArchiveApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Archive_7.ico" />
