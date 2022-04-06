@@ -1,10 +1,21 @@
 #pragma once
-#include"wx/wx.h"
+
+// For  Compiler that support precompilation
+#include"wx/wxprec.h"
+
+// For  Compiler that don't support precompilation
+#ifndef WX_PRECOMP
+	#include"wx/wx.h"
+#endif // !WX_PRECOMP
+
 #include"wx/archive.h"
 class ArchiveApp: public wxAppConsole
 {
 public:
-	ArchiveApp();
+	ArchiveApp() :m_forceZip64{false},
+		m_archiveClassFactory { nullptr },
+		m_filterClassFactory{ nullptr } {}
+
 	virtual~ArchiveApp() = default;
 
 	virtual void OnInitCmdLine(wxCmdLineParser&parser)wxOVERRIDE;
