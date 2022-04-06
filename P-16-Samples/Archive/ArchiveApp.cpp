@@ -122,6 +122,36 @@ int ArchiveApp::DoList()
 
 int ArchiveApp::DoExtract()
 {
+	wxFileInputStream fileInputStream(m_archiveFileName);
+	if (!fileInputStream.IsOk())
+		return 1;
+
+	if (m_archiveClassFactory)
+	{
+		wxScopedPtr<wxArchiveInputStream> archiveStream(m_archiveClassFactory->NewStream(fileInputStream));
+		wxPrintf("Extracting from: %s\n", m_archiveFileName);
+		for (wxArchiveEntry* entry = archiveStream->GetNextEntry(); entry;
+			entry = archiveStream->GetNextEntry())
+		{
+			wxPrintf("Extracting: %s...\n", entry->GetName());
+			wxTempFileOutputStream outputFileStream(entry->GetName());
+			if (!CopyStreamData(*archiveStream, outputFileStream, entry->GetSize()))
+				return 1;
+			outputFileStream.Commit();
+		}
+		wxPrintf("Extracted all files\n");
+	}
+	else
+	{
+		wxScopedPtr<wxFilterInputStream> filterStream(m_filterClassFactory->NewStream(fileInputStream));
+		wxPrintf("Extracting single file from: %s\n", m_archiveFileName);
+		wxTempFileOutputStream outputFileStream(wxFileName(m_archiveFileName).GetName());
+		if (!CopyStreamData(*filterStream, outputFileStream, -1))
+			return 1;
+		outputFileStream.Commit();
+		wxPrintf("Extracted successfully\n");
+	}
+
 	return 0;
 }
 
@@ -129,12 +159,12 @@ bool ArchiveApp::CopyStreamData(wxInputStream & inputStream, wxOutputStream & ou
 {
 	wxChar buf[128 * 1024];
 	int readSize = 128 * 1024;
-	wxFileOffset copiedData = 0;
+	wxFileOffset sizeOfReadedData = 0;
 
 	for (;;) // infinit loop
 	{
-		if (offset != wxInvalidOffset && copiedData + readSize > offset)
-			readSize = offset - copiedData;
+		if (offset != wxInvalidOffset && sizeOfReadedData + readSize > offset)
+			readSize = offset - sizeOfReadedData;
 		inputStream.Read(buf, readSize);
 
 		size_t lastReadSize = inputStream.LastRead();
@@ -145,7 +175,7 @@ bool ArchiveApp::CopyStreamData(wxInputStream & inputStream, wxOutputStream & ou
 
 		if (outputStream.LastWrite()!=lastReadSize)
 		{
-			wxLogError("Failed to output data!");
+			wxLogError("Failed to output all the readed data!");
 			return false;
 		}
 		if (offset == wxInvalidOffset)
@@ -157,8 +187,8 @@ bool ArchiveApp::CopyStreamData(wxInputStream & inputStream, wxOutputStream & ou
 		}
 		else
 		{
-			copiedData += lastReadSize;
-			if (copiedData >= offset)
+			sizeOfReadedData += lastReadSize;
+			if (sizeOfReadedData >= offset)
 			{
 				break;
 			}
