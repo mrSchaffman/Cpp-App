@@ -117,6 +117,40 @@ int ArchiveApp::DoCreate()
 
 int ArchiveApp::DoList()
 {
+	wxFileInputStream fileInputStream(m_archiveFileName);
+	if (!fileInputStream.IsOk())
+		return 1;
+	if (m_archiveClassFactory)
+	{
+		wxScopedPtr<wxArchiveInputStream> archiveInputStream(m_archiveClassFactory->NewStream(fileInputStream));
+		wxPrintf("Archive: %s\n", m_archiveFileName);
+		wxPrintf("Length		Date		Time		Name\n");
+		wxPrintf("------------- ----------- ----------- ----\n");
+
+		wxFileOffset totalSize = 0;
+		int entryCount = 0;
+
+		for (wxArchiveEntry* entry = archiveInputStream->GetNextEntry(); entry; entry = archiveInputStream->GetNextEntry())
+		{
+			totalSize = entry->GetSize();
+			entryCount++;
+
+			wxPrintf("%10lld %s %s %\n",
+				entry->GetSize(),
+				entry->GetDateTime().FormatISODate(), // ISO 8601 format "YYYY-MM-DD"
+				entry->GetDateTime().FormatISOTime(), // ISO 8601 format "HH:MM:SS"
+				entry->GetName());
+		}        
+		
+		wxPrintf("----------                     -------\n");
+		wxPrintf("%10lld                     %d files\n", totalSize, entryCount);
+	}
+	else
+	{
+		wxPrintf("Archive \"%s\" contains a single file named \"%s\"\n",
+			m_archiveFileName, wxFileName(m_archiveFileName).GetName());
+	}
+
 	return 0;
 }
 
