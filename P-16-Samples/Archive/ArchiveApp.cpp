@@ -5,9 +5,6 @@
 
 wxIMPLEMENT_APP(ArchiveApp);
 
-ArchiveApp::ArchiveApp()
-{
-}
 int ArchiveApp::OnRun()
 {
 	m_archiveClassFactory = wxArchiveClassFactory::Find(m_archiveFileName, wxSTREAM_FILEEXT);
