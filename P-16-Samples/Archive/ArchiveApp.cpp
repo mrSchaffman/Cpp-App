@@ -1,6 +1,7 @@
 #include "ArchiveApp.h"
 #include"wx/wfstream.h"
 #include"wx/zipstrm.h"
+#include"wx/cmdline.h"
 
 wxIMPLEMENT_APP(ArchiveApp);
 
@@ -256,4 +257,43 @@ wxString GetAllSupported(wxStreamProtocolType type)
 	AppendAllSupportedType<wxFilterClassFactory>(all, type);
 
 	return all;
+}
+void ArchiveApp::OnInitCmdLine(wxCmdLineParser&parser)
+{
+	wxAppConsole::OnInitCmdLine(parser);
+
+	parser.AddParam("command");
+	parser.AddParam("archive_name");
+	parser.AddParam("file_names", wxCMD_LINE_VAL_STRING,
+		wxCMD_LINE_PARAM_MULTIPLE | wxCMD_LINE_PARAM_OPTIONAL);
+	parser.AddSwitch("", "force-zip64", "Force ZIP64 format when creating ZIP archives");
+
+	parser.AddUsageText("\ncommand:");
+	for (const ArchiveCommandDesc* cmdDesc = s_cmdDesc; cmdDesc->type != CMD_NONE; cmdDesc++)
+		parser.AddUsageText(wxString::Format("  %s: %s", cmdDesc->id, cmdDesc->desc));
+
+	parser.AddUsageText("\nsupported formats: " + GetAllSupported(wxSTREAM_PROTOCOL));
+
+}
+bool ArchiveApp::OnCmdLineParsed(wxCmdLineParser&parser)
+{
+	m_command = CMD_NONE;
+	wxString command = parser.GetParam();
+	for (const ArchiveCommandDesc* cmdDesc = s_cmdDesc; cmdDesc->type != CMD_NONE; cmdDesc++)
+	{
+		if (cmdDesc->id == command)
+			m_command = cmdDesc->type;
+	}
+	if (m_command == CMD_NONE)
+	{
+		wxLogError("Invalid command: %s", command);
+		return false;
+	}
+	m_archiveFileName = parser.GetParam(1);
+	for (size_t i = 2; i < parser.GetParamCount(); i++)
+		m_fileNames.push_back(parser.GetParam(i));
+	m_forceZip64 = parser.FoundSwitch("force-zip64") == wxCMD_SWITCH_ON;
+
+	return wxAppConsole::OnCmdLineParsed(parser);
+
 }
