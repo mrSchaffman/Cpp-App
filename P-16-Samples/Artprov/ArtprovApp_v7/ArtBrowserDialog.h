@@ -6,13 +6,18 @@
 #include"wx/wx.h"
 #include"wx/artprov.h"
 
+class WXDLLIMPEXP_FWD_CORE wxListCtrl;
+class WXDLLIMPEXP_FWD_CORE wxListEvent;
+
 class ArtBrowserDialog : public wxDialog
 {
 public:
 	ArtBrowserDialog(wxWindow *parent); // dependency
 
 	void SetArtClient(const wxArtClient& client);// dependency
-	void SetArtBitmap(const wxArtID& id, const wxArtClient& client, const wxSize& size = wxDefaultSize);
+	void SetArtBitmap(const wxArtID& id, 
+		const wxArtClient& client, 
+		const wxSize& size = wxDefaultSize);
 
 private:
 	void OnSelectItem(wxListEvent &event); // dependency
