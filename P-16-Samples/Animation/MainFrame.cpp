@@ -225,7 +225,7 @@ void MainFrame::OnRun(wxCommandEvent& event)
 	{
 	case ID_BTN_RUN_1:
 
-		buf.Printf("  Interger Divisible by 3 and 5 smaller than %d are: ",
+		buf.Printf("  Integers Divisible by 3 and 5 smaller than %d are: ",
 			wxAtol(((wxTextCtrl*)FindWindowById(ID_TEXT_MATH1))->GetValue()));
 		
 		wxLogMessage(buf);

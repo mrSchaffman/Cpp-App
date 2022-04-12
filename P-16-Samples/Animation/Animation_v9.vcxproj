@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="MainFrame.cpp" />
-    <ClCompile Include="MathFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Animation_v9.ico" />
