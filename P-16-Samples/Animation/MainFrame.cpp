@@ -116,8 +116,8 @@ MainFrame::~MainFrame()
 void MainFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
     wxAboutDialogInfo info;
-    info.SetName(_("wxAnimation and wxAnimationCtrl"));
-    info.SetDescription(_("This is About the wxAnimationCtrl an the wxAnimation Classes"));
+    info.SetName(_("About this App"));
+    info.SetDescription(_("This is a simple Calcution App"));
     info.SetCopyright("(C) 2022,Barth. Feudong");
     info.AddDeveloper("Barth. Feudong");
 
